@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-electron
+release
+backend/build
+backend/dist
+.env*
+*.log
+*.exe
+.DS_Store
+coverage
+.vscode
+.idea
+__pycache__
+*.pyc

@@ -1,0 +1,551 @@
+Department,Day,Hour,Semester,Section,Subject,Course Code,Credit Hours,Teachers,Room
+BS-AI,Thursday,08:30 - 10:00 AM,1,HM,Applications of Information and Communication Technologies Lab ,,1,Aadrish pirzado,CG-C1
+BS-AI,Thursday,10:00 - 11:30 AM,1,HM,Applications of Information and Communication Technologies Lab ,,1,Aadrish pirzado,CG-C1
+BS-AI,Friday,10:00 - 11:30 AM,1,HM,Applications of Information and Communication Technologies ,,2,Syed Shabi ul Hasan,R12
+BS-AI,Monday,1:00 - 2:30 PM,1,HM,Applications of Information and Communication Technologies ,,2,Syed Shabi ul Hasan,R8
+BS-AI,Wednesday,1:00 - 2:30 PM,1,HM,Calculus and Analytical Geometry ,MT1140,3,Amir Sheikh,R11
+BS-AI,Monday,11:30 - 1:00 PM,1,HM,Calculus and Analytical Geometry ,MT1140,3,Amir Sheikh,R11
+BS-AI,Friday,2:00 - 3:30 PM,1,HM,Computer Programming Lab ,CS1411,1,Abiha Waqar,CS-C1
+BS-AI,Friday,3:30 - 5:00 PM,1,HM,Computer Programming Lab ,CS1411,1,Abiha Waqar,CS-C1
+BS-AI,Wednesday,08:30 - 10:00 AM,1,HM,Computer Programming  ,CS1410,3,Rimsha,R6
+BS-AI,Monday,08:30 - 10:00 AM,1,HM,Computer Programming  ,CS1410,3,Rimsha,R12
+BS-AI,Wednesday,11:30 - 1:00 PM,1,HM,Functional English ,SS1100,3,SS6 Midhat Maroof,R4
+BS-AI,Friday,08:30 - 10:00 AM,1,HM,Functional English ,SS1100,3,SS6 Midhat Maroof,R11
+BS-AI,Thursday,2:00 - 4:00 PM,1,HM,Islamic Studies ,SS1400,2,SS11 Dr. Rehan,CS-Audi
+BS-CS,Thursday,2:00 - 4:00 PM,1,BM,Islamic Studies ,SS1400,2,SS11 Dr. Rehan,CS-Audi
+BS-CS,Thursday,2:00 - 4:00 PM,1,AM,Islamic Studies ,SS1400,2,SS11 Dr. Rehan,CS-Audi
+BS-AI,Wednesday,08:30 - 10:00 AM,2,HM,Applied Physics Lab ,,1,Sumera Syed,DG-C3
+BS-AI,Friday,11:30 - 1:00 PM,2,HM,Applied Physics ,NS1240,2,Sumera Syed,CS-C1
+BS-AI,Monday,11:30 - 1:00 PM,2,HM,Discrete Structures ,CS2620,3,Zohaib Khan,R13
+BS-AI,Tuesday,08:30 - 10:00 AM,2,HM,Discrete Structures ,CS2620,3,Zohaib Khan,R12
+BS-AI,Friday,08:30 - 10:00 AM,2,HM,Expository Writing ,,3,SS9 New Faculty,R13
+BS-AI,Monday,2:30 - 4:00 PM,2,HM,Expository Writing ,,3,SS9 New Faculty,R10
+BS-AI,Monday,08:30 - 10:00 AM,2,HM,Object Oriented Programming  ,CS1420,3,Hafiz Tehreem,DG-C3
+BS-AI,Friday,3:30 - 5:00 PM,2,HM,Object Oriented Programming  ,CS1420,3,Hafiz Tehreem,R13
+BS-AI,Tuesday,11:30 - 1:00 PM,2,HM,Object Oriented Programming Lab ,CS1421,1,Abiha Waqar,CG-C1
+BS-AI,Tuesday,1:00 - 2:30 PM,2,HM,Object Oriented Programming Lab ,CS1421,1,Abiha Waqar,CG-C1
+BS-AI,Wednesday,2:00 - 4:00 PM,2,HM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-CS,Wednesday,2:00 - 4:00 PM,2,AM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-CS,Wednesday,2:00 - 4:00 PM,2,BM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-AI,Wednesday,2:30 - 4:00 PM,3,IM,Data Communications & Networking ,CS3210,3,Faizan ur Rehman (NF),R4
+BS-AI,Friday,08:30 - 10:00 AM,3,IM,Data Communications & Networking ,CS3210,3,Faizan ur Rehman (NF),R10
+BS-AI,Monday,1:00 - 2:30 PM,3,IM,Data Communications & Networking Lab ,CS3211,1,M Kashif(NEW),CG-C1
+BS-AI,Monday,2:30 - 4:00 PM,3,IM,Data Communications & Networking Lab ,CS3211,1,M Kashif(NEW),CG-C1
+BS-AI,Monday,08:30 - 10:00 AM,3,IM,Data Structures and Algorithms ,CS2510,3,Saima Burriro,R7
+BS-AI,Wednesday,10:00 - 11:30 AM,3,IM,Data Structures and Algorithms ,CS2510,3,Saima Burriro,R8
+BS-AI,Friday,2:00 - 3:30 PM,3,IM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R10
+BS-AI,Thursday,08:30 - 10:00 AM,3,IM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R4
+BS-AI,Thursday,10:00 - 11:30 AM,3,IM,Principles of Psychology ,SS2300,2,Rida Sohail,R2
+BS-AI,Friday,3:30 - 5:00 PM,3,IM,Principles of Psychology ,SS2300,2,Rida Sohail,R9
+BS-AI,Saturday,8:30-10:30 AM,3,IM,Professional Practices ,,2,Syed Nabeel Ali (VF),R2
+BS-AI,Friday,10:00 - 11:30 AM,3,IM,Software Engineering  ,CS3110,3,Saima Buriro,R13
+BS-AI,Wednesday,1:00 - 2:30 PM,3,IM,Software Engineering  ,CS3110,3,Saima Buriro,DB-C10
+BS-AI,Wednesday,08:30 - 10:00 AM,4,EM,Artificial Intelligence,,3,Hira Ansari (New),Library Block D
+BS-AI,Monday,2:30 - 4:00 PM,4,EM,Artificial Intelligence,,3,Hira Ansari (New),Library Block D
+BS-AI,Thursday,1:00 - 2:30 PM,4,EM,Computer Organization & Assembly Language,,3,Muhammad Yousaf,R5
+BS-AI,Tuesday,10:00 - 11:30 AM,4,EM,Computer Organization & Assembly Language,,3,Muhammad Yousaf,R2
+BS-AI,Tuesday,1:00 - 2:30 PM,4,EM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C2
+BS-AI,Tuesday,2:30 - 4:00 PM,4,EM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C2
+BS-AI,Monday,08:30 - 10:00 AM,4,EM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C10
+BS-AI,Monday,10:00 - 11:30 AM,4,EM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C10
+BS-AI,Wednesday,2:30 - 4:00 PM,4,EM,Database Management Systems,CS2511,1,Zaid Irshad,DB-C10
+BS-AI,Monday,1:00 - 2:30 PM,4,EM,Database Management Systems,CS2511,1,Zaid Irshad,CS-C2
+BS-AI,Thursday,08:30 - 10:00 AM,4,EM,Database Management Systems Lab,CS2231,1,Maria Ahmed,CS-C2
+BS-AI,Thursday,10:00 - 11:30 AM,4,EM,Database Management Systems Lab,CS2231,1,Maria Ahmed,CS-C2
+BS-AI,Thursday,2:30 - 4:00 PM,4,EM,Linear Algebra,MT2210,3,Amir Sheikh,R11
+BS-AI,Wednesday,10:00 - 11:30 AM,4,EM,Linear Algebra,MT2210,3,Amir Sheikh,R11
+BS-AI,Wednesday,1:00 - 2:30 PM,4,EM,Probability & Statistics,SS2300,2,Dr.Shahnila Haider Rizvi,R2
+BS-AI,Tuesday,08:30 - 10:00 AM,4,EM,Probability & Statistics,SS2300,2,Dr.Shahnila Haider Rizvi,R10
+BS-CS,Monday,08:30 - 10:00 AM,1,AM,Applications of Information and Communication Technologies Lab ,,1,Anusha Amir,CG-C1
+BS-CS,Monday,10:00 - 11:30 AM,1,AM,Applications of Information and Communication Technologies Lab ,,1,Anusha Amir,CG-C1
+BS-CS,Friday,08:30 - 10:00 AM,1,AM,Applications of Information and Communication Technologies ,,2,saad ali asif,DB-C8
+BS-CS,Tuesday,1:00 - 2:30 PM,1,AM,Applications of Information and Communication Technologies ,,2,saad ali asif,R6
+BS-CS,Monday,2:30 - 4:00 PM,1,AM,Calculus and Analytical Geometry ,MT1140,3,Dr. Shamsa Kanwal,R1
+BS-CS,Thursday,08:30 - 10:00 AM,1,AM,Calculus and Analytical Geometry ,MT1140,3,Dr. Shamsa Kanwal,R3
+BS-CS,Tuesday,08:30 - 10:00 AM,1,AM,Computer Programming Lab ,CS1411,1,Anusha Amir,CG-C1
+BS-CS,Tuesday,10:00 - 11:30 AM,1,AM,Computer Programming Lab ,CS1411,1,Anusha Amir,CG-C1
+BS-CS,Friday,3:30 - 5:00 PM,1,AM,Computer Programming  ,CS1410,3,M.Zubair,R5
+BS-CS,Friday,2:00 - 3:30 PM,1,AM,Computer Programming  ,CS1410,3,M.Zubair,R11
+BS-CS,Friday,10:00 - 11:30 AM,1,AM,Functional English ,SS1100,3,Nadia Noor,R10
+BS-CS,Tuesday,2:30 - 4:00 PM,1,AM,Functional English ,SS1100,3,Nadia Noor,R13
+BS-CS,Wednesday,11:30 - 1:00 PM,1,BM,Applications of Information and Communication Technologies Lab ,,1,Anusha Amir,DG-C2
+BS-CS,Wednesday,1:00 - 2:30 PM,1,BM,Applications of Information and Communication Technologies Lab ,,1,Anusha Amir,DG-C2
+BS-CS,Thursday,08:30 - 10:00 AM,1,BM,Applications of Information and Communication Technologies ,,2,saad ali asif,R9
+BS-CS,Friday,10:00 - 11:30 AM,1,BM,Applications of Information and Communication Technologies ,,2,saad ali asif,R8
+BS-CS,Monday,10:00 - 11:30 AM,1,BM,Calculus and Analytical Geometry ,MT1140,3,Dr. Shamsa Kanwal,R10
+BS-CS,Friday,3:30 - 5:00 PM,1,BM,Calculus and Analytical Geometry ,MT1140,3,Dr. Shamsa Kanwal,R8
+BS-CS,Monday,1:00 - 2:30 PM,1,BM,Computer Programming Lab ,CS1411,1,Anusha Amir,DB-C8
+BS-CS,Monday,2:30 - 4:00 PM,1,BM,Computer Programming Lab ,CS1411,1,Anusha Amir,DB-C8
+BS-CS,Wednesday,08:30 - 10:00 AM,1,BM,Computer Programming  ,CS1410,3,M.Zubair,R12
+BS-CS,Friday,08:30 - 10:00 AM,1,BM,Computer Programming  ,CS1410,3,M.Zubair,R8
+BS-CS,Friday,2:00 - 3:30 PM,1,BM,Functional English ,SS1100,3,Shazia Naz (VF),R3
+BS-CS,Monday,08:30 - 10:00 AM,1,BM,Functional English ,SS1100,3,Shazia Naz (VF),R13
+BS-CS,Monday,11:30 - 1:00 PM,1,CM,Applications of Information and Communication Technologies Lab ,,1,Nasreen Sheikh,DB-C10
+BS-CS,Monday,1:00 - 2:30 PM,1,CM,Applications of Information and Communication Technologies Lab ,,1,Nasreen Sheikh,DB-C10
+BS-CS,Tuesday,08:30 - 10:00 AM,1,CM,Applications of Information and Communication Technologies ,,2,Khalid Sheikh,R2
+BS-CS,Wednesday,11:30 - 1:00 PM,1,CM,Applications of Information and Communication Technologies ,,2,Khalid Sheikh,R1
+BS-CS,Tuesday,2:30 - 4:00 PM,1,CM,Calculus and Analytical Geometry ,MT1140,3,Shahid Hussain,R8
+BS-CS,Wednesday,10:00 - 11:30 AM,1,CM,Calculus and Analytical Geometry ,MT1140,3,Shahid Hussain,R13
+BS-CS,Friday,2:00 - 3:30 PM,1,CM,Computer Programming Lab ,CS1411,1,Sandesh Kumar,DB-C10
+BS-CS,Friday,3:30 - 5:00 PM,1,CM,Computer Programming Lab ,CS1411,1,Sandesh Kumar,DB-C10
+BS-CS,Tuesday,1:00 - 2:30 PM,1,CM,Computer Programming  ,CS1410,3,Syeda Aiman Naeem,R5
+BS-CS,Monday,08:30 - 10:00 AM,1,CM,Computer Programming  ,CS1410,3,Syeda Aiman Naeem,Library Block D
+BS-CS,Wednesday,2:30 - 4:00 PM,1,CM,Functional English ,SS1100,3,SS4 Ufaq Bint e Jamal,R2
+BS-CS,Tuesday,10:00 - 11:30 AM,1,CM,Functional English ,SS1100,3,SS4 Ufaq Bint e Jamal,R11
+BS-CS,Friday,08:30 - 10:30 AM,1,CM,Islamic Studies ,SS1400,2,SS3 Dr. Momin Fayyaz,CS-Audi
+BS-CS,Friday,08:30 - 10:30 AM,1,DM,Islamic Studies ,SS1400,2,SS3 Dr. Momin Fayyaz,CS-Audi
+BS-CS,Friday,08:30 - 10:30 AM,1,EM,Islamic Studies ,SS1400,2,SS3 Dr. Momin Fayyaz,CS-Audi
+BS-CS,Monday,08:30 - 10:00 AM,1,DM,Applications of Information and Communication Technologies Lab ,,1,Jawwad Ahmed,CS-C1
+BS-CS,Monday,10:00 - 11:30 AM,1,DM,Applications of Information and Communication Technologies Lab ,,1,Jawwad Ahmed,CS-C1
+BS-CS,Tuesday,2:30 - 4:00 PM,1,DM,Applications of Information and Communication Technologies ,,2,Khalid Sheikh,R1
+BS-CS,Wednesday,2:30 - 4:00 PM,1,DM,Applications of Information and Communication Technologies ,,2,Khalid Sheikh,DG-C2
+BS-CS,Wednesday,11:30 - 1:00 PM,1,DM,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R12
+BS-CS,Monday,2:30 - 4:00 PM,1,DM,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R6
+BS-CS,Tuesday,10:00 - 11:30 AM,1,DM,Computer Programming Lab ,CS1411,1,Sandesh Kumar,DG-C3
+BS-CS,Tuesday,11:30 - 1:00 PM,1,DM,Computer Programming Lab ,CS1411,1,Sandesh Kumar,DG-C3
+BS-CS,Monday,1:00 - 2:30 PM,1,DM,Computer Programming  ,CS1410,3,Rimsha,R1
+BS-CS,Friday,2:00 - 3:30 PM,1,DM,Computer Programming  ,CS1410,3,Rimsha,R5
+BS-CS,Friday,3:30 - 5:00 PM,1,DM,Functional English ,SS1100,3,SS4 Zurria Hashmi,R12
+BS-CS,Wednesday,08:30 - 10:00 AM,1,DM,Functional English ,SS1100,3,SS4 Zurria Hashmi,R1
+BS-CS,Thursday,2:30 - 4:00 PM,2,AM,Applied Physics,NS1240,2,Sumera Syed,Library Block D
+BS-CS,Tuesday,2:30 - 4:00 PM,2,AM,Applied Physics Lab,,1,Sumera Syed,CG-C1
+BS-CS,Tuesday,10:00 - 11:30 AM,2,AM,Discrete Structures ,CS2620,3,Kanwal Iqbal,R4
+BS-CS,Tuesday,1:00 - 2:30 PM,2,AM,Discrete Structures ,CS2620,3,Kanwal Iqbal,R4
+BS-CS,Friday,3:30 - 5:00 PM,2,AM,Expository Writing ,,3,Muhammad Irfan Khan,R3
+BS-CS,Tuesday,08:30 - 10:00 AM,2,AM,Expository Writing ,,3,Muhammad Irfan Khan,R13
+BS-CS,Friday,2:00 - 3:30 PM,2,AM,Object Oriented Programming  ,CS1420,3,Zaid Irshad,R6
+BS-CS,Wednesday,08:30 - 10:00 AM,2,AM,Object Oriented Programming  ,CS1420,3,Zaid Irshad,R3
+BS-CS,Friday,08:30 - 10:00 AM,2,AM,Object Oriented Programming Lab ,CS1421,1,Sandesh Kumar,CG-C1
+BS-CS,Friday,10:00 - 11:30 AM,2,AM,Object Oriented Programming Lab ,CS1421,1,Sandesh Kumar,CG-C1
+BS-CS,Tuesday,08:30 - 10:00 AM,2,BM,Applied Physics Lab ,,1,Sumera Syed,DG-C3
+BS-CS,Tuesday,1:00 - 2:30 PM,2,BM,Applied Physics ,NS1240,2,Sumera Syed,R12
+BS-CS,Friday,11:30 - 1:00 PM,2,BM,Discrete Structures ,CS2620,3,Kanwal Iqbal,R4
+BS-CS,Monday,11:30 - 1:00 PM,2,BM,Discrete Structures ,CS2620,3,Kanwal Iqbal,R1
+BS-CS,Tuesday,10:00 - 11:30 AM,2,BM,Expository Writing ,,3,Muhammad Irfan Khan,R6
+BS-CS,Monday,1:00 - 2:30 PM,2,BM,Expository Writing ,,3,Muhammad Irfan Khan,R13
+BS-CS,Tuesday,2:30 - 4:00 PM,2,BM,Object Oriented Programming  ,CS1420,3,Zaid Irshad,R7
+BS-CS,Friday,10:00 - 11:30 AM,2,BM,Object Oriented Programming  ,CS1420,3,Zaid Irshad,R9
+BS-CS,Wednesday,08:30 - 10:00 AM,2,BM,Object Oriented Programming Lab ,CS1421,1,Sandesh Kumar,CS-C2
+BS-CS,Wednesday,10:00 - 11:30 AM,2,BM,Object Oriented Programming Lab ,CS1421,1,Sandesh Kumar,CS-C2
+BS-CS,Friday,10:00 - 11:30 AM,2,CM,Applied Physics Lab ,,1,Sumera Syed,DG-C3
+BS-CS,Wednesday,11:30 - 1:00 PM,2,CM,Applied Physics ,NS1240,2,Sumera Syed,R11
+BS-CS,Friday,11:30 - 1:00 PM,2,CM,Discrete Structures ,CS2620,3,Dr. Noor,R8
+BS-CS,Thursday,2:30 - 4:00 PM,2,CM,Discrete Structures ,CS2620,3,Dr. Noor,R13
+BS-CS,Wednesday,2:30 - 4:00 PM,2,CM,Expository Writing ,,3,SS8 Zurria Hashmi,R3
+BS-CS,Tuesday,10:00 - 11:30 AM,2,CM,Expository Writing ,,3,SS8 Zurria Hashmi,R7
+BS-CS,Thursday,10:00 - 11:30 AM,2,CM,Object Oriented Programming Lab ,CS1421,1,Abiha Waqar,DG-C2
+BS-CS,Thursday,11:30 - 1:00 PM,2,CM,Object Oriented Programming Lab ,CS1421,1,Abiha Waqar,DG-C2
+BS-CS,Tuesday,2:00 - 4:00 PM,2,CM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-CS,Tuesday,2:00 - 4:00 PM,2,DM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-CS,Tuesday,2:00 - 4:00 PM,2,EM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-CS,Tuesday,08:30 - 10:00 AM,2,DM,Expository Writing ,,3,SS8 Zurria Hashmi,R1
+BS-CS,Thursday,10:00 - 11:30 AM,2,DM,Expository Writing ,,3,SS8 Zurria Hashmi,R7
+BS-CS,Friday,08:30 - 10:00 AM,2,DM,Object Oriented Programming  ,CS1420,3,Syeda Aiman Naeem,R5
+BS-CS,Monday,10:00 - 11:30 AM,2,DM,Object Oriented Programming  ,CS1420,3,Syeda Aiman Naeem,DG-C3
+BS-CS,Friday,2:00 - 3:30 PM,2,DM,Object Oriented Programming Lab ,CS1421,1,Jawwad Ahmed,CS-C2
+BS-CS,Friday,3:30 - 5:00 PM,2,DM,Object Oriented Programming Lab ,CS1421,1,Jawwad Ahmed,CS-C2
+BS-CS,Wednesday,1:00 - 2:30 PM,3,AM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,CS-C2
+BS-CS,Wednesday,2:30 - 4:00 PM,3,AM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,CS-C2
+BS-CS,Monday,10:00 - 11:30 AM,3,AM,Data Communications & Networking ,CS3210,3,Hafiz Muhammad Attaullah,R3
+BS-CS,Thursday,10:00 - 11:30 AM,3,AM,Data Communications & Networking ,CS3210,3,Hafiz Muhammad Attaullah,R9
+BS-CS,Tuesday,1:00 - 2:30 PM,3,AM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,DG-C3
+BS-CS,Tuesday,2:30 - 4:00 PM,3,AM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,DG-C3
+BS-CS,Wednesday,10:00 - 11:30 AM,3,AM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,R6
+BS-CS,Monday,2:30 - 4:00 PM,3,AM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,DB-C10
+BS-CS,Thursday,08:30 - 10:00 AM,3,AM,Information & Network Security  ,,3,Shizra Khalid(IT Staff),R10
+BS-CS,Tuesday,08:30 - 10:00 AM,3,AM,Information & Network Security  ,,3,Shizra Khalid(IT Staff),R3
+BS-CS,Thursday,2:30 - 4:00 PM,3,AM,Principles of Psychology ,SS2300,2,Eisha Usmani,R1
+BS-CS,Monday,1:00 - 2:30 PM,3,AM,Principles of Psychology ,SS2300,2,Eisha Usmani,R12
+BS-CS,Saturday,8:30-10:30 AM,3,AM,Professional Practices ,,2,Areebullah Khan(VF),R3
+BS-CS,Monday,08:30 - 10:00 AM,3,AM,Software Engineering  ,CS3110,3,Aqsa Shahid,R10
+BS-CS,Tuesday,10:00 - 11:30 AM,3,AM,Software Engineering  ,CS3110,3,Aqsa Shahid,R1
+BS-CS,Tuesday,08:30 - 10:00 AM,3,BM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,CS-C2
+BS-CS,Tuesday,10:00 - 11:30 AM,3,BM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,CS-C2
+BS-CS,Monday,08:30 - 10:00 AM,3,BM,Data Communications & Networking ,CS3210,3,Hafiz Muhammad Attaullah,R6
+BS-CS,Thursday,08:30 - 10:00 AM,3,BM,Data Communications & Networking ,CS3210,3,Hafiz Muhammad Attaullah,R1
+BS-CS,Monday,1:00 - 2:30 PM,3,BM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,CS-C1
+BS-CS,Monday,2:30 - 4:00 PM,3,BM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,CS-C1
+BS-CS,Monday,10:00 - 11:30 AM,3,BM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,R12
+BS-CS,Wednesday,2:30 - 4:00 PM,3,BM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,R1
+BS-CS,Thursday,10:00 - 11:30 AM,3,BM,Information & Network Security  ,,3,Shizra Khalid(IT Staff),R8
+BS-CS,Tuesday,1:00 - 2:30 PM,3,BM,Information & Network Security  ,,3,Shizra Khalid(IT Staff),R9
+BS-CS,Wednesday,1:00 - 2:30 PM,3,BM,Principles of Psychology ,SS2300,2,Eisha Usmani,R5
+BS-CS,Thursday,1:00 - 2:30 PM,3,BM,Principles of Psychology ,SS2300,2,Sabahat,R11
+BS-CS,Saturday,8:30-10:30 AM,3,BM,Professional Practices ,,2,Salman Ahmed Noor(VF),R4
+BS-CS,Wednesday,08:30 - 10:00 AM,3,BM,Software Engineering  ,CS3110,3,Aqsa Shahid,R4
+BS-CS,Tuesday,2:30 - 4:00 PM,3,BM,Software Engineering  ,CS3110,3,Aqsa Shahid,R2
+BS-CS,Monday,1:00 - 2:30 PM,3,CM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,DG-C2
+BS-CS,Monday,2:30 - 4:00 PM,3,CM,Data Communications & Networking Lab ,CS3211,1,Fayyaz Hussain,DG-C2
+BS-CS,Friday,08:30 - 10:00 AM,3,CM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R4
+BS-CS,Thursday,1:00 - 2:30 PM,3,CM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R7
+BS-CS,Friday,2:00 - 3:30 PM,3,CM,Data Structures and Algorithms Lab ,CS2511,1,Mahrukh Noman(NEW),DG-C3
+BS-CS,Friday,3:30 - 5:00 PM,3,CM,Data Structures and Algorithms Lab ,CS2511,1,Mahrukh Noman(NEW),DG-C3
+BS-CS,Monday,08:30 - 10:00 AM,3,CM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,R1
+BS-CS,Wednesday,1:00 - 2:30 PM,3,CM,Data Structures and Algorithms ,CS2510,3,Shumaila Razzak,R10
+BS-CS,Wednesday,08:30 - 10:00 AM,3,CM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R7
+BS-CS,Thursday,2:30 - 4:00 PM,3,CM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R5
+BS-CS,Thursday,08:30 - 10:00 AM,3,CM,Principles of Psychology ,SS2300,2,Sabahat,R13
+BS-CS,Wednesday,2:30 - 4:00 PM,3,CM,Principles of Psychology ,SS2300,2,Inshrah,R10
+BS-CS,Saturday,8:30-10:30 AM,3,CM,Professional Practices ,,2,Dr. Muhammad Ayoub Kamal(VF),R5
+BS-CS,Wednesday,10:00 - 11:30 AM,3,CM,Software Engineering  ,CS3110,3,Zohaib Khan,R3
+BS-CS,Monday,10:00 - 11:30 AM,3,CM,Software Engineering  ,CS3110,3,Zohaib Khan,R4
+BS-CS,Friday,2:00 - 3:30 PM,3,DM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),CG-C1
+BS-CS,Friday,3:30 - 5:00 PM,3,DM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),CG-C1
+BS-CS,Thursday,1:00 - 2:30 PM,3,DM,Data Structures and Algorithms Lab ,CS2511,1,Esha Ahsan (New),DG-C2
+BS-CS,Thursday,2:30 - 4:00 PM,3,DM,Data Structures and Algorithms Lab ,CS2511,1,Esha Ahsan (New),DG-C2
+BS-CS,Friday,10:00 - 11:30 AM,3,DM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R6
+BS-CS,Monday,2:30 - 4:00 PM,3,DM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R2
+BS-CS,Thursday,08:30 - 10:00 AM,3,DM,Data Structures and Algorithms ,CS2510,3,Simran,R8
+BS-CS,Monday,1:00 - 2:30 PM,3,DM,Data Structures and Algorithms ,CS2510,3,Simran,R4
+BS-CS,Thursday,10:00 - 11:30 AM,3,DM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R10
+BS-CS,Wednesday,10:00 - 11:30 AM,3,DM,Information & Network Security  ,,3,Faizan ur Rehman (NF),R5
+BS-CS,Monday,10:00 - 11:30 AM,3,DM,Principles of Psychology ,SS2300,2,Ayesha Ehsan,R8
+BS-CS,Wednesday,08:30 - 10:00 AM,3,DM,Principles of Psychology ,SS2300,2,Ayesha Ehsan,R11
+BS-CS,Saturday,8:30-10:30 AM,3,DM,Professional Practices ,,2,Mustafa Shabbir zariwala(VF),R6
+BS-CS,Wednesday,2:30 - 4:00 PM,3,DM,Software Engineering  ,CS3110,3,Arshad Ali,R9
+BS-CS,Monday,08:30 - 10:00 AM,3,DM,Software Engineering  ,CS3110,3,Arshad Ali,R11
+BS-CS,Tuesday,08:30 - 10:00 AM,3,EM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Tuesday,10:00 - 11:30 AM,3,EM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Tuesday,1:00 - 2:30 PM,3,EM,Data Communications & Networking ,CS3210,3,Khalid Sheikh,R1
+BS-CS,Thursday,10:00 - 11:30 AM,3,EM,Data Communications & Networking ,CS3210,3,Khalid Sheikh,R1
+BS-CS,Wednesday,08:30 - 10:00 AM,3,EM,Data Structures and Algorithms Lab ,CS2511,1,Mahrukh Noman(NEW),DG-C2
+BS-CS,Wednesday,10:00 - 11:30 AM,3,EM,Data Structures and Algorithms Lab ,CS2511,1,Mahrukh Noman(NEW),DG-C2
+BS-CS,Monday,08:30 - 10:00 AM,3,EM,Data Structures and Algorithms ,CS2510,3,Syed Shabi ul Hasan,DG-C2
+BS-CS,Thursday,1:00 - 2:30 PM,3,EM,Data Structures and Algorithms ,CS2510,3,Syed Shabi ul Hasan,R1
+BS-CS,Thursday,2:30 - 4:00 PM,3,EM,Information & Network Security  ,,3,Shaheer Ahmad (VF),R7
+BS-CS,Monday,1:00 - 2:30 PM,3,EM,Information & Network Security  ,,3,Shaheer Ahmad (VF),R5
+BS-CS,Tuesday,2:30 - 4:00 PM,3,EM,Principles of Psychology ,SS2300,2,Sabahat,R3
+BS-CS,Thursday,08:30 - 10:00 AM,3,EM,Principles of Psychology ,SS2300,2,Sabahat,R7
+BS-CS,Saturday,12:00 - 2:00 PM,3,EM,Professional Practices ,,2,Asma Yahya(VF),R8
+BS-CS,Monday,10:00 - 11:30 AM,3,EM,Software Engineering  ,CS3110,3,Arshad Ali,R6
+BS-CS,Wednesday,1:00 - 2:30 PM,3,EM,Software Engineering  ,CS3110,3,Arshad Ali,R1
+BS-CS,Tuesday,1:00 - 2:30 PM,3,FM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Tuesday,2:30 - 4:00 PM,3,FM,Data Communications & Networking Lab ,CS3211,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Monday,08:30 - 10:00 AM,3,FM,Data Communications & Networking ,CS3210,3,Ayaz Malik (VF),R2
+BS-CS,Thursday,1:00 - 2:30 PM,3,FM,Data Communications & Networking ,CS3210,3,Ayaz Malik (VF),R4
+BS-CS,Thursday,08:30 - 10:00 AM,3,FM,Data Structures and Algorithms Lab ,CS2511,1,Esha Ahsan (New),DG-C3
+BS-CS,Thursday,10:00 - 11:30 AM,3,FM,Data Structures and Algorithms Lab ,CS2511,1,Esha Ahsan (New),DG-C3
+BS-CS,Monday,2:30 - 4:00 PM,3,FM,Information & Network Security  ,,3,Shaheer Ahmad (VF),R8
+BS-CS,Tuesday,08:30 - 10:00 AM,3,FM,Information & Network Security  ,,3,Shaheer Ahmad (VF),R11
+BS-CS,Wednesday,08:30 - 10:00 AM,3,FM,Principles of Psychology ,SS2300,2,Maheen,R9
+BS-CS,Tuesday,10:00 - 11:30 AM,3,FM,Principles of Psychology ,SS2300,2,Maheen,R13
+BS-CS,Saturday,12:00 - 2:00 PM,3,FM,Professional Practices ,,2,Syed Nabeel Ali (VF),R9
+BS-CS,Thursday,2:30 - 4:00 PM,3,FM,Software Engineering  ,CS3110,3,Arshad Ali,R9
+BS-CS,Wednesday,10:00 - 11:30 AM,3,FM,Software Engineering  ,CS3110,3,Arshad Ali,R10
+BS-CS,Monday,08:30 - 10:00 AM,3,GM,Data Communications & Networking Lab ,CS3211,1,M Kashif,CS-C2
+BS-CS,Monday,10:00 - 11:30 AM,3,GM,Data Communications & Networking Lab ,CS3211,1,M Kashif,CS-C2
+BS-CS,Monday,1:00 - 2:30 PM,3,GM,Data Communications & Networking ,CS3210,3,Imran Ali,R7
+BS-CS,Tuesday,10:00 - 11:30 AM,3,GM,Data Communications & Networking ,CS3210,3,Imran Ali,R8
+BS-CS,Thursday,10:00 - 11:30 AM,3,GM,Information & Network Security  ,,3,Arsalan Hussain (VF),R12
+BS-CS,Monday,2:30 - 4:00 PM,3,GM,Software Engineering  ,CS3110,3,Arshad Ali,CS-C2
+BS-CS,Wednesday,08:30 - 10:00 AM,3,GM,Software Engineering  ,CS3110,3,Arshad Ali,R10
+BS-CS,Thursday,2:30 - 4:00 PM,4,AM,Database Management Systems,CS2511,1,saad ali asif,R6
+BS-CS,Friday,11:30 - 1:00 PM,4,AM,Database Management Systems,CS2511,1,saad ali asif,R10
+BS-CS,Tuesday,08:30 - 10:00 AM,4,AM,Database Management Systems Lab,CS2231,1,Aadrish pirzado,CS-C1
+BS-CS,Tuesday,10:00 - 11:30 AM,4,AM,Database Management Systems Lab,CS2231,1,Aadrish pirzado,CS-C1
+BS-CS,Tuesday,1:00 - 2:30 PM,4,AM,Differential Equations,,3,Shahid Hussain,R10
+BS-CS,Monday,08:30 - 10:00 AM,4,AM,Differential Equations,,3,Shahid Hussain,R4
+BS-CS,Friday,08:30 - 10:00 AM,4,AM,Digital Logic Design,,3,Muhammad Yousaf,R7
+BS-CS,Thursday,11:30 - 1:00 PM,4,AM,Digital Logic Design,,3,Muhammad Yousaf,R13
+BS-CS,Monday,1:00 - 2:30 PM,4,AM,Digital Logic Design Lab,CS1231,1,Maria Ahmed,DG-C3
+BS-CS,Monday,2:30 - 4:00 PM,4,AM,Digital Logic Design Lab,CS1231,1,Maria Ahmed,DG-C3
+BS-CS,Monday,10:00 - 11:30 AM,4,AM,Organizational Behavior,,3,Uzma Khan,R11
+BS-CS,Friday,3:30 - 5:00 PM,4,AM,Organizational Behavior,,3,Uzma Khan,R4
+BS-CS,Thursday,10:00 - 11:30 AM,4,AM,Theory of Automata,CS2520,3,Dr.Shaukat,R4
+BS-CS,Tuesday,2:30 - 4:00 PM,4,AM,Theory of Automata,CS2520,3,Dr.Shaukat,R4
+BS-CS,Friday,3:30 - 5:00 PM,4,BM,Database Management Systems,CS2511,1,saad ali asif,R1
+BS-CS,Tuesday,2:30 - 4:00 PM,4,BM,Database Management Systems,CS2511,1,saad ali asif,R9
+BS-CS,Wednesday,1:00 - 2:30 PM,4,BM,Differential Equations,,3,Shahid Hussain,R4
+BS-CS,Monday,10:00 - 11:30 AM,4,BM,Differential Equations,,3,Shahid Hussain,R1
+BS-CS,Friday,11:30 - 1:00 PM,4,BM,Digital Logic Design,,3,Muhammad Yousaf,R5
+BS-CS,Monday,2:30 - 4:00 PM,4,BM,Digital Logic Design,,3,Muhammad Yousaf,R4
+BS-CS,Tuesday,08:30 - 10:00 AM,4,BM,Digital Logic Design Lab,CS1231,1,Maria Ahmed,DB-C8
+BS-CS,Tuesday,10:00 - 11:30 AM,4,BM,Digital Logic Design Lab,CS1231,1,Maria Ahmed,DB-C8
+BS-CS,Wednesday,08:30 - 10:00 AM,4,BM,Database Management Systems Lab,CS2231,1,Esha Ahsan (New),CG-C1
+BS-CS,Wednesday,10:00 - 11:30 AM,4,BM,Database Management Systems Lab,CS2231,1,Esha Ahsan (New),CG-C1
+BS-CS,Friday,10:00 - 11:30 AM,4,BM,Organizational Behavior,,3,Uzma Khan,R5
+BS-CS,Monday,11:30 - 1:00 PM,4,BM,Organizational Behavior,,3,Uzma Khan,R12
+BS-CS,Wednesday,2:30 - 4:00 PM,4,BM,Theory of Automata,CS2520,3,Dr.Shaukat,R7
+BS-CS,Tuesday,1:00 - 2:30 PM,4,BM,Theory of Automata,CS2520,3,Dr.Shaukat,R7
+BS-CS,Thursday,08:30 - 10:00 AM,5,AM,Computer Organization and Assembly Language,,3,Farooq Alam (VF5),DG-C2
+BS-CS,Friday,08:30 - 10:00 AM,5,AM,Computer Organization and Assembly Language,,3,Farooq Alam (VF5),R3
+BS-CS,Thursday,1:00 - 2:30 PM,5,AM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C1
+BS-CS,Thursday,2:30 - 4:00 PM,5,AM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C1
+BS-CS,Friday,2:00 - 3:30 PM,5,AM,Data Communications & Networking Lab,CS3211,1,M Kashif(NEW),DB-C8
+BS-CS,Friday,3:30 - 5:00 PM,5,AM,Data Communications & Networking Lab,CS3211,1,M Kashif(NEW),DB-C8
+BS-CS,Monday,11:30 - 1:00 PM,5,AM,Design and Analysis of Algorithms,,3,Dr.Abdul Qadar Kara,R6
+BS-CS,Thursday,10:00 - 11:30 AM,5,AM,Design and Analysis of Algorithms,,3,Dr.Abdul Qadar Kara,R13
+BS-CS,Tuesday,1:00 - 2:30 PM,5,AM,Operating Systems Lab,CS3221,1,M Kashif(NEW),DB-C8
+BS-CS,Tuesday,2:30 - 4:00 PM,5,AM,Operating Systems Lab,CS3221,1,M Kashif(NEW),DB-C8
+BS-CS,Tuesday,10:00 - 11:30 AM,5,AM,Operating Systems,CS3221,1,Huma Rashid,R12
+BS-CS,Friday,10:00 - 11:30 AM,5,AM,Operating Systems,CS3221,1,Huma Rashid,R11
+BS-CS,Monday,1:00 - 2:30 PM,5,AM,Technical Report Writing,SS3130,3,SS10(Sheikh Muhammad Abdulllah) VF,R3
+BS-CS,Tuesday,08:30 - 10:00 AM,5,AM,Technical Report Writing,SS3130,3,SS10(Sheikh Muhammad Abdulllah) VF,R5
+BS-CS,Monday,08:30 - 10:00 AM,5,AM,Data Communications & Networking,CS3210,3,Saad Ali Asif,R8
+BS-CS,Thursday,11:30- 1:00 PM,5,AM,Data Communications & Networking,CS3210,3,Saad Ali Asif,R4
+BS-CS,Friday,2:00 - 3:30 PM,5,BM,Computer Organization and Assembly Language,,3,Aqeel Tahir,R1
+BS-CS,Wednesday,2:30 - 4:00 PM,5,BM,Computer Organization and Assembly Language,,3,Aqeel Tahir,R5
+BS-CS,Friday,08:30 - 10:00 AM,5,BM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C1
+BS-CS,Friday,10:00 - 11:30 AM,5,BM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,CS-C1
+BS-CS,Wednesday,08:30 - 10:00 AM,5,BM,Data Communications & Networking Lab,CS3211,1,Fayyaz Hussain,DB-C8
+BS-CS,Wednesday,10:00 - 11:30 AM,5,BM,Data Communications & Networking Lab,CS3211,1,Fayyaz Hussain,DB-C8
+BS-CS,Thursday,11:30 - 1:00 PM,5,BM,Design and Analysis of Algorithms,,3,Dr.Abdul Qadar Kara,R2
+BS-CS,Monday,2:30 - 4:00 PM,5,BM,Design and Analysis of Algorithms,,3,Dr.Abdul Qadar Kara,R13
+BS-CS,Friday,3:30 - 5:00 PM,5,BM,Operating Systems,CS3221,1,Maha Irfan,R6
+BS-CS,Thursday,1:00 - 2:30 PM,5,BM,Operating Systems,CS3221,1,Maha Irfan,R6
+BS-CS,Thursday,08:30 - 10:00 AM,5,BM,Operating Systems Lab,CS3221,1,Mahrukh Noman(NEW),DB-C10
+BS-CS,Thursday,10:00 - 11:30 AM,5,BM,Operating Systems Lab,CS3221,1,Mahrukh Noman(NEW),DB-C10
+BS-CS,Wednesday,1:00 - 2:30 PM,5,BM,Technical Report Writing,SS3130,3,SS10 Aqdus Abdul Rasheed,R6
+BS-CS,Monday,11:30 - 1:00 PM,5,BM,Technical Report Writing,SS3130,3,SS10 Aqdus Abdul Rasheed,R2
+BS-CS,Monday,10:00 - 11:30 AM,5,BM,Data Communications & Networking,CS3210,3,Imran Ali,R7
+BS-CS,Friday,11:30 - 1:00 PM,5,BM,Data Communications & Networking,CS3210,3,Imran Ali,R3
+BS-CS,Friday,2:00 - 3:30 PM,5,CM,Computer Organization and Assembly Language,,3,Muhammad Yousaf,DG-C2
+BS-CS,Thursday,08:30 - 10:00 AM,5,CM,Computer Organization and Assembly Language,,3,Muhammad Yousaf,DB-C8
+BS-CS,Monday,08:30 - 10:00 AM,5,CM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,DB-C8
+BS-CS,Monday,10:00 - 11:30 AM,5,CM,Computer Organization and Assembly Language Lab,CS2211,1,Abdul Samad,DB-C8
+BS-CS,Friday,08:30 - 10:00 AM,5,CM,Data Communications & Networking Lab,CS3211,1,Mubashir Siddiqui(IT Staff),DG-C2
+BS-CS,Friday,10:00 - 11:30 AM,5,CM,Data Communications & Networking Lab,CS3211,1,Mubashir Siddiqui(IT Staff),DG-C2
+BS-CS,Friday,3:30 - 5:00 PM,5,CM,Design and Analysis of Algorithms,,3,Simran,DG-C2
+BS-CS,Tuesday,2:30 - 4:00 PM,5,CM,Design and Analysis of Algorithms,,3,Simran,R12
+BS-CS,Thursday,10:00 - 11:30 AM,5,CM,Operating Systems,CS3221,1,Maha Irfan,R5
+BS-CS,Monday,1:00 - 2:30 PM,5,CM,Operating Systems,CS3221,1,Maha Irfan,R10
+BS-CS,Thursday,1:00 - 2:30 PM,5,CM,Operating Systems Lab,CS3221,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Thursday,2:30 - 4:00 PM,5,CM,Operating Systems Lab,CS3221,1,Abdul Ghafoor(NF),DB-C10
+BS-CS,Monday,2:30 - 4:00 PM,5,CM,Technical Report Writing,SS3130,3,SS10(Sheikh Muhammad Abdulllah) VF,R9
+BS-CS,Tuesday,10:00 - 11:30 AM,5,CM,Technical Report Writing,SS3130,3,SS10(Sheikh Muhammad Abdulllah) VF,R9
+BS-CS,Tuesday,11:30 - 1:00 PM,5,CM,Data Communications & Networking,CS3210,3,Zaib un Nisa,R12
+BS-CS,Thursday,11:30 - 1:00 PM,5,CM,Data Communications & Networking,CS3210,3,Zaib un Nisa,R2
+BS-CS,Friday,3:30 - 5:00 PM,6,AM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Friday,2:00 - 3:30 PM,6,AM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Friday,3:30 - 5:00 PM,6,BM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Friday,2:00 - 3:30 PM,6,BM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Friday,3:30 - 5:00 PM,6,CM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Friday,2:00 - 3:30 PM,6,CM,Artificial Intelligence,,3,Dr.Imran Jami TA: Syed Haider Imam,AF-Audi
+BS-CS,Thursday,08:30 - 10:00 AM,6,AM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,CS-C1
+BS-CS,Thursday,10:00 - 11:30 AM,6,AM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,CS-C1
+BS-CS,Thursday,1:00 - 2:30 PM,6,AM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,R9
+BS-CS,Friday,11:30 - 1:00 PM,6,AM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,R7
+BS-CS,Sunday,11:45 - 1:15 PM,6,AW,Developer Operations,,3,Faizan Shahid(VF),R6
+BS-CS,Sunday,1:15 - 2:45 PM,6,AW,Developer Operations,,3,Faizan Shahid(VF),R6
+BS-CS,Friday,06:15 - 09:15 PM,6,AW,Digital Image Processing,,3,Aqeel Tahir,R3
+BS-CS,Friday,06:15 - 09:15 PM,6,AW,Digital Image Processing,,3,Aqeel Tahir,R3
+BS-CS,Saturday,08:30 - 10:00 AM,6,AW,Mobile Application Development,,3,Tahir Hassan(VF),DG-C2
+BS-CS,Saturday,10:00 - 11:30 AM,6,AW,Mobile Application Development,,3,Tahir Hassan(VF),DG-C2
+BS-CS,Saturday,11:45 - 1:15 PM,6,AW,Projest Based Software Engineering,,3,Dr. ZUBAIR AHMED SHAIKH TA: Faisal Feroz,CG-C1
+BS-CS,Saturday,1:15 - 2:45 PM,6,AW,Projest Based Software Engineering,,3,Dr. ZUBAIR AHMED SHAIKH TA: Faisal Feroz,CG-C1
+BS-CS,Friday,10:00 - 11:30 AM,6,BM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C8
+BS-CS,Friday,11:30 - 1:00 PM,6,BM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C8
+BS-CS,Friday,08:30 - 10:00 AM,6,BM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,R12
+BS-CS,Thursday,08:30 - 10:00 AM,6,BM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,Library Block D
+BS-CS,Thursday,1:00 - 2:30 PM,6,CM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C8
+BS-CS,Thursday,2:30 - 4:00 PM,6,CM,Artificial Intelligence Lab,CS3311,1,Syed Haider Imam,DB-C8
+BS-CS,Friday,10:00 - 11:30 AM,6,CM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,R4
+BS-CS,Thursday,11:30 - 1:00 PM,6,CM,Parallel and Distributed Computing,CS3230,3,Muhammad Harris,R3
+BS-CS,Sunday,11:45 - 1:15 PM,7,AW,Cloud Computing,,3,Farooq Alam (VF5),DB-C10
+BS-CS,Sunday,1:15 - 2:45 PM,7,AW,Cloud Computing,,3,Farooq Alam (VF5),DB-C10
+BS-CS,Sunday,11:45 - 1:15 PM,7,AW,Web Development,,3,Kashif Ali (VF),DG-C3
+BS-CS,Sunday,1:15 - 2:45 PM,7,AW,Web Development,,3,Kashif Ali (VF),DG-C3
+BS-CS,Saturday,3:00 - 4:30 PM,7,AW,Human Computer Interaction,CS4110,3,Sumaiyya(VF),R11
+BS-CS,Saturday,4:30 - 6:00 PM,7,AW,Human Computer Interaction,CS4110,3,Sumaiyya(VF),R11
+BS-CS,Saturday,11:45 - 1:15 PM,7,AW,Information & Network Security,,3,Imran Ali,R4
+BS-CS,Saturday,1:15 - 2:45 PM,7,AW,Information & Network Security,,3,Imran Ali,R4
+BS-CS,Sunday,08:30 - 10:00 AM,7,AW,Introduction to Machine Learning,,3,Imran Ali,DG-C2
+BS-CS,Sunday,10:00 - 11:30 AM,7,AW,Introduction to Machine Learning,,3,Imran Ali,DG-C2
+BS-CS,Saturday,08:30 - 10:00 AM,7,AW,Numerical Computing,,3,Muhammad Waqar,R8
+BS-CS,Saturday,10:00 - 11:30 AM,7,AW,Numerical Computing,,3,Muhammad Waqar,R8
+BS-CS,Sunday,3:00 - 5:00 PM,7,AW,Pakistan Studies,SS1420,2,SS7 Dr. Kashif,CS-Audi
+BS-CS,Saturday,08:30 - 10:00 AM,7,BW,Agile Software Project Management,,3,Talha Ahmed Shaikh(VF),R1
+BS-CS,Saturday,10:00 - 11:30 AM,7,BW,Agile Software Project Management,,3,Talha Ahmed Shaikh(VF),R1
+BS-CS,Saturday,3:00 - 4:30 PM,7,BW,Big Data,,3,Farooq Alam (VF5),CS-C1
+BS-CS,Saturday,4:30 - 6:00 PM,7,BW,Big Data,,3,Farooq Alam (VF5),CS-C1
+BS-CS,Sunday,08:30 - 10:00 AM,7,BW,Human Computer Interaction,CS4110,3,Sumaiyya(VF),R9
+BS-CS,Sunday,10:00 - 11:30 AM,7,BW,Human Computer Interaction,CS4110,3,Sumaiyya(VF),R9
+BS-CS,Sunday,11:45 - 1:15 PM,7,BW,Numerical Computing,,3,Shahid hussain,R11
+BS-CS,Sunday,1:15 - 2:45 PM,7,BW,Numerical Computing,,3,Shahid hussain,R11
+BS-CS,Saturday,11:45 - 1:15 PM,7,BW,Information & Network Security,,3,Muhammad Haris (VF),R1
+BS-CS,Saturday,1:15 - 2:45 PM,7,BW,Information & Network Security,,3,Muhammad Haris (VF),R1
+BS-CS,Sunday,11:45 - 1:15 PM,7,CW,Cyber Security,,3,Noman Ansari,DG-C2
+BS-CS,Sunday,1:15 - 2:45 PM,7,CW,Cyber Security,,3,Noman Ansari,DG-C2
+BS-CS,Sunday,11:45 - 1:15 PM,7,CW,Mobile Application Development,,3,Ubaid ur Rehman(VF),DB-C8
+BS-CS,Sunday,1:15 - 2:45 PM,7,CW,Mobile Application Development,,3,Ubaid ur Rehman(VF),DB-C8
+BS-CS,Saturday,11:45 - 1:15 PM,7,CW,Human Computer Interaction,CS4110,3,Fozia Khan (VF),R5
+BS-CS,Saturday,1:15 - 2:45 PM,7,CW,Human Computer Interaction,CS4110,3,Fozia Khan (VF),R5
+BS-CS,Saturday,3:00 - 4:30 PM,7,CW,Information & Network Security,,3,Imran Ali,R4
+BS-CS,Saturday,4:30 - 6:00 PM,7,CW,Information & Network Security,,3,Imran Ali,R4
+BS-CS,Saturday,08:30 - 10:00 AM,7,CW,Introduction to Data Science,,3,Dr.Kashif TA Syeda Aiman Naeem,CS-C2
+BS-CS,Saturday,10:00 - 11:30 AM,7,CW,Introduction to Data Science,,3,Dr.Kashif TA Syeda Aiman Naeem,CS-C2
+BS-CS,Saturday,08:30 - 10:00 AM,6,BW,Introduction to Data Science,,3,Dr.Kashif TA Syeda Aiman Naeem,CS-C2
+BS-CS,Saturday,10:00 - 11:30 AM,6,BW,Introduction to Data Science,,3,Dr.Kashif TA Syeda Aiman Naeem,CS-C2
+BS-CS,Sunday,08:30 - 10:00 AM,7,CW,Numerical Computing,,3,Shahid hussain,R10
+BS-CS,Sunday,10:00 - 11:30 AM,7,CW,Numerical Computing,,3,Shahid hussain,R10
+BS-CS,Sunday,08:30 - 10:00 AM,8,AW,Cloud Computing,,3,Muhammad Hialal(NewVF6),R11
+BS-CS,Sunday,10:00 - 11:30 AM,8,AW,Cloud Computing,,3,Muhammad Hialal(NewVF6),R11
+BS-CS,Sunday,3:00 - 4:30 PM,8,AW,Game Programming,,3,Nusrat Waheed (VF),CG-C1
+BS-CS,Sunday,4:30 - 6:00 PM,8,AW,Game Programming,,3,Nusrat Waheed (VF),CG-C1
+BS-CS,Saturday,08:30 - 10:00 AM,8,AW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-CS,Saturday,10:00 - 11:30 AM,8,AW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-SE,Saturday,08:30 - 10:00 AM,6,DW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-SE,Saturday,10:00 - 11:30 AM,6,DW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-CS,Saturday,08:30 - 10:00 AM,8,BW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-CS,Saturday,10:00 - 11:30 AM,8,BW,Principles Of Sociology,SS2300,2,Ms. Alina Aziz,AF-Audi
+BS-CS,Saturday,11:45 - 1:15 PM,8,AW,Professional Issues in Computing,MT2300,3,Jawwad Ali(NewVF21),DB-C8
+BS-CS,Saturday,1:15 - 2:45 PM,8,AW,Professional Issues in Computing,MT2300,3,Jawwad Ali(NewVF21),DB-C8
+BS-CS,Saturday,3:00 - 4:30 PM,8,AW,Software Testing,,3,Muhammad Haris (VF26),R9
+BS-CS,Saturday,4:30 - 6:00 PM,8,AW,Software Testing,,3,Muhammad Haris (VF26),R9
+BS-CS,Sunday,8:30-10:00 AM,8,AW,Compiler Construction,CS3510,3,Usman Khan(VF),R3
+BS-CS,Sunday,10:00 - 11:30 AM,8,Aw,Compiler Construction,CS3510,3,Usman Khan(VF),R3
+BS-CS,Sunday,11:45 - 1:15 PM,8,BW,Compiler Construction,CS3510,3,Usman Khan(VF),R3
+BS-CS,Sunday,1:15 - 2:45 PM,8,BW,Compiler Construction,CS3510,3,Usman Khan(VF),R3
+BS-CS,Sunday,3:00 - 4:30 PM,8,BW,Cyber Security,,3,Noman Ansari,DG-C3
+BS-CS,Sunday,4:30 - 6:00 PM,8,BW,Cyber Security,,3,Noman Ansari,DG-C3
+BS-CS,Sunday,08:30 - 10:00 AM,8,BW,Professional Issues in Computing,MT2300,3,Dr. Muhammad Ayoub Kamal(VF),R12
+BS-CS,Sunday,10:00 - 11:30 AM,8,BW,Professional Issues in Computing,MT2300,3,Dr. Muhammad Ayoub Kamal(VF),R12
+BS-SE,Wednesday,1:00 - 2:30 PM,1,EM,Applications of Information and Communication Technologies Lab ,,1,(Haris QEC ),CG-C1
+BS-SE,Wednesday,2:30 - 4:00 PM,1,EM,Applications of Information and Communication Technologies Lab ,,1,(Haris QEC ),CG-C1
+BS-SE,Tuesday,10:00 - 11:30 AM,1,EM,Applications of Information and Communication Technologies ,,2,Syed Shabi ul Hasan,R3
+BS-SE,Wednesday,10:00 - 11:30 AM,1,EM,Applications of Information and Communication Technologies ,,2,Syed Shabi ul Hasan,R9
+BS-SE,Tuesday,11:30 - 1:00 PM,1,EM,Calculus and Analytical Geometry ,MT1140,3,Dr.Shahnila Haider Rizvi,R10
+BS-SE,Wednesday,08:30 - 10:00 AM,1,EM,Calculus and Analytical Geometry ,MT1140,3,Dr.Shahnila Haider Rizvi,R13
+BS-SE,Monday,10:00 - 11:30 AM,1,EM,Computer Programming Lab ,CS1411,1,Aiman Fatima,DG-C2
+BS-SE,Monday,11:30 - 1:00 PM,1,EM,Computer Programming Lab ,CS1411,1,Aiman Fatima,DG-C2
+BS-SE,Friday,2:00 - 3:30 PM,1,EM,Computer Programming  ,CS1410,3,Syeda Aiman Naeem,R9
+BS-SE,Tuesday,2:30 - 4:00 PM,1,EM,Computer Programming  ,CS1410,3,Syeda Aiman Naeem,R6
+BS-SE,Friday,3:30 - 5:00 PM,1,EM,Functional English ,SS1100,3,SS6  Bazif Jabbar,R7
+BS-SE,Monday,2:30 - 4:00 PM,1,EM,Functional English ,SS1100,3,Bazif Jabbar,R11
+BS-SE,Thursday,1:00 - 2:30 PM,1,FM,Applications of Information and Communication Technologies Lab ,,1,Aadrish pirzado,DG-C3
+BS-SE,Thursday,2:30 - 4:00 PM,1,FM,Applications of Information and Communication Technologies Lab ,,1,Aadrish pirzado,DG-C3
+BS-SE,Wednesday,08:30 - 10:00 AM,1,FM,Applications of Information and Communication Technologies ,,2,Simran,R5
+BS-SE,Tuesday,11:30 - 1:00 PM,1,FM,Applications of Information and Communication Technologies ,,2,Simran,R2
+BS-SE,Tuesday,1:00 - 2:30 PM,1,FM,Calculus and Analytical Geometry ,MT1140,3,Amir Sheikh,R2
+BS-SE,Monday,08:30 - 10:00 AM,1,FM,Calculus and Analytical Geometry ,MT1140,3,Amir Sheikh,R3
+BS-SE,Wednesday,1:00 - 2:30 PM,1,FM,Computer Programming Lab ,CS1411,1,Aiman Fatima,DB-C8
+BS-SE,Wednesday,2:30 - 4:00 PM,1,FM,Computer Programming Lab ,CS1411,1,Aiman Fatima,DB-C8
+BS-SE,Monday,2:30 - 4:00 PM,1,FM,Computer Programming  ,CS1410,3,Faisal Feroz,R3
+BS-SE,Tuesday,08:30 - 10:00 AM,1,FM,Computer Programming  ,CS1410,3,Faisal Feroz,R8
+BS-SE,Monday,1:00 - 2:30 PM,1,FM,Functional English ,SS1100,3,Aqdus Abdul Raheed,R2
+BS-SE,Monday,10:00 - 11:30 AM,1,FM,Functional English ,SS1100,3,Aqdus Abdul Raheed,R5
+BS-SE,Thursday,08:30 - 10:30 AM,1,FM,Islamic Studies ,SS1400,2,SS11 Dr. Rehan,CS-Audi
+BS-AI,Thursday,08:30 - 10:30 AM,1,GM,Islamic Studies ,SS1400,2,SS11 Dr. Rehan,CS-Audi
+BS-AI,Friday,08:30 - 10:00 AM,1,GM,Applications of Information and Communication Technologies Lab ,,1,Jawwad Ahmed,DB-C10
+BS-AI,Friday,10:00 - 11:30 AM,1,GM,Applications of Information and Communication Technologies Lab ,,1,Jawwad Ahmed,DB-C10
+BS-AI,Friday,2:00 - 3:30 PM,1,GM,Applications of Information and Communication Technologies ,,2,Simran,R4
+BS-AI,Monday,11:30 - 1:00 PM,1,GM,Applications of Information and Communication Technologies ,,2,Simran,R5
+BS-AI,Monday,08:30 - 10:00 AM,1,GM,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R5
+BS-AI,Thursday,2:30 - 4:00 PM,1,GM,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R8
+BS-AI,Wednesday,1:00 - 2:30 PM,1,GM,Computer Programming Lab ,CS1411,1,Abiha Waqar,CS-C1
+BS-AI,Wednesday,2:30 - 4:00 PM,1,GM,Computer Programming Lab ,CS1411,1,Abiha Waqar,CS-C1
+BS-AI,Monday,1:00 - 2:30 PM,1,GM,Computer Programming  ,CS1410,3,Faisal Feroz,R6
+BS-AI,Wednesday,10:00 - 11:30 AM,1,GM,Computer Programming  ,CS1410,3,Faisal Feroz,R4
+BS-AI,Thursday,1:00 - 2:30 PM,1,GM,Functional English ,SS1100,3,SS5 Sana Attique,R13
+BS-AI,Friday,3:30 - 5:00 PM,1,GM,Functional English ,SS1100,3,SS5 Sana Attique,R10
+BS-SE,Friday,11:30 - 1:00 PM,2,EM,Applied Physics Lab ,,1,Hafiz Tehreem,DG-C3
+BS-SE,Thursday,1:00 - 2:30 PM,2,EM,Applied Physics ,NS1240,2,Hafiz Tehreem,R10
+BS-SE,Friday,2:00 - 3:30 PM,2,EM,Discrete Structures ,CS2620,3,Syed Sikander shirazi,R13
+BS-SE,Tuesday,10:00 - 11:30 AM,2,EM,Discrete Structures ,CS2620,3,Syed Sikander shirazi,R10
+BS-SE,Wednesday,1:00 - 2:30 PM,2,EM,Expository Writing ,,3,SS8 Ishtiaq Ahmed Kolachi,R13
+BS-SE,Thursday,11:30 - 1:00 PM,2,EM,Expository Writing ,,3,SS8 Ishtiaq Ahmed Kolachi,R6
+BS-SE,Wednesday,2:30 - 4:00 PM,2,EM,Object Oriented Programming  ,CS1420,3,Saima Burriro,R12
+BS-SE,Tuesday,08:30 - 10:00 AM,2,EM,Object Oriented Programming  ,CS1420,3,Saima Burriro,R4
+BS-SE,Wednesday,08:30 - 10:00 AM,2,EM,Object Oriented Programming Lab ,CS1421,1,Aiman Fatima,CS-C1
+BS-SE,Wednesday,10:00 - 11:30 AM,2,EM,Object Oriented Programming Lab ,CS1421,1,Aiman Fatima,CS-C1
+BS-SE,Wednesday,1:00 - 2:30 PM,2,FM,Applied Physics Lab ,,1,Sumera Syed,DG-C3
+BS-SE,Friday,08:30 - 10:00 AM,2,FM,Applied Physics ,NS1240,2,Sumera Syed,DG-C3
+BS-SE,Tuesday,1:00 - 2:30 PM,2,FM,Discrete Structures ,CS2620,3,Asma Irfan,R8
+BS-SE,Friday,11:30 - 1:00 PM,2,FM,Discrete Structures ,CS2620,3,Asma Irfan,R12
+BS-SE,Friday,3:30 - 5:00 PM,2,FM,Expository Writing ,,3,SS9 New Faculty,R11
+BS-SE,Thursday,2:30 - 4:00 PM,2,FM,Expository Writing ,,3,SS9 New Faculty,R10
+BS-SE,Wednesday,11:30 - 1:00 PM,2,FM,Object Oriented Programming  ,CS1420,3,Saima Burriro,DB-C10
+BS-SE,Tuesday,2:30 - 4:00 PM,2,FM,Object Oriented Programming  ,CS1420,3,Saima Burriro,R10
+BS-SE,Thursday,10:00 - 11:30 AM,2,FM,Object Oriented Programming Lab ,CS1421,1,Aiman Fatima,DB-C8
+BS-SE,Thursday,11:30 - 1:00 PM,2,FM,Object Oriented Programming Lab ,CS1421,1,Aiman Fatima,DB-C8
+BS-SE,Tuesday,08:30 - 10:30 AM,2,FM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-SE,Tuesday,08:30 - 10:30 AM,2,GM,Pakistan Studies ,SS1420,2,SS13 Mariya Nazar,CS-Audi
+BS-SE,Wednesday,2:30 - 4:00 PM,2,GM,Applied Physics Lab ,,1,Hafiz Tehreem,DG-C3
+BS-SE,Tuesday,1:00 - 2:30 PM,2,GM,Applied Physics ,NS1240,2,Hafiz Tehreem,R3
+BS-SE,Tuesday,2:30 - 4:00 PM,2,GM,Discrete Structures ,CS2620,3,Zohaib Khan,R5
+BS-SE,Friday,2:00 - 3:30 PM,2,GM,Discrete Structures ,CS2620,3,Zohaib Khan,R8
+BS-SE,Thursday,11:30 - 1:00 PM,2,GM,Expository Writing ,,3,SS9 Midhat Maroof,R8
+BS-SE,Friday,10:00 - 11:30 AM,2,GM,Expository Writing ,,3,SS9 Midhat Maroof,R3
+BS-SE,Thursday,08:30 - 10:00 AM,2,GM,Object Oriented Programming  ,CS1420,3,Hafiz Tehreem,R12
+BS-SE,Friday,08:30 - 10:00 AM,2,GM,Object Oriented Programming  ,CS1420,3,Hafiz Tehreem,R6
+BS-SE,Wednesday,10:00 - 11:30 AM,2,GM,Object Oriented Programming Lab ,CS1421,1,Jawwad Ahmed,DG-C3
+BS-SE,Wednesday,11:30 - 1:00 PM,2,GM,Object Oriented Programming Lab ,CS1421,1,Jawwad Ahmed,DG-C3
+BS-SE,Tuesday,2:30 - 4:00 PM,3,HM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R11
+BS-SE,Thursday,10:00 - 11:30 AM,3,HM,Data Communications & Networking ,CS3210,3,Zaib un Nisa,R6
+BS-SE,Wednesday,08:30 - 10:00 AM,3,HM,Data Communications & Networking Lab ,CS3211,1,Farhan Ali(IT Staff),DB-C10
+BS-SE,Wednesday,10:00 - 11:30 AM,3,HM,Data Communications & Networking Lab ,CS3211,1,Farhan Ali(IT Staff),DB-C10
+BS-SE,Tuesday,08:30 - 10:00 AM,3,HM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,DG-C2
+BS-SE,Tuesday,10:00 - 11:30 AM,3,HM,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,DG-C2
+BS-SE,Monday,1:00 - 2:30 PM,3,HM,Data Structures and Algorithms ,CS2510,3,Saima Burriro,R9
+BS-SE,Tuesday,1:00 - 2:30 PM,3,HM,Data Structures and Algorithms ,CS2510,3,Saima Burriro,R13
+BS-SE,Monday,08:30 - 10:00 AM,3,HM,Information & Network Security  ,,3,Naveed Ahmed,R9
+BS-SE,Thursday,08:30 - 10:00 AM,3,HM,Information & Network Security  ,,3,Naveed Ahmed,R11
+BS-SE,Thursday,1:00 - 2:30 PM,3,HM,Principles of Psychology ,SS2300,2,Inshrah,R12
+BS-SE,Wednesday,1:00 - 2:30 PM,3,HM,Principles of Psychology ,SS2300,2,Inshrah,R8
+BS-SE,Saturday,12:00 - 2:00 PM,3,HM,Professional Practices ,,2,Dr. Muhammad Ayoub Kamal(VF),R11
+BS-SE,Wednesday,2:30 - 4:00 PM,3,HM,Software Engineering  ,CS3110,3,Aqsa Shahid,Library Block D
+BS-SE,Monday,2:30 - 4:00 PM,3,HM,Software Engineering  ,CS3110,3,Aqsa Shahid,R7
+BS-SE,Tuesday,08:30 - 10:00 AM,4,CM,Business Process Engineering,,3,Parkash lohana,R7
+BS-SE,Friday,11:30 - 1:00 PM,4,CM,Business Process Engineering,,3,Parkash lohana,R1
+BS-SE,Thursday,2:30 - 4:00 PM,4,CM,Database Management Systems,CS2511,1,Khalid Sheikh,R3
+BS-SE,Wednesday,10:00 - 11:30 AM,4,CM,Database Management Systems,CS2511,1,Khalid Sheikh,R2
+BS-SE,Tuesday,1:00 - 2:30 PM,4,CM,Database Management Systems Lab,CS2231,1,Aadrish pirzado,DG-C2
+BS-SE,Tuesday,2:30 - 4:00 PM,4,CM,Database Management Systems Lab,CS2231,1,Aadrish pirzado,DG-C2
+BS-SE,Friday,2:00 - 3:30 PM,4,CM,Organizational Behavior,,3,Marium Iqbal,R2
+BS-SE,Wednesday,2:30 - 4:00 PM,4,CM,Organizational Behavior,,3,Marium Iqbal,R11
+BS-SE,Thursday,11:30 - 1:00 PM,4,CM,Software Construction and Development,CS4121,3,Aqsa Shahid,R1
+BS-SE,Wednesday,11:30 - 1:00 PM,4,CM,Software Construction and Development,CS4121,3,Aqsa Shahid,R8
+BS-SE,Friday,08:30 - 10:00 AM,4,CM,Software Requirement Engineering,,3,M Kamran,R9
+BS-SE,Thursday,08:30 - 10:00 AM,4,CM,Software Requirement Engineering,,3,M Kamran,R2
+BS-SE,Tuesday,10:00 - 11:30 AM,4,DM,Business Process Engineering,,3,Parkash lohana,R5
+BS-SE,Friday,08:30 - 10:00 AM,4,DM,Business Process Engineering,,3,Parkash lohana,R1
+BS-SE,Wednesday,1:00 - 2:30 PM,4,DM,Database Management Systems,CS2511,1,Khalid Sheikh,R3
+BS-SE,Thursday,11:30 - 1:00 PM,4,DM,Database Management Systems,CS2511,1,Khalid Sheikh,R11
+BS-SE,Tuesday,1:00 - 2:30 PM,4,DM,Database Management Systems Lab,CS2231,1,Maria Ahmed,CS-C1
+BS-SE,Tuesday,2:30 - 4:00 PM,4,DM,Database Management Systems Lab,CS2231,1,Maria Ahmed,CS-C1
+BS-CS,Sunday,3:00 - 5:00 PM,7,BW,Pakistan Studies,SS1420,2,SS7 Dr. Kashif,CS-Audi
+BS-SE,Wednesday,11:30 - 1:00 PM,4,DM,Organizational Behavior,,3,Marium Iqbal,R10
+BS-SE,Friday,11:30 - 1:00 PM,4,DM,Organizational Behavior,,3,Marium Iqbal,R13
+BS-SE,Tuesday,08:30 - 10:00 AM,4,DM,Software Construction and Development,CS4121,3,Faizan Shahid(VF),R6
+BS-SE,Thursday,08:30 - 10:00 AM,4,DM,Software Construction and Development,CS4121,3,Faizan Shahid(VF),R5
+BS-SE,Thursday,1:00 - 2:30 PM,4,DM,Software Requirement Engineering,,3,M Kamran,R3
+BS-SE,Friday,2:00 - 3:30 PM,4,DM,Software Requirement Engineering,,3,M Kamran,R12
+BS-SE,Thursday,1:00 - 2:30 PM,6,DM,Human Computer Interaction,CS4110,3,Hassam (VF),R2
+BS-SE,Friday,11:30 - 1:00 PM,6,DM,Human Computer Interaction,CS4110,3,Hassam (VF),R2
+BS-SE,Thursday,10:00 - 11:30 AM,6,DM,Operations Research,,3,Dr.Abdul Qadar Kara,R3
+BS-SE,Friday,10:00 - 11:30 AM,6,DM,Operations Research,,3,Dr.Abdul Qadar Kara,R2
+BS-SE,Thursday,11:30 - 1:00 PM,6,DM,Software Quality Engineering,,3,Hira Ansari (New),R12
+BS-SE,Friday,2:00 - 3:30 PM,6,DM,Software Quality Engineering,,3,Hira Ansari (New),R7
+BS-CS,Sunday,3:00 - 5:00 PM,7,CW,Pakistan Studies,SS1420,2,SS7 Dr. Kashif,CS-Audi
+BS-SE,Sunday,08:30 - 10:00 AM,6,DW,Web Engineering,,3,Syed Nabeel Ali (VF),R13
+BS-SE,Sunday,10:00 - 11:30 AM,6,DW,Web Engineering,,3,Syed Nabeel Ali (VF),R13
+BS-SE,Saturday,3:00 - 6:00 PM,6,DW,Artificial Intelligence,,3,Hira Ansari (New),R5
+BS-SE,Saturday,3:00 - 4:30 PM,8,CW,Professional Issues in Computing,MT2300,3,Jawwad Ali(NewVF21),DG-C2
+BS-SE,Saturday,4:30 - 6:00 PM,8,CW,Professional Issues in Computing,MT2300,3,Jawwad Ali(NewVF21),DG-C2
+BS-CS,Sunday,08:30 - 10:00 AM,1,AW,Computer Programming Lab ,CS1411,1,Hafiz Usman (VF),DG-C3
+BS-CS,Sunday,10:00 - 11:30 AM,1,AW,Computer Programming Lab ,CS1411,1,Hafiz Usman (VF),DG-C3
+BS-CS,Saturday,08:30 - 10:00 AM,1,AW,Calculus and Analytical Geometry ,MT1140,3,Maria Aman,R9
+BS-CS,Saturday,10:00 - 11:30 AM,1,AW,Calculus and Analytical Geometry ,MT1140,3,Maria Aman,R9
+BS-CS,Saturday,11:45 - 1:15 PM,1,AW,Computer Programming  ,CS1410,3,Shumaila Razzak,R7
+BS-CS,Saturday,1:15 - 2:45 PM,1,AW,Computer Programming  ,CS1410,3,Shumaila Razzak,R7
+BS-CS,Sunday,11:45 - 1:15 PM,2,AW,Object Oriented Programming Lab ,CS1421,1,Tayyab Ahmed(VF),CS-C2
+BS-CS,Sunday,1:15 - 2:45 PM,2,AW,Object Oriented Programming Lab ,CS1421,1,Tayyab Ahmed(VF),CS-C2
+BS-CS,Sunday,08:30 - 10:00 AM,2,AW,Object Oriented Programming  ,CS1420,3,Shoaib Idress,CS-C1
+BS-CS,Sunday,10:00 - 11:30 AM,2,AW,Object Oriented Programming  ,CS1420,3,Shoaib Idress,CS-C1
+BS-CS,Saturday,11:45 - 1:15 PM,3,AW,Data Structures and Algorithms ,CS2510,3,Huma Rashid,DG-C3
+BS-CS,Saturday,1:15 - 2:45 PM,3,AW,Data Structures and Algorithms ,CS2510,3,Huma Rashid,DG-C3
+BS-CS,Saturday,3:00 - 4:30 PM,3,AW,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,CG-C1
+BS-CS,Saturday,4:30 - 6:00 PM,3,AW,Data Structures and Algorithms Lab ,CS2511,1,Waqas Aziz,CG-C1
+BS-CS,,,1,AW,Ethics ,,2,SS1 Ishtiaq Ahmed,R8
+BS-CS,,,1,AW,Basic Math - I,,3,Ani Haider,R9
+BS-CS,,,1,AW,Basic Math - I,,3,Ani Haider,R9
+BS-CS,,,1,AW,Basic Math - II,,3,Saeed Akbar,R2
+BS-CS,,,1,AW,Basic Math - II,,3,Saeed Akbar,R2
+BS-CS,,,1,BW,Basic Math - I,,3,Ani Haider,R1
+BS-CS,,,1,BW,Basic Math - I,,3,Ani Haider,R1
+BS-CS,,,1,BW,Basic Math - II,,3,Saeed Akbar,R13
+BS-CS,,,1,BW,Basic Math - II,,3,Saeed Akbar,R13
+BS-CS,,,2,BW,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R2
+BS-CS,,,2,BW,Calculus and Analytical Geometry ,MT1140,3,Syed Sikander,R2
+BS-CS,,,6,BW,Web development,,3,Areeb ullah Khan (VF),DB-C10
+BS-CS,,,6,BW,Web development,,3,Areeb ullah Khan (VF),DB-C10

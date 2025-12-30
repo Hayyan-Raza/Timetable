@@ -1,0 +1,7 @@
+1. Classes should be from 8:30 to 4 PM and can go to 5 PM(rare cases)
+2. There should be 1:30 hrs gap b/w classes like after 2 classes there is a gap then the other class one day should only have 3 classes max 
+3. For Lab classes, lab classes will be consecutive and only 2 in a week 
+4. A teacher can be at one place at a time 
+5. A course can be teached in one place at a time
+6. A room can be used for one class at a time
+7. 
