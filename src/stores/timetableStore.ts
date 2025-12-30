@@ -55,6 +55,7 @@ interface TimetableStore extends TimetableState {
 
     setNavigationFilter: (filter: { department?: string, semesterLevel?: string, classId?: string } | null) => void;
     setLastGenerated: (timestamp: string) => void;
+    toggleDebugMode: () => void;
     resetToDefaults: () => Promise<void>;
     clearAllData: () => Promise<void>;
 }
@@ -72,6 +73,7 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
     generationConflicts: [],
     lastGenerated: null,
     navigationFilter: null,
+    debugMode: false,
     isLoading: false,
     error: null,
 
@@ -201,6 +203,10 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
     },
 
     setLastGenerated: (timestamp) => set({ lastGenerated: timestamp }),
+
+    toggleDebugMode: () => {
+        set((state) => ({ debugMode: !state.debugMode }));
+    },
 
     resetToDefaults: async () => {
         set({ isLoading: true, error: null });

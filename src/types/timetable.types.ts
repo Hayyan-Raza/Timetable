@@ -67,7 +67,9 @@ export interface TimetableEntry {
 }
 
 export interface Conflict {
-    type: 'faculty-clash' | 'room-clash' | 'student-clash' | 'capacity-overflow';
+    type: 'faculty-clash' | 'room-clash' | 'student-clash' | 'capacity-overflow' |
+    'daily-limit' | 'break-requirement' | 'lab-continuity' |
+    'room-type-mismatch' | 'unscheduled' | 'no-room' | 'no-slot';
     message: string;
     affectedEntries: string[]; // Entry IDs
     severity: 'error' | 'warning';
@@ -142,4 +144,5 @@ export interface TimetableState {
         semesterLevel?: string;
         classId?: string;
     } | null;
+    debugMode: boolean;
 }

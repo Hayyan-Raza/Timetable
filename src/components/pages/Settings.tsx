@@ -5,15 +5,17 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Badge } from "../ui/badge";
-import { User, Lock, Palette, Globe, Save, Bot } from "lucide-react";
+import { User, Lock, Palette, Globe, Save, Bot, Bug } from "lucide-react";
 import { useState } from "react";
 import { useAppContext } from "../../App";
 import { toast } from "sonner";
 import { themes, useTheme, type Theme } from "../../context/ThemeContext";
+import { useTimetableStore } from "../../stores/timetableStore";
 
 export function Settings() {
   const { settings, updateSettings } = useAppContext();
   const { currentTheme, setTheme } = useTheme();
+  const { debugMode, toggleDebugMode } = useTimetableStore();
   const [profileData, setProfileData] = useState({
     firstName: "Ali",
     lastName: "Ahmed",
@@ -251,6 +253,23 @@ export function Settings() {
                   onCheckedChange={(checked: boolean) => {
                     updateSettings({ compactMode: checked });
                     toast.success(checked ? "Compact mode enabled" : "Compact mode disabled");
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-4 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Bug className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                    <p className="text-slate-800 dark:text-slate-100 font-medium">Debug Mode</p>
+                  </div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Enable comprehensive diagnostics tab</p>
+                </div>
+                <Switch
+                  checked={debugMode}
+                  onCheckedChange={() => {
+                    toggleDebugMode();
+                    toast.success(debugMode ? "Debug mode disabled" : "Debug mode enabled");
                   }}
                 />
               </div>

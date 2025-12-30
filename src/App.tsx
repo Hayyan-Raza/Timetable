@@ -14,10 +14,11 @@ import EditTimetable from "./components/pages/EditTimetable";
 import { Toaster } from "./components/ui/sonner";
 import { Agent } from "./components/pages/Agent";
 import { Conflicts } from "./components/pages/Conflicts";
+import { Debugging } from "./components/pages/Debugging";
 import { useState, createContext, useContext, useEffect } from "react";
 import { useTimetableStore } from "./stores/timetableStore";
 
-type PageType = "Dashboard" | "Course Offering" | "Faculty Management" | "Room Management" | "Course Allotment" | "Timetable" | "Edit Timetable" | "Settings" | "Data Management" | "Agent" | "Departments" | "Semesters" | "Conflicts";
+type PageType = "Dashboard" | "Course Offering" | "Faculty Management" | "Room Management" | "Course Allotment" | "Timetable" | "Edit Timetable" | "Settings" | "Data Management" | "Agent" | "Departments" | "Semesters" | "Conflicts" | "Debugging";
 
 interface AppSettings {
   compactMode: boolean;
@@ -80,6 +81,8 @@ export default function App() {
         return <Departments />;
       case "Conflicts":
         return <Conflicts onPageChange={setActivePage} />;
+      case "Debugging":
+        return <Debugging onPageChange={setActivePage} />;
       default:
         return <Dashboard />;
     }

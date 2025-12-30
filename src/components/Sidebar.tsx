@@ -9,7 +9,8 @@ import {
   Building,
   Bot,
   Building2,
-  AlertTriangle
+  AlertTriangle,
+  Bug
 } from "lucide-react";
 
 
@@ -38,6 +39,15 @@ import { useTimetableStore } from "../stores/timetableStore";
 
 export function Sidebar({ activePage, onPageChange }: SidebarProps) {
   const entries = useTimetableStore((state) => state.entries);
+  const debugMode = useTimetableStore((state) => state.debugMode);
+
+  // Base menu items
+  const baseMenuItems = menuItems;
+
+  // Conditionally add Debugging item if debug mode is enabled
+  const displayMenuItems = debugMode
+    ? [...baseMenuItems.slice(0, -1), { icon: Bug, label: "Debugging" }, baseMenuItems[baseMenuItems.length - 1]]
+    : baseMenuItems;
 
   return (
     <aside
@@ -45,7 +55,7 @@ export function Sidebar({ activePage, onPageChange }: SidebarProps) {
       style={{ background: "var(--sidebar-bg)" }}
     >
       <nav className="space-y-1">
-        {menuItems.map((item) => {
+        {displayMenuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activePage === item.label;
 
