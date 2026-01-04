@@ -1,0 +1,356 @@
+Department,Semester,Section,Subject,Credit Hours,Teachers
+BS-CS,1,AM,Applications of Information and Communication Technologies,3,Nauman Hafiz Ansari + M. Kashif(TA)
+BS-CS,1,AM,Applications of Information and Communication Technologies Lab,3,Aliza Riaz
+BS-CS,1,AM,Calculus and Analytical Geometry,3,Dr. Shamsa
+BS-CS,1,AM,Computer Programming,3,Dr. Kara
+BS-CS,1,AM,Computer Programming Lab,3,Aliza Riaz
+BS-CS,1,AM,Functional English,3,SS1
+BS-CS,1,AM,Islamic Studies,3,SS1
+BS-CS,1,BM,Applications of Information and Communication Technologies,3,Nauman Hafiz Ansari + M. Kashif(TA)
+BS-CS,1,BM,Applications of Information and Communication Technologies Lab,3,Aliza Riaz
+BS-CS,1,BM,Calculus and Analytical Geometry,3,Dr. Shamsa
+BS-CS,1,BM,Computer Programming,3,Dr. Kara
+BS-CS,1,BM,Computer Programming Lab,3,Aliza Riaz
+BS-CS,1,BM,Functional English,3,SS1
+BS-CS,1,BM,Islamic Studies,3,SS1
+BS-CS,1,CM,Applications of Information and Communication Technologies,3,Shabi-ul-Hassan
+BS-CS,1,CM,Applications of Information and Communication Technologies Lab,3,Nasreen Sheikh
+BS-CS,1,CM,Calculus and Analytical Geometry,3,Shahid Hussain
+BS-CS,1,CM,Computer Programming,3,Dr. Kara
+BS-CS,1,CM,Computer Programming Lab,3,Haider Imam
+BS-CS,1,CM,Functional English,3,SS2
+BS-CS,1,CM,Islamic Studies,3,SS7
+BS-Cyb,1,DM,Applications of Information and Communication Technologies,3,Shabi-ul-Hassan
+BS-Cyb,1,AM,Applications of Information and Communication Technologies Lab,3,Nasreen Sheikh
+BS-Cyb,1,AM,Calculus and Analytical Geometry,3,Shahid Hussain
+BS-Cyb,1,AM,Computer Programming,3,Rimsha Javed
+BS-Cyb,1,AM,Computer Programming Lab,3,Anusha Amir
+BS-Cyb,1,AM,Functional English,3,SS2
+BS-Cyb,1,AM,Islamic Studies,3,SS7
+BS-SE,1,AM,Applications of Information and Communication Technologies,3,Sumera Syed
+BS-SE,1,AM,Applications of Information and Communication Technologies Lab,3,PF-1
+BS-SE,1,AM,Calculus and Analytical Geometry,3,Dr. Umer
+BS-SE,1,AM,Computer Programming,3,Rimsha Javed
+BS-SE,1,AM,Computer Programming Lab,3,Anusha Amir
+BS-SE,1,AM,Functional English,3,SS2
+BS-SE,1,AM,Islamic Studies,3,SS8
+BS-SE,1,BM,Applications of Information and Communication Technologies,3,Sumera Syed
+BS-SE,1,BM,Applications of Information and Communication Technologies Lab,3,PF-1
+BS-SE,1,BM,Calculus and Analytical Geometry,3,Dr. Umer
+BS-SE,1,BM,Computer Programming,3,Abdul Samad
+BS-SE,1,BM,Computer Programming Lab,3,Haider Imam
+BS-SE,1,BM,Functional English,3,SS2
+BS-SE,1,BM,Islamic Studies,3,SS8
+BS-AI,1,AM,Applications of Information and Communication Technologies,3,Saima Burriro
+BS-AI,1,AM,Applications of Information and Communication Technologies Lab,3,PF-1
+BS-AI,1,AM,Calculus and Analytical Geometry,3,Dr. Shahnilla
+BS-AI,1,AM,Computer Programming,3,Kanwal Iqbal
+BS-AI,1,AM,Computer Programming Lab,3,Esha Ahsan
+BS-AI,1,AM,Functional English,3,SS3
+BS-AI,1,AM,Islamic Studies,3,SS8
+BS-AI,1,BM,Applications of Information and Communication Technologies,3,Saima Burriro
+BS-AI,1,BM,Applications of Information and Communication Technologies Lab,3,PF-1
+BS-AI,1,BM,Calculus and Analytical Geometry,3,Dr. Shahnilla
+BS-AI,1,BM,Computer Programming,3,Kanwal Iqbal
+BS-AI,1,BM,Computer Programming Lab,3,Esha Ahsan
+BS-AI,1,BM,Functional English,3,SS3
+BS-AI,1,BM,Islamic Studies,3,SS8
+IMP,1,AW,Computer Programming  ,3,Abdul Samad
+IMP,1,AW,Computer Programming Lab ,3,PF-2
+IMP,1,AW,Calculus and Analytical Geometry ,3,PF-2
+BS-CS,1,AW,Ethics ,3,SS13
+BS-CS,1,AW,Basic Math - I,3,MF-1
+BS-CS,1,AW,Basic Math - II,3,MF-1
+BS-CS,2,AM,Applied Physics,3,Sumera Syed
+BS-CS,2,AM,Discrete Structures,3,Ms. Fouzia Naz
+BS-CS,2,AM,Expository Writing,3,SS3
+BS-CS,2,AM,Object Oriented Programming,3,Huma Rashid
+BS-CS,2,AM,Object Oriented Programming Lab,3,Mahrukh
+BS-CS,2,AM,Pakistan Studies,3,SS5
+BS-CS,2,BM,Applied Physics,3,Maha Irfan
+BS-CS,2,BM,Discrete Structures,3,Ms. Fouzia Naz
+BS-CS,2,BM,Expository Writing,3,SS3
+BS-CS,2,BM,Object Oriented Programming,3,Shumaila Razzak
+BS-CS,2,BM,Object Oriented Programming Lab,3,Mahrukh
+BS-CS,2,BM,Pakistan Studies,3,SS5
+BS-CS,2,CM,Applied Physics,3,Sumera Syed
+BS-CS,2,CM,Discrete Structures,3,Kanwal Iqbal
+BS-CS,2,CM,Expository Writing,3,SS4
+BS-CS,2,CM,Object Oriented Programming,3,Shumaila Razzak
+BS-CS,2,CM,Object Oriented Programming Lab,3,Esha Ahsan
+BS-CS,2,CM,Pakistan Studies,3,SS6
+BS-CS,2,DM,Applied Physics,3,Haris (QEC)
+BS-CS,2,DM,Discrete Structures,3,MF-2
+BS-CS,2,DM,Expository Writing,3,SS4
+BS-CS,2,DM,Object Oriented Programming,3,Arshad Ali
+BS-CS,2,DM,Object Oriented Programming Lab,3,Esha Ahsan
+BS-CS,2,DM,Pakistan Studies,3,SS6
+BS-SE,2,AM,Applied Physics,3,Haris (QEC)
+BSSE,2,AM,Discrete Structures,3,MF-2
+BSSE,2,AM,Expository Writing,3,SS4
+BSSE,2,AM,Object Oriented Programming,3,Hafiz Tehreem
+BSSE,2,AM,Object Oriented Programming Lab,3,Aimen Fatima
+BSSE,2,AM,Pakistan Studies,3,SS6
+BSSE,2,BM,Applied Physics,3,Maha Irfan
+BSSE,2,BM,Discrete Structures,3,MF-3
+BSSE,2,BM,Expository Writing,3,SS4
+BSSE,2,BM,Object Oriented Programming,3,Hafiz Tehreem
+BSSE,2,BM,Object Oriented Programming Lab,3,Aimen Fatima
+BSSE,2,BM,Pakistan Studies,3,SS6
+BSAI,2,AM,Applied Physics,3,Hafiz Tehreem
+BSAI,2,AM,Discrete Structures,3,MF-3
+BSAI,2,AM,Expository Writing,3,SS5
+BSAI,2,AM,Object Oriented Programming,3,Shoaib Idrees
+BSAI,2,AM,Object Oriented Programming Lab,3,Abdul Wasay
+BSAI,2,AM,Pakistan Studies,3,SS7
+BSAI,2,BM,Applied Physics,3,Hafiz Tehreem
+BSAI,2,BM,Discrete Structures,3,MF-3
+BSAI,2,BM,Expository Writing,3,SS5
+BSAI,2,BM,Object Oriented Programming,3,Shoaib Idrees
+BSAI,2,BM,Object Oriented Programming Lab,3,Abdul Wasay
+BSAI,2,BM,Pakistan Studies,3,SS7
+IMP,2,AW,Object Oriented Programming,3,Arshad Ali
+IMP,2,AW,Object Oriented Programming Lab,3,PF-2
+BS-CS,3,AM,Data Structures and Algorithms,3,Dr.Shaukat Wasi + Waqas Aziz (TA)
+BS-CS,3,AM,Data Structures and Algorithms Lab,3,Mahrukh
+BS-CS,3,AM,Computer Network,3,Zaib -un- Nisa
+BS-CS,3,AM,Information Security,3,Hafiz Attaullah
+BS-CS,3,AM,Positive Psychology,3,Psy1
+BS-CS,3,AM,Professional Practices,3,Qurrat ul Ain
+BS-CS,3,AM,Software Engineering,3,Aadrish
+BS-CS,3,BM,Data Structures and Algorithms,3,Dr.Shaukat Wasi + Waqas Aziz (TA)
+BS-CS,3,BM,Data Structures and Algorithms Lab,3,Mahrukh
+BS-CS,3,BM,Computer Network,3,Zaib -un- Nisa
+BS-CS,3,BM,Information Security,3,Hafiz Attaullah
+BS-CS,3,BM,Positive Psychology,3,Psy1
+BS-CS,3,BM,Professional Practices,3,Qurrat ul Ain
+BS-CS,3,BM,Software Engineering,3,Aadrish
+BS-CS,3,CM,Data Structures and Algorithms,3,Huma Rashid
+BS-CS,3,CM,Data Structures and Algorithms Lab,3,Aimen Fatima
+BS-CS,3,CM,Computer Network,3,Aqsa Shahid
+BS-CS,3,CM,Information Security,3,Faizan ur Rehman
+BS-CS,3,CM,Positive Psychology,3,Psy1
+BS-CS,3,CM,Professional Practices,3,Khalid Sheikh
+BS-CS,3,CM,Software Engineering,3,Abdul Ghafoor
+BS-CS,3,DM,Data Structures and Algorithms,3,Huma Rashid
+BS-CS,3,DM,Data Structures and Algorithms Lab,3,Aimen Fatima
+BS-CS,3,DM,Computer Network,3,Aqsa Shahid
+BS-CS,3,DM,Information Security,3,Faizan ur Rehman
+BS-CS,3,DM,Positive Psychology,3,Psy1
+BS-CS,3,DM,Professional Practices,3,Aadrish
+BS-CS,3,DM,Software Engineering,3,Qurrat ul Ain
+BSSE,3,AM,Data Structures and Algorithms,3,Zaid Irshad
+BSSE,3,AM,Data Structures and Algorithms Lab,3,Abdul Wasay
+BSSE,3,AM,Computer Network,3,Zohaib
+BSSE,3,AM,Information Security,3,Arsalan Hussain(VF)
+BSSE,3,AM,Positive Psychology,3,Psy2
+BSSE,3,AM,Professional Practices,3,Aadrish
+BSSE,3,AM,Software Engineering,3,Qurrat ul Ain
+BSSE,3,BM,Data Structures and Algorithms,3,Zaid Irshad
+BSSE,3,BM,Data Structures and Algorithms Lab,3,Abdul Wasay
+BSSE,3,BM,Computer Network,3,Zohaib
+BSSE,3,BM,Information Security,3,PF-2
+BSSE,3,BM,Positive Psychology,3,Psy2
+BSSE,3,BM,Professional Practices,3,Khalid Sheikh
+BSSE,3,BM,Software Engineering,3,Abdul Ghafoor
+BSSE,3,CM,Data Structures and Algorithms,3,Zaib -un- Nisa
+BSSE,3,CM,Data Structures and Algorithms Lab,3,PF-3
+BSSE,3,CM,Computer Network,3,Faisal Feroz
+BSSE,3,CM,Information Security,3,Saima Burriro
+BSSE,3,CM,Positive Psychology,3,Psy2
+BSSE,3,CM,Professional Practices,3,Abdul Ghafoor
+BSSE,3,CM,Software Engineering,3,M. Harris
+BSAI,3,AM,Data Structures and Algorithms,3,Zaib -un- Nisa
+BSAI,3,AM,Data Structures and Algorithms Lab,3,PF-3
+BSAI,3,AM,Computer Network,3,Faisal Feroz
+BSAI,3,AM,Information Security,3,Saima Burriro
+BSAI,3,AM,Positive Psychology,3,Psy2
+BSAI,3,AM,Professional Practices,3,Abdul Ghafoor
+BSAI,3,AM,Software Engineering,3,M. Harris
+IMP,3,AW,Data Structures and Algorithms,3,Shabi-ul-Hassan
+IMP,3,AW,Data Structures and Algorithms Lab,3,Shabi-ul-Hassan
+BS-CS,4,AM,Database Management Systems,3,Shumaila Razzak
+BS-CS,4,AM,Database Management Systems Lab,3,Maria Ahmed
+BS-CS,4,AM,Design and Analysis of Algorithms,3,Dr. Jami
+BS-CS,4,AM,Digital Logic Design,3,Aqeel Tahir
+BS-CS,4,AM,Digital Logic Design Lab,3,PF-3
+BS-CS,4,AM,Entrepreneurship,3,MG-1
+BS-CS,4,AM,Civics And Community Engagement,3,SS
+BS-CS,4,AM,Ideology and Constitution of Pakistan,3,SS10
+BS-CS,4,BM,Database Management Systems,3,Shumaila Razzak
+BS-CS,4,BM,Database Management Systems Lab,3,Maria Ahmed
+BS-CS,4,BM,Design and Analysis of Algorithms,3,Dr. Jami
+BS-CS,4,BM,Digital Logic Design,3,Aqeel Tahir
+BS-CS,4,BM,Digital Logic Design Lab,3,PF-3
+BS-CS,4,BM,Entrepreneurship,3,MG-1
+BS-CS,4,BM,Civics And Community Engagement,3,SS
+BS-CS,4,BM,Ideology and Constitution of Pakistan,3,SS10
+BS-CS,4,CM,Database Management Systems,3,Khalid Sheikh
+BS-CS,4,CM,Database Management Systems Lab,3,Waqas Aziz
+BS-CS,4,CM,Design and Analysis of Algorithms,3,Simran
+BS-CS,4,CM,Digital Logic Design,3,PF-4
+,,,Digital Logic Design Lab,3,Maria Ahmed
+BS-CS,4,CM,Entrepreneurship,3,MG-1
+BS-CS,4,CM,Civics And Community Engagement,3,SS
+BS-CS,4,CM,Ideology and Constitution of Pakistan,3,SS10
+BS-CS,4,DM,Database Management Systems,3,Khalid Sheikh
+BS-CS,4,DM,Database Management Systems Lab,3,Waqas Aziz
+BS-CS,4,DM,Design and Analysis of Algorithms,3,Simran
+BS-CS,4,DM,Digital Logic Design,3,M. Yousaf
+BS-CS,4,DM,Digital Logic Design Lab,3,Maria Ahmed
+BS-CS,4,DM,Entrepreneurship,3,MG-1
+BS-CS,4,DM,Civics And Community Engagement,3,SS
+BS-CS,4,DM,Ideology and Constitution of Pakistan,3,SS10
+BS-CS,4,EM,Database Management Systems,3,Arshad Ali
+BS-CS,4,EM,Database Management Systems Lab,3,Anusha Amir
+BS-CS,4,EM,Design and Analysis of Algorithms,3,M. Zubair
+BS-CS,4,EM,Digital Logic Design,3,M. Yousaf
+BS-CS,4,EM,Digital Logic Design Lab,3,PF-4
+BS-CS,4,EM,Entrepreneurship,3,MG-2
+BS-CS,4,EM,Civics And Community Engagement,3,SS15
+BS-CS,4,EM,Ideology and Constitution of Pakistan,3,SS11
+BS-CS,4,FM,Database Management Systems,3,Arshad Ali
+BS-CS,4,FM,Database Management Systems Lab,3,Anusha Amir
+BS-CS,4,FM,Design and Analysis of Algorithms,3,M. Zubair
+BS-CS,4,FM,Digital Logic Design,3,Faizan ur Rehman
+BS-CS,4,FM,Digital Logic Design Lab,3,PF-4
+BS-CS,4,FM,Entrepreneurship,3,MG-2
+BS-CS,4,FM,Civics And Community Engagement,3,SS15
+BS-CS,4,FM,Ideology and Constitution of Pakistan,3,SS11
+BS-CS,4,GM,Database Management Systems,3,Saad Ali Asif
+BS-CS,4,GM,Database Management Systems Lab,3,PF-4
+BS-CS,4,GM,Design and Analysis of Algorithms,3,Amna Dilawar
+BS-CS,4,GM,Digital Logic Design,3,Faizan ur Rehman
+BS-CS,4,GM,Digital Logic Design Lab,3,PF-5
+BS-CS,4,GM,Entrepreneurship,3,MG
+BS-CS,4,GM,Civics And Community Engagement,3,SS15
+BS-CS,4,GM,Ideology and Constitution of Pakistan,3,SS11
+BS-CS,4,HM,Database Management Systems,3,Saad Ali Asif
+BS-CS,4,HM,Database Management Systems Lab,3,PF-5
+BS-CS,4,HM,Design and Analysis of Algorithms,3,Amna Dilawar
+BS-CS,4,HM,Digital Logic Design,3,PF-5
+BS-CS,4,HM,Digital Logic Design Lab,3,PF-5
+BS-CS,4,HM,Entrepreneurship,3,MG-2
+BS-CS,4,HM,Civics And Community Engagement,3,SS15
+BS-CS,4,HM,Ideology and Constitution of Pakistan,3,SS11
+BSSE,4,AM,Database Management Systems,3,Aqsa Shahid
+BSSE,4,AM,Database Management Systems Lab,3,PF-6
+BSSE,4,AM,Design and Analysis of Algorithms,3,PF-6
+BSSE,4,AM,Digital Logic Design,3,PF-6
+BSSE,4,AM,Digital Logic Design Lab,3,PF-6
+BSSE,4,AM,Entrepreneurship,3,MG
+BSSE,4,AM,Civics And Community Engagement,3,SS16
+BSSE,4,AM,Ideology and Constitution of Pakistan,3,SS12
+BSAI,4,AM,Database Management Systems,3,Aqsa Shahid
+BSAI,4,AM,Database Management Systems Lab,3,PF-7
+BSAI,4,AM,Design and Analysis of Algorithms,3,Nusrat Waheed
+BSAI,4,AM,Digital Logic Design,3,PF-7
+BSAI,4,AM,Digital Logic Design Lab,3,PF-7
+BSAI,4,AM,Entrepreneurship,3,MG-2
+BSAI,4,AM,Civics And Community Engagement,3,SS16
+BSAI,4,AM,Ideology and Constitution of Pakistan,3,SS12
+BS-CS,5,AM,Computer Organization and Assembly Language,3,Dr. Farooq
+BS-CS,5,AM,Computer Organization and Assembly Language Lab,3,PF-7
+BS-CS,5,AM,Data Communications & Networking,3,Saad Ali Asif
+BS-CS,5,AM,Data Communications & Networking Lab,3,PF-8
+BS-CS,5,AM,Design and Analysis of Algorithms,3,Nusrat Waheed
+BS-CS,5,AM,Operating Systems,3,Dr. NK + Fayyaz Hussain (TA)
+BS-CS,5,AM,Operating Systems Lab,3,Fayyaz Hussain
+BS-CS,5,AM,Technical Report Writing,3,SS12
+BS-CS,5,BM,Computer Organization and Assembly Language,3,Dr. Farooq
+BS-CS,5,BM,Computer Organization and Assembly Language Lab,3,PF-8
+BS-CS,5,BM,Data Communications & Networking,3,Saad Ali Asif
+BS-CS,5,BM,Data Communications & Networking Lab,3,M. Kashif
+BS-CS,5,BM,Design and Analysis of Algorithms,3,Amna Dilawar
+BS-CS,5,BM,Operating Systems,3,Dr. NK + Fayyaz Hussain (TA)
+BS-CS,5,BM,Operating Systems Lab,3,Fayyaz Hussain
+BS-CS,5,BM,Technical Report Writing,3,SS12
+BSSE,5,AM,Data Communications & Networking,3,M. Yousaf
+BSSE,5,AM,Data Communications & Networking Lab,3,M. Kashif
+BSSE,5,AM,Operating Systems,3,Maha Irfan
+BSSE,5,AM,Operating Systems Lab,3,PF-8
+BSSE,5,AM,Software Architecture,3,M. Harris
+BSSE,5,AM,Software Architecture Lab,3,Taha Memon
+BSSE,5,AM,Software Project Management,3,Sir Parkash Lohana
+BSSE,5,AM,Technical Report Writing,3,SS13
+BSSE,5,BM,Data Communications & Networking,3,M. Yousaf
+BSSE,5,BM,Data Communications & Networking Lab,3,M. Kashif
+BSSE,5,BM,Operating Systems,3,Maha Irfan
+BSSE,5,BM,Operating Systems Lab,3,Fayyaz Hussain
+BSSE,5,BM,Software Architecture,3,M. Harris
+BSSE,5,BM,Software Architecture Lab,3,Taha Memon
+BSSE,5,BM,Software Project Management,3,Sir Parkash Lohana
+BSSE,5,BM,Technical Report Writing,3,SS13
+BSAI,5,AM,Operating System,3,Faisal Feroz
+BSAI,5,AM,Operating System Lab,3,PF-8
+BSAI,5,AM,Information & Network Security,3,Zohaib
+BSAI,5,AM,Programming for Artificial Intelligence,3,Imran Ali
+BSAI,5,AM,Machine Learning,3,Abdul Samad
+BSAI,5,AM,Design & Analysis of Algorithms,3,Simran
+BS-CS,6,AM,Artificial Intelligence,3,Hira Ansari
+BS-CS,6,AM,Artificial Intelligence Lab,3,PF-9
+BS-CS,6,AM,CS Elective - II,3,PF-9
+BS-CS,6,AM,Introduction to Datascience,3,Usman (VF)
+BS-CS,6,AM,CS Elective,3,PF-9
+BS-CS,6,AM,Parallel and Distributed Computing,3,Arsalan Hussain(VF)
+BS-CS,6,BM,Artificial Intelligence,3,Hira Ansari
+BS-CS,6,BM,Artificial Intelligence Lab,3,Haider Imam
+BS-CS,6,BM,CS Elective - II,3,PF-9
+BS-CS,6,BM,CS Elective-I,3,PF-10
+BS-CS,6,BM,CS Elective,3,PF-10
+BS-CS,6,BM,Parallel and Distributed Computing,3,Arsalan Hussain(VF)
+BS-CS,6,CM,Artificial Intelligence,3,Aimen Naeem
+BS-CS,6,CM,Artificial Intelligence Lab,3,Haider Imam
+BS-CS,6,CM,CS Elective - II,3,PF-10
+BS-CS,6,CM,CS Elective-I,3,PF-10
+BS-CS,6,CM,CS Elective,3,PF-11
+BS-CS,6,CM,Parallel and Distributed Computing,3,VF2
+BS-CS,7,AW,Cloud Computing,3,Muhammad Hilal
+BS-CS,7,AW,Human Computer Interaction,3,Fozia Khan
+BS-CS,7,AW,Information & Network Security,3,Imran Ali
+BS-CS,7,AW,Numerical Computing,3,Dr. Umer
+BS-CS,7,AW,Pakistan Studies,3,SS14
+BS-CS,7,BW,Cloud Computing,3,Muhammad Hilal
+BS-CS,7,BW,Human Computer Interaction,3,Summaiya Jangdha
+BS-CS,7,BW,Information & Network Security,3,Mubashir Ali (IT)
+BS-CS,7,BW,Numerical Computing,3,Shahid Hussain
+BS-CS,7,BW,Pakistan Studies,3,SS14
+BS-CS,7,CW,Big Data,3,Dr. Shamsa
+BS-CS,7,CW,Human Computer Interaction,3,Summaiya Jangdha
+BS-CS,7,CW,Information & Network Security,3,Imran Ali
+BS-CS,7,CW,Numerical Computing,3,Shahid Hussain
+BS-CS,7,CW,Pakistan Studies,3,SS14
+BSSE,7,AW,Information and Network Security,3,Hafiz Attaullah
+BSSE,7,AW,Pakistan Studies,3,SS14
+BSSE,7,AW,Introduction to Machine Learning,3,Abdul Samad
+BSSE,7,AW,Generative AI,3,Dr. Tafseer + Simran(TA)
+BSSE,7,AW,Software Re-engineering,3,Hira Ansari
+BS-CS,8,AW,Compiler Construction,3,Usman (VF)
+BS-CS,8,AW,Cyber Security,3,Faisal Feroz
+BS-CS,8,AW,Principles Of Sociology,3,Alina Aziz
+BS-CS,8,AW,Professional Issues in Computing,3,Nabeel Ali (VF)
+BS-CS,8,BW,Compiler Construction,3,Nabeel Ali (VF)
+BS-CS,8,BW,Agile Software Project Management,3,Talha Ahmed Sheikh(VF)
+BS-CS,8,BW,Principles Of Sociology,3,Alina Aziz
+BS-CS,8,BW,Professional Issues in Computing,3,Jawwad Ali(VF)
+BS-CS,8,CW,Compiler Construction,3,Nabeel Ali (VF)
+BS-CS,8,CW,Software Testing,3,Haris Irfan (VF)
+BS-CS,8,CW,Principles Of Sociology,3,Alina Aziz
+BS-CS,8,CW,Professional Issues in Computing,3,Jawwad Ali (VF)
+MSCS,1,AW,Advanced Topics in Theoretical Computer Science,3,Tamkeen Syed (VF)
+MSCS,1,AW,Applied Programming,3,VF2
+MSCS,1,AW,Computer Vision,3,M. Zubair
+MSCS,2,AW,Advanced Analysis of Algorithms,3,PF
+MSCS,2,AW,Advanced Research Methods,3,Dr. Farooq
+MSCS,2,AW,Cyber Security,3,Nauman Hafiz Ansari
+MSDS,1,AW,Tools and Techniques for Data Science,3,Shoaib Idrees
+MSDS,1,AW,Statistical and Mathematical Methods for Data Analysis,3,Dr. Shahnilla
+MSDS,2,AW,Machine Learning,3,VF1
+MSDS+PhD,2,AW,Big Data,3,Dr. Shamsa
+MSDS,2,AW,AI-SE,3,Dr. Tafseer + Simran(TA)
+MSSE,1,AW,Advanced Topics in Requirement Engineering,3,M. Kamran (VF)
+MSSE,1,AW,Advanced Topics in Software Architecture ,3,Ayub Latif (VF)
+MSSE,1,AW,Applied Programming,3,VF1
+MSSE,2,AW,Advanced Topics in Software Quality Assurance,3,Shahzad Paracha(VF)
+MSSE,2,AW,Softwere Testing Automation,3,Mustafa Shabbir ZariWala
+PhDCS,1,AW,Natural Language Processing,3,Dr. Shaukat + Imran Ali (TA)

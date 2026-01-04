@@ -4,6 +4,7 @@ import { checkAllDebugIssues } from "../../utils/debugConstraints";
 import { Conflict } from "../../types/timetable.types";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { ConsoleTerminal } from "../ConsoleTerminal";
 import {
     Bug,
     Search,
@@ -384,6 +385,25 @@ export function Debugging({ onPageChange }: { onPageChange: (page: any) => void 
                     </div>
                 </>
             )}
+
+            {/* Console Terminal Section */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="mt-8"
+            >
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-slate-100">
+                        <AlertTriangle className="w-5 h-5 text-slate-600" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Console Output</h3>
+                        <p className="text-sm text-slate-500">Monitor real-time logs, errors, and warnings</p>
+                    </div>
+                </div>
+                <ConsoleTerminal />
+            </motion.div>
         </div>
     );
 }

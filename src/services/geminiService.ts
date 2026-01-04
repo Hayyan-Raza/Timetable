@@ -41,15 +41,39 @@ Supported Commands:
    Example: add course "CS101" "Programming Fundamentals" 3 "BS-CS" "1"
 
 4. Bulk Actions (JSON):
-   You can create multiple items at once by outputting a JSON block.
+   You can create/update/delete multiple items at once by outputting a JSON block.
+   \`\`\`json
+   {
+     "action": "bulk_create", // or "bulk_update", "bulk_delete"
+     "type": "allotment", // or "faculty", "course", "room"
+     "data": [
+       // CREATE examples:
+       // Faculty: { "name": "John Doe", "initials": "JD", "department": "CS" }
+       // Course: { "code": "CS101", "name": "Programming", "credits": 3, "department": "BS-CS", "semester": "1" }
+       // Allotment: { "courseCode": "CS101", "facultyInitials": "JD", "classId": "BSCS-1A", "roomName": "R12" }
+       // Room: { "name": "R12", "capacity": 50, "type": "lecture" }
+     ]
+   }
+   \`\`\`
+   
+   UPDATE operations (use type: "update_allotment", "update_course", "update_faculty", "update_room"):
    \`\`\`json
    {
      "action": "bulk_create",
-     "type": "faculty", // or "course", "room", "allotment"
+     "type": "update_course",
      "data": [
-       // For Faculty: { "name": "John Doe", "initials": "JD", "department": "CS" }
-       // For Course: { "code": "CS101", "name": "Programming", "credits": 3, "department": "BS-CS", "semester": "1" }
-       // For Allotment: { "courseCode": "CS101", "facultyInitials": "JD", "classIds": ["BSCS-1A"], "roomName": "R12" }
+       { "code": "CS101", "name": "Updated Name", "credits": 4 }
+     ]
+   }
+   \`\`\`
+   
+   DELETE operations (use type: "delete_allotment", "delete_course", "delete_faculty", "delete_room"):
+   \`\`\`json
+   {
+     "action": "bulk_create",
+     "type": "delete_course",
+     "data": [
+       { "code": "CS101" }
      ]
    }
    \`\`\`
@@ -61,6 +85,16 @@ Supported Commands:
    Example: create allotment CS101 JD BSCS-1A R12
    NOTE: You MUST always assign a room when creating allotments. Choose an appropriate room based on course type (lecture/lab).
 
+🚨 CRITICAL ALLOTMENT RULES - NEVER VIOLATE THESE:
+1. classId MUST NEVER be null, undefined, or empty string
+2. classId MUST be a valid, non-empty string (e.g., "BSCS-1A", "BSSE-3B")
+3. When creating allotments in JSON format, use "classId" (singular), NOT "classIds"
+4. ALWAYS verify the classId exists and is a proper string before creating allotment
+5. If you don't have a valid classId, DO NOT create the allotment - ask the user for it
+6. Format for classId should be: [Department]-[Semester]-[Section] (e.g., "BSCS-1-A", "BSSE-3-B")
+7. NEVER use null, undefined, "", or any non-string value for classId
+8. Double-check EVERY allotment before creating it - invalid classIds will crash the system
+
 RULES:
 1. ALWAYS check which departments exist before creating courses
 2. When user asks to create courses for a specific department/semester, check if those courses already exist
@@ -70,7 +104,9 @@ RULES:
 6. When asked to create data, ALWAYS use the command format above
 7. For multiple items, PREFER the JSON format
 8. Be concise and helpful
+9. VALIDATE all allotment data before creating - especially classId values
 `;
+
 
 export interface ChatMessage {
     role: 'user' | 'assistant';

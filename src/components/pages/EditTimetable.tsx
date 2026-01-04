@@ -29,15 +29,11 @@ function DraggableSession({ id, courseCode, courseName, roomName, facultyName }:
         id: id,
     });
 
-    // Original item stays in place but is dimmed/hidden. We do not transform it.
-    // The DragOverlay provides the moving visual.
-
     return (
         <Card
             ref={setNodeRef}
             {...listeners}
             {...attributes}
-            // Use opacity-30 for ghost effect.
             className={`p-2 h-full text-xs shadow-sm cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow ${isDragging ? "opacity-30 border-blue-200 border-dashed bg-blue-50/50" : "bg-white"}`}
         >
             <div className="font-bold text-slate-800 dark:text-slate-100 truncate">{courseCode}</div>
@@ -52,7 +48,7 @@ function DraggableSession({ id, courseCode, courseName, roomName, facultyName }:
 
 // Helper Component: Droppable Slot Cell
 interface DroppableSlotProps {
-    id: string; // Format: "Day-Time"
+    id: string;
     children?: React.ReactNode;
 }
 
@@ -77,12 +73,9 @@ export default function EditTimetable() {
     const [activeId, setActiveId] = useState<string | null>(null);
     const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
 
-    // Get unique classes that have generated entries - MEMOIZED
     const generatedClasses = useMemo(() => {
         return Array.from(new Set(entries.map(e => e.classId))).sort();
     }, [entries]);
-
-    // DEBUG LOGS REMOVED FOR CLEANLINESS (User reported duplications, we assume backend fix is live or they will regenerate)
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -94,15 +87,9 @@ export default function EditTimetable() {
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
-        // console.log("HANDLE DRAG END:", { activeId: active.id, overId: over?.id });
 
         if (over && active.id !== over.id) {
-            console.log(`Moved ${active.id} to ${over.id}`);
-
-            // Expected Over ID format: "Day-StartTime" (e.g., "Monday-08:30")
             const [newDay, newStartTime] = (over.id as string).split('|');
-
-            // Find the entry being moved
             const entryToMove = entries.find(e => e.id === active.id);
 
             if (entryToMove && newDay && newStartTime) {
@@ -115,7 +102,7 @@ export default function EditTimetable() {
                     { start: "16:00", end: "17:30" }
                 ];
                 const matchingSlot = timeIntervals.find(t => t.start === newStartTime);
-                const newEndTime = matchingSlot ? matchingSlot.end : entryToMove.timeSlot.endTime; // Fallback
+                const newEndTime = matchingSlot ? matchingSlot.end : entryToMove.timeSlot.endTime;
 
                 const updatedEntry = {
                     ...entryToMove,
@@ -133,92 +120,155 @@ export default function EditTimetable() {
     };
 
     const handleSave = () => {
-        console.log("Saving timetable entries:", entries);
-        window.alert("Changes saved successfully (to local session)!");
+        window.alert("Changes saved successfully!");
     };
 
-    // Define Grid structure
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const timeSlots = ["08:30", "10:00", "11:30", "13:00", "14:30", "16:00"];
 
     // SELECTION VIEW
     if (!selectedClassId) {
         return (
-            <div className="p-8 space-y-8">
+            <div className="p-8 space-y-6">
                 <header>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Edit Timetable</h1>
-                    <p className="text-slate-500 mt-2">Select a class to modify its schedule.</p>
+                    <h1 className="text-2xl font-semibold text-slate-900">Edit Timetable</h1>
+                    <p className="text-sm text-slate-500 mt-1">Select a class to modify its schedule.</p>
                 </header>
 
                 {generatedClasses.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-2xl border border-slate-200/60 shadow-sm">
+                    <div className="text-center py-12 bg-white rounded-lg border border-slate-200 shadow-sm">
                         <p className="text-slate-400 mb-2">No generated timetables found.</p>
                         <p className="text-sm text-slate-500">Go to the Dashboard to generate a new timetable.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {generatedClasses.map(cls => {
-                            const classEntries = entries.filter(e => e.classId === cls);
-                            const uniqueCourses = new Set(classEntries.map(e => e.courseId)).size;
+                    <div className="space-y-8">
+                        {(() => {
+                            // Group classes by semester
+                            const classesBySemester: Record<string, any[]> = {};
 
-                            const firstEntry = classEntries[0];
+                            generatedClasses.forEach((cls: string) => {
+                                const classEntries = entries.filter((e: any) => e.classId === cls);
+                                const firstEntry = classEntries[0];
 
-                            // Extract department and semester - OPTIM IZED
-                            let department = firstEntry?.metadata?.departmentCode || 'Unknown';
-                            let semester: string | number | undefined = firstEntry?.metadata?.semesterLevel;
+                                let department = firstEntry?.metadata?.departmentCode || 'Unknown';
+                                let semester: any = firstEntry?.metadata?.semesterLevel;
 
-                            // Fallback: extract from course lookup if needed
-                            if (!department || !semester) {
-                                const course = courses.find((c: any) => c.id === firstEntry?.courseId);
-                                if (course) {
-                                    department = course.department || department;
-                                    semester = course.semester || semester;
+                                if (!semester) {
+                                    const course = courses.find((c: any) => c.id === firstEntry?.courseId);
+                                    semester = course?.semester || 'Unknown';
+                                    if (!department) department = course?.department || department;
                                 }
-                            }
 
-                            // Normalize semester to number
-                            if (typeof semester === 'string') {
-                                const match = semester.match(/\d+/);
-                                semester = match ? parseInt(match[0]) : semester;
-                            }
+                                if (typeof semester === 'string') {
+                                    const match = semester.match(/\d+/);
+                                    semester = match ? match[0] : semester;
+                                }
 
-                            return (
-                                <Card
-                                    key={cls}
-                                    className="cursor-pointer hover:shadow-lg transition-all border border-slate-200 hover:border-blue-500 group"
-                                    onClick={() => setSelectedClassId(cls)}
-                                >
-                                    <CardHeader className="pb-3 pt-5 px-6 space-y-2.5">
-                                        {/* Department and Semester Badge */}
-                                        <div className="flex items-center justify-center gap-2">
-                                            <Badge className="bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 border-0 hover:bg-purple-100 text-xs px-2.5 py-0.5 font-medium">
-                                                {department}
-                                            </Badge>
-                                            <Badge className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border-0 hover:bg-blue-100 text-xs px-2.5 py-0.5 font-medium">
-                                                Sem {semester}
-                                            </Badge>
+                                const semKey = `Semester ${semester}`;
+                                if (!classesBySemester[semKey]) classesBySemester[semKey] = [];
+                                classesBySemester[semKey].push({ cls, classEntries, department });
+                            });
+
+                            const sortedSemesters = Object.keys(classesBySemester).sort((a, b) => {
+                                const numA = parseInt(a.match(/\d+/)?.[0] || '999');
+                                const numB = parseInt(b.match(/\d+/)?.[0] || '999');
+                                return numA - numB;
+                            });
+
+                            return sortedSemesters.map(semesterLabel => (
+                                <div key={semesterLabel} className="space-y-4">
+                                    {/* Semester Header - Simple */}
+                                    <div className="flex items-center gap-3 px-1">
+                                        <div className="flex items-center gap-2 text-blue-600">
+                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                                            </svg>
+                                            <h2 className="text-base font-semibold">{semesterLabel}</h2>
                                         </div>
+                                        <div className="flex-1"></div>
+                                        <span className="text-xs text-slate-500">
+                                            {classesBySemester[semesterLabel].length} {classesBySemester[semesterLabel].length === 1 ? 'Section' : 'Sections'}
+                                        </span>
+                                    </div>
 
-                                        {/* Class ID */}
-                                        <CardTitle className="text-2xl font-bold text-center text-slate-900 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                                            {cls}
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="pt-3 pb-5 px-6">
-                                        <div className="space-y-2.5 text-sm">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-slate-600 dark:text-slate-400">Total Sessions</span>
-                                                <span className="font-bold text-slate-900 dark:text-slate-100">{classEntries.length}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-slate-600 dark:text-slate-400">Subjects</span>
-                                                <span className="font-bold text-slate-900 dark:text-slate-100">{uniqueCourses}</span>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            );
-                        })}
+                                    {/* Classes - Single Column */}
+                                    <div className="space-y-3">
+                                        {classesBySemester[semesterLabel].map(({ cls, classEntries, department }: any) => {
+                                            // Get unique courses and sort them
+                                            const uniqueCourses = Array.from(new Set(classEntries.map((e: any) => e.courseCode || e.courseId))).sort();
+
+                                            // Clean up department text
+                                            const deptDisplay = department === 'Unknown' ? '' : department;
+
+                                            return (
+                                                <Card
+                                                    key={cls}
+                                                    className="cursor-pointer hover:shadow-md transition-all border border-slate-200 hover:border-blue-400 hover:ring-1 hover:ring-blue-100 bg-white group"
+                                                    onClick={() => setSelectedClassId(cls)}
+                                                >
+                                                    {/* Card Header - Enhanced with better typography and stats */}
+                                                    <CardHeader className="pb-3 pt-5 px-6 py-6">
+                                                        <div className="flex items-start justify-between">
+                                                            <div>
+                                                                <div className="flex items-center gap-2 mb-1">
+                                                                    <CardTitle className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                                                                        {cls}
+                                                                    </CardTitle>
+                                                                    <Badge variant="outline" className="text-[10px] font-normal text-slate-400 border-slate-200 bg-slate-50 uppercase tracking-wider">
+                                                                        Section
+                                                                    </Badge>
+                                                                </div>
+                                                                <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+                                                                    {deptDisplay && (
+                                                                        <>
+                                                                            <span className="text-slate-700">{deptDisplay}</span>
+                                                                            <span className="text-slate-300">•</span>
+                                                                        </>
+                                                                    )}
+                                                                    <span className="text-slate-600">{uniqueCourses.length} Courses</span>
+                                                                    <span className="text-slate-300">•</span>
+                                                                    <span className="text-slate-600">{classEntries.length} Sessions</span>
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Arrow Icon with hover effect */}
+                                                            <div className="h-8 w-8 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-blue-50 group-hover:text-blue-600 transition-all transform group-hover:translate-x-1">
+                                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </CardHeader>
+
+                                                    {/* Horizontal Divider */}
+                                                    <div className="px-6 py-0">
+                                                        <div className="border-t border-slate-100"></div>
+                                                    </div>
+
+                                                    {/* Course Badges - Clean list */}
+                                                    <CardContent className="px-6 pb-16 pt-6">
+                                                        <div className="mb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                                                            Active Courses
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {uniqueCourses.map((course: any) => (
+                                                                <Badge
+                                                                    key={course}
+                                                                    variant="secondary"
+                                                                    className="bg-slate-100 text-slate-600 hover:bg-white hover:shadow-sm hover:text-blue-600 border border-transparent hover:border-slate-200 transition-all font-medium text-[11px] px-2 py-0.5"
+                                                                >
+                                                                    {course}
+                                                                </Badge>
+                                                            ))}
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ));
+                        })()}
                     </div>
                 )}
             </div>
@@ -264,7 +314,6 @@ export default function EditTimetable() {
                 onDragEnd={handleDragEnd}
             >
                 <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-                    {/* Header Row */}
                     <div
                         className="grid bg-slate-50 border-b border-slate-200"
                         style={{ gridTemplateColumns: '100px repeat(5, 1fr)' }}
@@ -277,7 +326,6 @@ export default function EditTimetable() {
                         ))}
                     </div>
 
-                    {/* Time Rows */}
                     {timeSlots.map((time) => (
                         <div
                             key={time}
@@ -289,7 +337,6 @@ export default function EditTimetable() {
                             </div>
                             {days.map(day => {
                                 const slotId = `${day}|${time}`;
-                                // Find entries for this slot AND selected class
                                 const slotEntries = entries.filter(e =>
                                     e.classId === selectedClassId &&
                                     e.timeSlot.day === day &&

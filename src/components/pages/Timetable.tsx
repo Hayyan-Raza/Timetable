@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { Button } from "../ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
-import { Download, Calendar as CalendarIcon, Grid3x3, List, Trash2 } from "lucide-react";
+import { Download, Calendar as CalendarIcon, Grid3x3, List, Trash2, FileSpreadsheet } from "lucide-react";
 import { toast } from "sonner";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { getTimetableForClass } from "../../utils/timetableGenerator";
@@ -263,6 +263,49 @@ export function Timetable() {
     }
   };
 
+  const handleExportCSV = () => {
+    if (entries.length === 0) {
+      toast.error("No timetable data available to export");
+      return;
+    }
+
+    const headers = ["Section", "Day", "Start Time", "End Time", "Course Code", "Course Name", "Faculty", "Room", "Department", "Semester"];
+
+    // Convert entries to CSV rows
+    const rows = entries.map(entry => {
+      const course = courses.find(c => c.id === entry.courseId);
+      const facultyMember = faculty.find(f => f.id === entry.facultyId);
+      const room = rooms.find(r => r.id === entry.roomId);
+
+      return [
+        entry.classId,
+        entry.timeSlot.day,
+        entry.timeSlot.startTime,
+        entry.timeSlot.endTime,
+        course?.code || entry.courseCode || "-",
+        course?.name || entry.courseName || "-",
+        facultyMember?.name || entry.facultyName || "-",
+        room?.name || entry.roomName || "-",
+        entry.metadata?.departmentCode || course?.department || "-",
+        entry.metadata?.semesterLevel || course?.semester || "-"
+      ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(","); // Escape quotes and wrap in quotes
+    });
+
+    const csvContent = [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `all_timetables_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success("All timetables exported to CSV");
+  };
+
   const handleDeleteTimetable = () => {
     clearEntries();
     toast.success("Timetable deleted successfully");
@@ -309,7 +352,8 @@ export function Timetable() {
                 <AlertDialogTrigger asChild>
                   <Button
                     variant="destructive"
-                    className="bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border border-red-200 shadow-sm"
+                    disabled={entries.length === 0}
+                    className="bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 border border-red-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
                     Delete Timetable
@@ -326,13 +370,21 @@ export function Timetable() {
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleDeleteTimetable}
-                      className="bg-red-600 hover:bg-red-700 text-white border-none shadow-sm font-medium"
+                      className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm font-medium"
                     >
                       Delete
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+
+              <Button
+                onClick={handleExportCSV}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-lg shadow-emerald-500/30"
+              >
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
 
               <Button
                 onClick={handleExportPDF}
@@ -410,7 +462,7 @@ export function Timetable() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-2xl border border-slate-200/60 p-12 text-center"
+            className="bg-white rounded-2xl border border-slate-200/60 p-12 flex flex-col items-center justify-center text-center"
           >
             <CalendarIcon className="w-16 h-16 mx-auto mb-4 text-slate-300" />
             <h3 className="text-slate-800 dark:text-slate-100 mb-2">

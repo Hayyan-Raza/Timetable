@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Button } from "../ui/button";
 import { useState, useRef, useEffect } from "react";
-import { Bot, Send, User, Trash2, Loader2, AlertCircle } from "lucide-react";
+import { Bot, Send, User, Trash2, AlertCircle } from "lucide-react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
 import { Room, Faculty, Course } from "../../types/timetable.types";
@@ -102,6 +102,86 @@ export function Agent() {
                             updateAllotments([...allotments, ...newAllotments]);
                             processedCount += newAllotments.length;
                         }
+                    } else if (data.type === 'update_allotment') {
+                        // Update allotments
+                        const updatedAllotments = allotments.map(a => {
+                            const update = data.data.find((u: any) => {
+                                const course = courses.find(c => c.code.toLowerCase() === u.courseCode?.toLowerCase());
+                                const fac = faculty.find(f => f.initials.toLowerCase() === u.facultyInitials?.toLowerCase());
+                                return a.courseId === course?.id && a.facultyId === fac?.id;
+                            });
+                            if (update) {
+                                return {
+                                    ...a,
+                                    classIds: update.classId ? [update.classId] : a.classIds,
+                                    preferredRoomId: update.roomName ? rooms.find(r => r.name === update.roomName)?.id : a.preferredRoomId
+                                };
+                            }
+                            return a;
+                        });
+                        updateAllotments(updatedAllotments);
+                        processedCount += data.data.length;
+                    } else if (data.type === 'delete_allotment') {
+                        // Delete allotments
+                        const filtered = allotments.filter(a => {
+                            const course = courses.find(c => c.id === a.courseId);
+                            const fac = faculty.find(f => f.id === a.facultyId);
+                            return !data.data.some((d: any) =>
+                                course?.code.toLowerCase() === d.courseCode?.toLowerCase() &&
+                                fac?.initials.toLowerCase() === d.facultyInitials?.toLowerCase()
+                            );
+                        });
+                        processedCount = allotments.length - filtered.length;
+                        updateAllotments(filtered);
+                    } else if (data.type === 'update_course') {
+                        // Update courses
+                        const updatedCourses = courses.map(c => {
+                            const update = data.data.find((u: any) => u.code?.toLowerCase() === c.code.toLowerCase());
+                            if (update) {
+                                return { ...c, ...update, id: c.id };
+                            }
+                            return c;
+                        });
+                        updateCourses(updatedCourses);
+                        processedCount += data.data.length;
+                    } else if (data.type === 'delete_course') {
+                        const filtered = courses.filter(c =>
+                            !data.data.some((d: any) => c.code.toLowerCase() === d.code?.toLowerCase())
+                        );
+                        processedCount = courses.length - filtered.length;
+                        updateCourses(filtered);
+                    } else if (data.type === 'update_faculty') {
+                        const updatedFaculty = faculty.map(f => {
+                            const update = data.data.find((u: any) => u.initials?.toLowerCase() === f.initials.toLowerCase());
+                            if (update) {
+                                return { ...f, ...update, id: f.id };
+                            }
+                            return f;
+                        });
+                        updateFaculty(updatedFaculty);
+                        processedCount += data.data.length;
+                    } else if (data.type === 'delete_faculty') {
+                        const filtered = faculty.filter(f =>
+                            !data.data.some((d: any) => f.initials.toLowerCase() === d.initials?.toLowerCase())
+                        );
+                        processedCount = faculty.length - filtered.length;
+                        updateFaculty(filtered);
+                    } else if (data.type === 'update_room') {
+                        const updatedRooms = rooms.map(r => {
+                            const update = data.data.find((u: any) => u.name?.toLowerCase() === r.name.toLowerCase());
+                            if (update) {
+                                return { ...r, ...update, id: r.id };
+                            }
+                            return r;
+                        });
+                        updateRooms(updatedRooms);
+                        processedCount += data.data.length;
+                    } else if (data.type === 'delete_room') {
+                        const filtered = rooms.filter(r =>
+                            !data.data.some((d: any) => r.name.toLowerCase() === d.name?.toLowerCase())
+                        );
+                        processedCount = rooms.length - filtered.length;
+                        updateRooms(filtered);
                     }
                 }
             } catch (e) {

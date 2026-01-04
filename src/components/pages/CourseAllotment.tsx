@@ -5,8 +5,8 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "../ui/dialog";
-import { Plus, Search, Clock, Upload, Trash2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription, DialogClose } from "../ui/dialog";
+import { Plus, Search, Clock, Upload, Trash2, Download } from "lucide-react";
 import { useState, useRef } from "react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
@@ -22,7 +22,7 @@ const avatarColors = [
 ];
 
 export function CourseAllotment() {
-  const { allotments, updateAllotments, courses, faculty, departments, rooms } = useTimetableStore();
+  const { allotments, updateAllotments, courses, faculty, rooms } = useTimetableStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("all");
   const [semesterFilter, setSemesterFilter] = useState("all");
@@ -52,54 +52,144 @@ export function CourseAllotment() {
     try {
       const data = await parseCSV(file);
 
-      // Validate required fields
-      const requiredFields = ['courseName', 'facultyName', 'sections'];
-      const errors: string[] = [];
+      if (data.length === 0) {
+        toast.error("CSV file is empty");
+        return;
+      }
+
+      // Determine CSV format
+      const isNewFormat = 'Subject' in data[0] && 'Teachers' in data[0] && 'Department' in data[0];
+
+      // Validate required fields based on format
+      const requiredFields = isNewFormat
+        ? ['Subject', 'Teachers', 'Department', 'Semester', 'Section']
+        : ['courseName', 'facultyName', 'sections'];
+
+      const validAllotments: any[] = [];
+      const validationErrors: string[] = [];
 
       data.forEach((row, index) => {
-        requiredFields.forEach(field => {
-          if (!row[field]) {
-            errors.push(`Row ${index + 2}: Missing required field '${field}'`);
+        let courseName, facultyName, classIdsList, dept;
+
+        // Check for missing fields
+        const missingFields = requiredFields.filter(field => !row[field]);
+        if (missingFields.length > 0) {
+          validationErrors.push(`Row ${index + 2}: Skipped - Missing required fields: ${missingFields.join(', ')}`);
+          return;
+        }
+
+        if (isNewFormat) {
+          courseName = row.Subject;
+          facultyName = row.Teachers;
+          // Construct class ID:
+          // If Section already contains the Department, don't prefix it again?
+          // But usually Section is just "A" or "AM".
+          // The issue reported is that it defaults to BS-SE? 
+          // I will enforce using row.Department.
+          // Format: DEPT-SEM-SECTION
+          const cleanDept = row.Department.trim();
+          const cleanSem = row.Semester.toString().trim();
+          const cleanSec = row.Section.toString().trim();
+          const classId = `${cleanDept}-${cleanSem}-${cleanSec}`;
+          classIdsList = [classId];
+          dept = row.Department;
+        } else {
+          courseName = row.courseName;
+          facultyName = row.facultyName;
+          classIdsList = row.sections?.split(',').map((s: string) => s.trim()).filter((s: string) => s) || [];
+          dept = row.department;
+        }
+
+        // Smart course matching: Filter by department and semester first, then match by name
+        let course;
+        if (isNewFormat && row.Department && row.Semester) {
+          // Filter courses by department and semester for more accurate matching
+          const filteredCourses = courses.filter(c =>
+            c.department === row.Department &&
+            c.semester === row.Semester.toString()
+          );
+
+          // Now find by name or code within the filtered list
+          course = filteredCourses.find(c =>
+            c.name.toLowerCase() === courseName.toLowerCase() ||
+            c.code.toLowerCase() === courseName.toLowerCase()
+          );
+
+          // Fallback: search all courses if not found
+          if (!course) {
+            course = courses.find(c =>
+              c.name.toLowerCase() === courseName.toLowerCase() ||
+              c.code.toLowerCase() === courseName.toLowerCase()
+            );
           }
+        } else {
+          // Legacy format: simple name/code match
+          course = courses.find(c => c.name === courseName || c.code === courseName);
+        }
+
+        const facultyMember = faculty.find(f => f.name === facultyName);
+
+        if (!course) {
+          validationErrors.push(`Row ${index + 2}: Skipped - Course not found: '${courseName}'`);
+          return;
+        }
+        if (!facultyMember) {
+          validationErrors.push(`Row ${index + 2}: Skipped - Faculty not found: '${facultyName}'`);
+          return;
+        }
+
+        validAllotments.push({
+          courseId: course.id,
+          facultyId: facultyMember.id,
+          classIds: classIdsList,
+          preferredRoomId: row.roomName ? rooms.find(r => r.name === row.roomName)?.id : undefined,
+          department: dept || course.department
         });
       });
 
-      if (errors.length > 0) {
-        toast.error(`CSV validation failed: ${errors[0]}`);
-        console.error('Validation errors:', errors);
+      if (validAllotments.length === 0) {
+        console.error('Import validation errors:', validationErrors);
+        toast.error(`No valid allotments found. Check console for details. Common issues: faculty names don't match, course names don't match.`);
+
+        // Show a summary of error types
+        const courseErrors = validationErrors.filter(e => e.includes('Course not found')).length;
+        const facultyErrors = validationErrors.filter(e => e.includes('Faculty not found')).length;
+        const missingFieldErrors = validationErrors.filter(e => e.includes('Missing required fields')).length;
+
+        console.log(`\n📊 Error Summary:
+- Course not found: ${courseErrors}
+- Faculty not found: ${facultyErrors}  
+- Missing fields: ${missingFieldErrors}
+        
+💡 Tips:
+- Faculty names must match EXACTLY (check Faculty tab)
+- Course names must match EXACTLY (check Course Offerings tab)
+- Use full names, not abbreviations or codes`);
         return;
       }
 
-      // Map CSV data to allotments
-      const newAllotments = data.map(row => {
-        const course = courses.find(c => c.name === row.courseName || c.code === row.courseName);
-        const facultyMember = faculty.find(f => f.name === row.facultyName);
+      if (validationErrors.length > 0) {
+        console.warn('Import validation warnings:', validationErrors);
 
-        if (!course) {
-          errors.push(`Course not found: ${row.courseName}`);
-          return null;
+        const courseErrors = validationErrors.filter(e => e.includes('Course not found'));
+        const facultyErrors = validationErrors.filter(e => e.includes('Faculty not found'));
+
+        if (courseErrors.length > 0) {
+          console.log(`\n❌ Courses not found (${courseErrors.length}):`, courseErrors);
         }
-        if (!facultyMember) {
-          errors.push(`Faculty not found: ${row.facultyName}`);
-          return null;
+        if (facultyErrors.length > 0) {
+          console.log(`\n❌ Faculty not found (${facultyErrors.length}):`, facultyErrors);
         }
 
-        return {
-          courseId: course.id,
-          facultyId: facultyMember.id,
-          classIds: row.sections.split(',').map((s: string) => s.trim()).filter((s: string) => s),
-          preferredRoomId: row.roomName ? rooms.find(r => r.name === row.roomName)?.id : undefined,
-          department: row.department || course.department
-        };
-      }).filter(Boolean);
-
-      if (errors.length > 0) {
-        toast.error(`Mapping failed: ${errors[0]}`);
-        console.error('Mapping errors:', errors);
-        return;
+        toast.warning(
+          `Found ${validAllotments.length} valid allotments. ${validationErrors.length} rows skipped. Check console for details.`,
+          { duration: 5000 }
+        );
+      } else {
+        toast.success(`All ${validAllotments.length} allotments validated successfully!`);
       }
 
-      setImportPreview({ allotments: newAllotments, count: newAllotments.length });
+      setImportPreview({ allotments: validAllotments, count: validAllotments.length });
       setIsImportDialogOpen(true);
     } catch (error) {
       console.error('Import error:', error);
@@ -124,9 +214,36 @@ export function CourseAllotment() {
     } catch (error) {
       console.error('Import error:', error);
       toast.error('Failed to import allotments');
-    } finally {
       setImporting(false);
     }
+  };
+
+  const downloadTemplate = () => {
+    // Create CSV template with headers and realistic example data
+    const headers = ['Subject', 'Teachers', 'Department', 'Semester', 'Section', 'RoomName'];
+
+    const csvContent = [
+      headers.join(','),
+      // Example rows with realistic FULL course names (not codes!)
+      'Programming Fundamentals,Dr. John Doe,BS-CS,1,A,R101',
+      'Data Structures,Dr. Jane Smith,BS-CS,2,B,R102',
+      'Software Engineering,Dr. Bob Johnson,BS-SE,3,A,R201',
+      'Database Systems,Dr. Alice Williams,BS-CS,4,C,LAB-01'
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'allotment_template.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success('Template downloaded successfully!');
   };
 
   // Convert allotments to display format
@@ -135,14 +252,29 @@ export function CourseAllotment() {
     const facultyMember = faculty.find(f => f.id === allotment.facultyId);
     const room = allotment.preferredRoomId ? rooms.find(r => r.id === allotment.preferredRoomId) : null;
 
+    // Try to infer semester from classId if available (e.g. "BS-CS-1-AM" -> 1)
+    // This prioritizes the actual allotted semester over the course's default semester
+    let displaySemester = course?.semester || "";
+    if (allotment.classIds && allotment.classIds.length > 0) {
+      // Look for pattern like *-{Semester}-{Section} (e.g. -1-AM)
+      // We look for a digit(s) bounded by hyphens near the end
+      const classId = allotment.classIds[0];
+      if (classId && typeof classId === 'string') {
+        const match = classId.match(/-(\d+)-[^-]+$/);
+        if (match) {
+          displaySemester = match[1];
+        }
+      }
+    }
+
     return {
-      id: allotment.courseId + allotment.facultyId,
+      id: allotment.courseId + allotment.facultyId + (allotment.classIds || []).sort().join('-'),
       faculty: facultyMember?.name || "Unknown Faculty",
       initials: facultyMember?.initials || "??",
       course: course?.name || "Unknown Course",
       code: course?.code || "???",
       department: allotment.department || course?.department || "",
-      semester: course?.semester || "",
+      semester: displaySemester,
       classes: allotment.classIds,
       room: room?.name || "Not Assigned",
       hours: course ? course.credits * 1.5 : 0, // Approximate hours
@@ -151,34 +283,34 @@ export function CourseAllotment() {
   });
 
   const filteredAllotments = displayAllotments.filter(allotment => {
-    const matchesSearch = allotment.faculty.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      allotment.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      allotment.code.toLowerCase().includes(searchQuery.toLowerCase());
+    // Normalize helper: remove non-alphanumeric, uppercase
+    const normalize = (str: string) => str ? str.replace(/[^a-zA-Z0-9]/g, '').toUpperCase() : '';
 
-    // Department filter - normalize comparison
-    const courseDept = (allotment.department || '').toUpperCase().trim();
-    const selectedDept = departmentFilter.toUpperCase().trim();
+    const matchesSearch =
+      (allotment.faculty && allotment.faculty.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (allotment.course && allotment.course.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (allotment.code && allotment.code.toLowerCase().includes(searchQuery.toLowerCase()));
+
+    // Department filter
+    const courseDept = normalize(allotment.department);
+    const selectedDept = normalize(departmentFilter);
     const matchesDepartment = departmentFilter === "all" || courseDept === selectedDept;
 
-    // Semester filter - normalize to just the number
-    let courseSemester = String(allotment.semester || '').trim();
-    let selectedSem = String(semesterFilter).trim();
-
-    // Remove "Semester " prefix if exists
-    courseSemester = courseSemester.replace(/^Semester\s*/i, '');
-    selectedSem = selectedSem.replace(/^Semester\s*/i, '');
-
+    // Semester filter
+    const courseSemester = normalize(String(allotment.semester).replace(/^Semester\s*/i, ''));
+    const selectedSem = normalize(String(semesterFilter).replace(/^Semester\s*/i, ''));
     const matchesSemester = semesterFilter === "all" || courseSemester === selectedSem;
 
     return matchesSearch && matchesDepartment && matchesSemester;
   });
 
   // Get unique semesters - normalize to just numbers
+  // Derived from displayAllotments to ensure all visible semesters are filterable
   const uniqueSemesters = Array.from(
     new Set(
-      courses
-        .map(c => {
-          let sem = String(c.semester || '').trim();
+      displayAllotments
+        .map(a => {
+          let sem = String(a.semester || '').trim();
           // Remove "Semester " prefix if it exists
           sem = sem.replace(/^Semester\s*/i, '');
           return sem;
@@ -240,12 +372,12 @@ export function CourseAllotment() {
     });
   };
 
-  const handleRemoveAllotment = (allotmentId: string) => {
+  const handleRemoveAllotment = async (allotmentId: string) => {
     const updatedAllotments = allotments.filter(a => {
-      const id = a.courseId + a.facultyId;
+      const id = a.courseId + a.facultyId + (a.classIds || []).sort().join('-');
       return id !== allotmentId;
     });
-    updateAllotments(updatedAllotments);
+    await updateAllotments(updatedAllotments);
     toast.success('Allotment removed successfully!');
   };
 
@@ -271,6 +403,14 @@ export function CourseAllotment() {
               ref={fileInputRef}
               onChange={handleFileSelect}
             />
+            <Button
+              onClick={downloadTemplate}
+              variant="outline"
+              className="border-green-300 text-green-700 hover:bg-green-50"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download Template
+            </Button>
             <Button
               onClick={() => fileInputRef.current?.click()}
               variant="outline"
@@ -300,13 +440,16 @@ export function CourseAllotment() {
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
-                    <Button variant="outline">Cancel</Button>
+                    <DialogClose asChild>
+                      <Button variant="outline" className="border-slate-300 hover:bg-slate-100">Cancel</Button>
+                    </DialogClose>
                     <Button
                       onClick={() => {
                         updateAllotments([]);
                         toast.success('All allotments deleted successfully!');
                       }}
-                      className="bg-red-600 hover:bg-red-700 text-white"
+                      variant="destructive"
+                      className="bg-red-600 hover:bg-red-700 text-black font-semibold shadow-sm"
                     >
                       Delete All
                     </Button>
@@ -637,7 +780,10 @@ export function CourseAllotment() {
                         size="sm"
                         className="rounded-lg border-slate-200 hover:bg-slate-50"
                         onClick={() => {
-                          const actualAllotment = allotments.find(a => (a.courseId + a.facultyId) === allotment.id);
+                          const actualAllotment = allotments.find(a => {
+                            const id = a.courseId + a.facultyId + (a.classIds || []).sort().join('-');
+                            return id === allotment.id;
+                          });
                           if (actualAllotment) {
                             setFormData({
                               courseId: actualAllotment.courseId,

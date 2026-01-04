@@ -11,7 +11,7 @@ function timeToMinutes(time: string): number {
 /**
  * Check if two time slots overlap
  */
-function timeSlotsOverlap(slot1: TimeSlot, slot2: TimeSlot): boolean {
+function _timeSlotsOverlap(slot1: TimeSlot, slot2: TimeSlot): boolean {
     if (slot1.day !== slot2.day) return false;
 
     const start1 = timeToMinutes(slot1.startTime);
@@ -25,7 +25,7 @@ function timeSlotsOverlap(slot1: TimeSlot, slot2: TimeSlot): boolean {
 /**
  * Get duration of a time slot in minutes
  */
-function getSlotDuration(slot: TimeSlot): number {
+function _getSlotDuration(slot: TimeSlot): number {
     return timeToMinutes(slot.endTime) - timeToMinutes(slot.startTime);
 }
 
@@ -146,7 +146,7 @@ export function checkLabContinuity(entries: TimetableEntry[]): Conflict[] {
         sessionMap.get(key)!.push(entry);
     });
 
-    sessionMap.forEach((sessionEntries, key) => {
+    sessionMap.forEach((sessionEntries) => {
         // Check if this is a lab (multiple entries for same course-class on same day)
         const dayMap = new Map<string, TimetableEntry[]>();
         sessionEntries.forEach(entry => {

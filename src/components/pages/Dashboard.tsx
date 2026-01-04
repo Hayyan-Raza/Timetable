@@ -13,7 +13,6 @@ import { generateTimetableViaAPI as generateTimetable, pollGenerationStatus, get
 import { exportTimetableToCSV } from "../../utils/csvExport";
 import { GenerationResult } from "../../types/timetable.types";
 import { TimetableGridView } from "../TimetableGridView";
-import { TimetableHeader } from "../TimetableHeader";
 import { Progress } from "../ui/progress";
 
 // Hardcoded mock data removed - now using real timetable store
@@ -49,7 +48,9 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
   // Auto-select first class when data loads
   useEffect(() => {
     if (allotments.length > 0) {
-      const allClasses = Array.from(new Set(allotments.flatMap(a => a.classIds))).sort();
+      const allClasses = Array.from(new Set(allotments.flatMap(a => a.classIds || [])))
+        .filter(c => c && typeof c === 'string')
+        .sort();
       if (allClasses.length > 0) {
         const currentValid = allClasses.some(c => c.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass);
         if (!currentValid) {
@@ -142,7 +143,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
             // Auto-switch to a class that has entries
             if (result.timetable.length > 0) {
               const currentClassHasEntries = result.timetable.some(
-                e => e.classId.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass
+                (e: any) => e.classId.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass
               );
 
               if (!currentClassHasEntries) {
@@ -187,66 +188,6 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
     }
   };
 
-  const handleExportTimetable = async () => {
-    // Get filtered entries for the selected class
-    // Helper to find the original class ID from the selected value
-    const getOriginalClassId = (selectedValue: string) => {
-      const allClasses = Array.from(new Set(allotments.flatMap(a => a.classIds)));
-      return allClasses.find(c => c.toLowerCase().replace('-', '') === selectedValue) || "BCS-3A";
-    };
-
-    const classFullName = getOriginalClassId(selectedClass);
-
-    const filteredEntries = getTimetableForClass(entries, classFullName);
-
-    if (filteredEntries.length === 0) {
-      toast.error("No timetable data to export. Please generate a timetable first.");
-      return;
-    }
-
-    if (!gridViewRef.current) {
-      toast.error("Unable to capture timetable. Please try again.");
-      return;
-    }
-
-    try {
-      toast.loading("Generating timetable image...");
-
-      // Use dom-to-image-more to convert the grid view directly to blob
-      const blob = await domtoimage.toBlob(gridViewRef.current, {
-        quality: 1,
-        bgcolor: '#ffffff',
-        style: {
-          transform: 'scale(1)',
-          transformOrigin: 'top left'
-        }
-      });
-
-      // Create download link with proper filename
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      const filename = `timetable_${classFullName}_${selectedSemester}.png`;
-
-      link.href = url;
-      link.download = filename;
-      link.style.display = 'none';
-
-      document.body.appendChild(link);
-
-      // Small delay to ensure the download attribute is processed
-      setTimeout(() => {
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      }, 100);
-
-      toast.dismiss();
-      toast.success("Timetable exported as image successfully!");
-    } catch (error) {
-      toast.dismiss();
-      toast.error("Error exporting timetable: " + (error as Error).message);
-    }
-  };
 
   return (
     <>
@@ -347,7 +288,8 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                   </SelectTrigger>
                   <SelectContent>
                     {/* Show all class options - sections come from allotments */}
-                    {Array.from(new Set(allotments.flatMap(a => a.classIds)))
+                    {Array.from(new Set(allotments.flatMap(a => a.classIds || [])))
+                      .filter(c => c && typeof c === 'string')
                       .sort()
                       .map(classId => (
                         <SelectItem key={classId} value={classId.toLowerCase().replace(/[^a-z0-9]/g, '')}>
@@ -436,7 +378,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                 {(() => {
                   // Helper to find the original class ID from the selected value
                   const getOriginalClassId = (selectedValue: string) => {
-                    const allClasses = Array.from(new Set(allotments.flatMap(a => a.classIds)));
+                    const allClasses = Array.from(new Set(allotments.flatMap(a => a.classIds || []))).filter(c => c && typeof c === 'string');
                     return allClasses.find(c => c.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedValue) || "BCS-3A";
                   };
 
