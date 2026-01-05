@@ -5,14 +5,14 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog";
-import { Plus, Search, MapPin, Users, Building } from "lucide-react";
+import { Plus, Search, MapPin, Users, Building, Download } from "lucide-react";
 import { useState } from "react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
 import { Room } from "../../types/timetable.types";
 
 export function RoomManagement() {
-    const { rooms, updateRooms } = useTimetableStore();
+    const { rooms, updateRooms, importRooms } = useTimetableStore();
     const [searchQuery, setSearchQuery] = useState("");
     const [typeFilter, setTypeFilter] = useState("all");
     const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -150,6 +150,75 @@ export function RoomManagement() {
                                 Delete Selected ({selectedRooms.length})
                             </Button>
                         )}
+                        <Button
+                            variant="outline"
+                            className="gap-2 rounded-xl"
+                            onClick={() => {
+                                const csvContent = "Name,Capacity,Type,Building\nRoom 101,40,lecture,Main Block";
+                                const blob = new Blob([csvContent], { type: 'text/csv' });
+                                const url = window.URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = "rooms_template.csv";
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                window.URL.revokeObjectURL(url);
+                            }}
+                        >
+                            <Download className="w-4 h-4" />
+                            Template
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="gap-2 rounded-xl"
+                            onClick={() => document.getElementById('room-csv-upload')?.click()}
+                        >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            Import CSV
+                        </Button>
+                        <input
+                            type="file"
+                            id="room-csv-upload"
+                            className="hidden"
+                            style={{ display: 'none' }}
+                            accept=".csv"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = async (event) => {
+                                        const text = event.target?.result as string;
+                                        const rows = text.split('\n').slice(1); // Skip header
+                                        const newRooms: Room[] = rows
+                                            .filter(row => row.trim() !== '')
+                                            .map(row => {
+                                                const [name, capacity, type, building] = row.split(',').map(s => s.trim());
+                                                if (!name) return null;
+                                                return {
+                                                    id: `room-import-${Math.random().toString(36).substr(2, 9)}`,
+                                                    name,
+                                                    capacity: Number(capacity) || 40,
+                                                    type: (type === 'lab' || type === 'both') ? type : 'lecture',
+                                                    building: building || "Main Block"
+                                                };
+                                            })
+                                            .filter(r => r !== null) as Room[];
+
+                                        if (newRooms.length > 0) {
+                                            await importRooms(newRooms);
+                                            toast.success(`Imported ${newRooms.length} rooms`);
+                                        } else {
+                                            toast.error("No valid rooms found in CSV");
+                                        }
+                                        e.target.value = ''; // Reset input
+                                    };
+                                    reader.readAsText(file);
+                                }
+                            }}
+                        />
                         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30">
@@ -277,8 +346,8 @@ export function RoomManagement() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, delay: index * 0.05 }}
                         className={`group bg-white dark:bg-slate-800 rounded-2xl border p-6 hover:shadow-lg transition-all duration-300 relative ${selectedRooms.includes(room.id)
-                                ? 'border-blue-500 ring-1 ring-blue-500'
-                                : 'border-slate-200/60 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600'
+                            ? 'border-blue-500 ring-1 ring-blue-500'
+                            : 'border-slate-200/60 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600'
                             }`}
                     >
                         <div className="absolute top-4 right-4 z-10">

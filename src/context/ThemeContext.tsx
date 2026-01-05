@@ -143,8 +143,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
         localStorage.setItem("app-theme", currentTheme);
 
-        // Handle legacy dark mode class for Tailwind
-        if (currentTheme === 'dark') {
+        // Add 'dark' class for all non-light themes to activate Tailwind's dark: variants
+        if (currentTheme !== 'light') {
             root.classList.add('dark');
         } else {
             root.classList.remove('dark');

@@ -193,7 +193,9 @@ export async function parseCompleteTimetable(file: File): Promise<ParseResult> {
         rows.forEach(row => {
             const courseCode = row['Course Code'] || generateCourseCode(row['Subject'], row['Semester']);
             const teacherName = row['Teachers'];
-            const section = row['Section'];
+            const sectionFromCSV = row['Section']; // e.g., "HM", "EM", "AM"
+            const department = row['Department']; // e.g., "BS-CS", "BS-SE"
+            const semester = row['Semester']; // e.g., "1", "2"
             const day = row['Day'];
             const hour = row['Hour'];
             const roomName = row['Room'];
@@ -204,20 +206,24 @@ export async function parseCompleteTimetable(file: File): Promise<ParseResult> {
             const room = roomsMap.get(roomName);
 
             if (course && faculty) {
+                // Generate proper section code based on department and semester
+                // Format: DEPARTMENT-SEMESTER-SECTION (e.g., BS-CS-1-HM)
+                const properSectionCode = `${department}-${semester}-${sectionFromCSV}`;
+
                 const allotmentKey = `${course.id}-${faculty.id}`;
 
                 if (!allotmentsMap.has(allotmentKey)) {
                     allotmentsMap.set(allotmentKey, {
                         courseId: course.id,
                         facultyId: faculty.id,
-                        classIds: [section],
+                        classIds: [properSectionCode],
                         preferredRoomId: room?.id // Store room assignment from CSV
                     });
                 } else {
                     // Add section if not already present
                     const allotment = allotmentsMap.get(allotmentKey)!;
-                    if (!allotment.classIds.includes(section)) {
-                        allotment.classIds.push(section);
+                    if (!allotment.classIds.includes(properSectionCode)) {
+                        allotment.classIds.push(properSectionCode);
                     }
                     // Update preferred room if not set
                     if (!allotment.preferredRoomId && room) {

@@ -221,7 +221,7 @@ export default function EditTimetable() {
                                                                 <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
                                                                     {deptDisplay && (
                                                                         <>
-                                                                            <span className="text-slate-700">{deptDisplay}</span>
+                                                                            <span className="text-slate-700 dark:text-slate-300">{deptDisplay}</span>
                                                                             <span className="text-slate-300">•</span>
                                                                         </>
                                                                     )}

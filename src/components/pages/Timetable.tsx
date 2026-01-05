@@ -404,7 +404,7 @@ export function Timetable() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white rounded-2xl border border-slate-200/60 p-6 mb-6"
+          className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 mb-6"
         >
           <div className="grid grid-cols-3 gap-4">
             {/* 1. Department Selection */}
@@ -462,7 +462,7 @@ export function Timetable() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-2xl border border-slate-200/60 p-12 flex flex-col items-center justify-center text-center"
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-12 flex flex-col items-center justify-center text-center"
           >
             <CalendarIcon className="w-16 h-16 mx-auto mb-4 text-slate-300" />
             <h3 className="text-slate-800 dark:text-slate-100 mb-2">
@@ -488,12 +488,12 @@ export function Timetable() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-2xl border border-slate-200/60 overflow-hidden"
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 overflow-hidden"
           >
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
+                  <tr className="bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-700">
                     <th className="px-4 py-4 text-left text-sm text-slate-600 dark:text-slate-300 w-32">Time</th>
                     {days.map((day) => (
                       <th key={day} className="px-4 py-4 text-center text-sm text-slate-600 dark:text-slate-300 min-w-[180px]">
@@ -508,8 +508,8 @@ export function Timetable() {
                     .sort()
                     .map((timeString, slotIndex) => {
                       return (
-                        <tr key={timeString} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
-                          <td className="px-4 py-3 text-sm text-slate-500 bg-slate-50/50">
+                        <tr key={timeString} className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50/50 dark:hover:bg-slate-700/50 transition-colors">
+                          <td className="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 bg-slate-50/50 dark:bg-slate-700/50">
                             {timeString}
                           </td>
                           {days.map((day) => {
@@ -551,9 +551,9 @@ export function Timetable() {
             className="space-y-6"
           >
             {days.map((day, dayIndex) => (
-              <div key={day} className="bg-white rounded-2xl border border-slate-200/60 overflow-hidden">
-                <div className="bg-gradient-to-r from-slate-50 to-white px-6 py-4 border-b border-slate-200">
-                  <h3 className="text-slate-800 flex items-center gap-2">
+              <div key={day} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 overflow-hidden">
+                <div className="bg-gradient-to-r from-slate-50 to-white dark:from-slate-700 dark:to-slate-800 px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                  <h3 className="text-slate-800 dark:text-slate-100 flex items-center gap-2">
                     <CalendarIcon className="w-5 h-5" />
                     {day}
                   </h3>
@@ -565,13 +565,13 @@ export function Timetable() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors"
+                      className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
                     >
                       <Badge className={`${courseColors[dayIndex % courseColors.length]} border`}>
                         {classItem.time}
                       </Badge>
                       <div className="flex-1">
-                        <p className="text-slate-800 font-medium">{classItem.course}</p>
+                        <p className="text-slate-800 dark:text-slate-100 font-medium">{classItem.course}</p>
                         <p className="text-sm text-slate-500">{classItem.faculty}</p>
                       </div>
                       <Badge variant="outline" className="border-slate-200">

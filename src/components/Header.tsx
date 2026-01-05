@@ -1,8 +1,27 @@
-import { Search, ChevronDown } from "lucide-react";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { Input } from "./ui/input";
+import { ChevronDown, LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export function Header() {
+  const { user, logout } = useAuth();
+
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-[var(--border-color)] shadow-sm transition-colors duration-300"
@@ -24,30 +43,48 @@ export function Header() {
 
         {/* Search & Profile */}
         <div className="flex items-center gap-6">
-          {/* Search Bar */}
-          <div className="relative w-96">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[var(--fg-secondary)] w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search classes, courses, or faculty..."
-              className="pl-11 pr-4 py-2.5 bg-[var(--bg-secondary)] border-0 rounded-full focus:bg-[var(--bg-primary)] focus:ring-2 focus:ring-blue-500/20 transition-all text-[var(--fg-primary)] placeholder:text-[var(--fg-secondary)]"
-            />
-          </div>
 
           {/* Profile */}
-          <div className="flex items-center gap-3 pl-6 border-l border-[var(--border-color)]">
-            <Avatar className="w-10 h-10 ring-2 ring-blue-100 dark:ring-blue-900">
-              <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
-                DA
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex items-center gap-2">
-              <div>
-                <p className="text-sm text-[var(--header-fg)] font-medium">Dr. Ali</p>
-                <p className="text-xs text-[var(--fg-secondary)]">Administrator</p>
-              </div>
-              <ChevronDown className="w-4 h-4 text-[var(--fg-secondary)]" />
-            </div>
+          <div className="pl-6 border-l border-[var(--border-color)]">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="outline-none" asChild>
+                <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 p-2 -mr-2 rounded-xl transition-colors">
+                  <Avatar className="w-10 h-10 ring-2 ring-blue-100 dark:ring-blue-900 shadow-sm border border-white dark:border-slate-800">
+                    <AvatarImage src={user?.picture} />
+                    <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+                      {user ? getInitials(user.name) : "GU"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex items-center gap-2">
+                    <div className="text-left">
+                      <p className="text-sm text-[var(--header-fg)] font-medium max-w-[120px] truncate">
+                        {user?.name || "Guest User"}
+                      </p>
+                      <p className="text-xs text-[var(--fg-secondary)]">Administrator</p>
+                    </div>
+                    <ChevronDown className="w-4 h-4 text-[var(--fg-secondary)]" />
+                  </div>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none text-slate-800 dark:text-slate-100">{user?.name}</p>
+                    <p className="text-xs leading-none text-slate-500 dark:text-slate-400">
+                      {user?.email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-slate-200 dark:bg-slate-700" />
+                <DropdownMenuItem
+                  className="text-red-600 dark:text-red-400 focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-900/10 cursor-pointer"
+                  onClick={logout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

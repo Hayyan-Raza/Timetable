@@ -99,7 +99,7 @@ export function DataManagement() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="bg-white rounded-2xl border border-slate-200/60 shadow-sm p-8"
+                className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 shadow-sm p-8"
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Reset to Defaults */}

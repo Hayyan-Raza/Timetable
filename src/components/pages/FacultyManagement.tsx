@@ -5,14 +5,14 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog";
-import { Plus, Search, Users, Briefcase, Clock } from "lucide-react";
-import { useState } from "react";
+import { Plus, Search, Users, Briefcase, Clock, Download } from "lucide-react";
+import { useState, useMemo } from "react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
 import { Faculty } from "../../types/timetable.types";
 
 export function FacultyManagement() {
-    const { faculty, updateFaculty, departments } = useTimetableStore();
+    const { faculty, updateFaculty, departments, importFaculty } = useTimetableStore();
 
     const getDepartmentName = (deptIdOrName: string | undefined) => {
         if (!deptIdOrName) return "";
@@ -32,13 +32,15 @@ export function FacultyManagement() {
         department: "Computer Science",
     });
 
-    const filteredFaculty = faculty.filter(f => {
-        const matchesSearch = f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            f.initials.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesDept = deptFilter === "all" || f.department === deptFilter;
+    const filteredFaculty = useMemo(() => {
+        return faculty.filter(f => {
+            const matchesSearch = f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                f.initials.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesDept = deptFilter === "all" || f.department === deptFilter;
 
-        return matchesSearch && matchesDept;
-    });
+            return matchesSearch && matchesDept;
+        });
+    }, [faculty, searchQuery, deptFilter]);
 
     const handleAddFaculty = () => {
         if (!formData.name || !formData.initials) {
@@ -114,12 +116,83 @@ export function FacultyManagement() {
                         <p className="text-slate-500 dark:text-slate-400">Manage faculty members and their workloads</p>
                     </div>
                     <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-                        <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30">
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add New Faculty
+                        <div className="flex gap-2">
+                            <Button
+                                variant="outline"
+                                className="gap-2 rounded-xl"
+                                onClick={() => {
+                                    const csvContent = "Name,Initials,MaxWeeklyHours,Department\nDr. John Doe,JD,12,Computer Science";
+                                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = "faculty_template.csv";
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                    window.URL.revokeObjectURL(url);
+                                }}
+                            >
+                                <Download className="w-4 h-4" />
+                                Template
                             </Button>
-                        </DialogTrigger>
+                            <Button
+                                variant="outline"
+                                className="gap-2 rounded-xl"
+                                onClick={() => document.getElementById('faculty-csv-upload')?.click()}
+                            >
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                                Import CSV
+                            </Button>
+                            <input
+                                type="file"
+                                id="faculty-csv-upload"
+                                className="hidden"
+                                style={{ display: 'none' }}
+                                accept=".csv"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = async (event) => {
+                                            const text = event.target?.result as string;
+                                            const rows = text.split('\n').slice(1); // Skip header
+                                            const newFaculty: Faculty[] = rows
+                                                .filter(row => row.trim() !== '')
+                                                .map(row => {
+                                                    const [name, initials, maxWeeklyHours, department] = row.split(',').map(s => s.trim());
+                                                    if (!name || !initials) return null;
+                                                    return {
+                                                        id: `faculty-import-${Math.random().toString(36).substr(2, 9)}`,
+                                                        name,
+                                                        initials,
+                                                        maxWeeklyHours: Number(maxWeeklyHours) || 12,
+                                                        department: department || "Computer Science"
+                                                    };
+                                                })
+                                                .filter(f => f !== null) as Faculty[];
+
+                                            if (newFaculty.length > 0) {
+                                                await importFaculty(newFaculty);
+                                                toast.success(`Imported ${newFaculty.length} faculty members`);
+                                            } else {
+                                                toast.error("No valid faculty found in CSV");
+                                            }
+                                            e.target.value = ''; // Reset input
+                                        };
+                                        reader.readAsText(file);
+                                    }
+                                }}
+                            />
+                            <DialogTrigger asChild>
+                                <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    Add New Faculty
+                                </Button>
+                            </DialogTrigger>
+                        </div>
                         <DialogContent className="max-w-md">
                             <DialogHeader>
                                 <DialogTitle>Add New Faculty</DialogTitle>

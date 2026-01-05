@@ -17,7 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
 import { parseCSV } from "../../utils/csvParser";
@@ -173,20 +173,20 @@ export function CourseOffering() {
 
 
   // Map internal courses to display format
-  const displayCourses = courses.map(course => ({
+  const displayCourses = useMemo(() => courses.map(course => ({
     ...course,
     capacity: course.estimatedStudents,
     enrolled: 0, // Default enrolled count
-  }));
+  })), [courses]);
 
-  const filteredCourses = displayCourses.filter(course => {
+  const filteredCourses = useMemo(() => displayCourses.filter(course => {
     const matchesSearch = course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       course.code.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesType = typeFilter === "all" || course.type.toLowerCase() === typeFilter;
     const matchesSemester = semesterFilter === "all" ||
       course.semester === semesterFilter ||
       `Semester ${course.semester}` === semesterFilter ||
-      course.semester === semesterFilter.replace('Semester ', '');
+      String(course.semester) === semesterFilter.replace('Semester ', '');
     const matchesDepartment = departmentFilter === "all" ||
       course.department?.toLowerCase() === departmentFilter.toLowerCase();
 
@@ -197,7 +197,7 @@ export function CourseOffering() {
       (labFilter === "non-labs" && !isLab);
 
     return matchesSearch && matchesType && matchesSemester && matchesDepartment && matchesLab;
-  });
+  }), [displayCourses, searchQuery, typeFilter, semesterFilter, departmentFilter, labFilter]);
 
   const handleAddCourse = () => {
     // Auto-append "-L" to lab course codes to avoid duplicates with theory courses
@@ -312,7 +312,7 @@ export function CourseOffering() {
             />
             <Button
               variant="outline"
-              className="border-slate-200 text-slate-700 hover:bg-slate-50"
+              className="border-slate-200 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
               onClick={() => fileInputRef.current?.click()}
             >
               <Upload className="w-4 h-4 mr-2" />
@@ -433,7 +433,7 @@ export function CourseOffering() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white rounded-2xl border border-slate-200/60 p-6 mb-6"
+        className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 mb-6"
       >
         <div className="flex flex-wrap items-center gap-4">
           <div className="relative flex-1 min-w-[300px]">
@@ -511,7 +511,7 @@ export function CourseOffering() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="group bg-white rounded-2xl border border-slate-200/60 p-6 hover:border-slate-300 hover:shadow-lg transition-all duration-300"
+              className="group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
@@ -535,7 +535,7 @@ export function CourseOffering() {
                   </div>
                   <h3 className="text-slate-800 dark:text-slate-100 mb-1">{course.name}</h3>
                   <p className="text-sm text-slate-500">
-                    {course.semester.startsWith('Semester') ? course.semester : `Semester ${course.semester}`}
+                    {String(course.semester).startsWith('Semester') ? course.semester : `Semester ${course.semester}`}
                   </p>
                 </div>
               </div>
@@ -716,17 +716,17 @@ export function CourseOffering() {
               </div>
               <div>
                 <p className="text-slate-500">
-                  {selectedCourse.semester.startsWith('Semester') ? selectedCourse.semester : `Semester ${selectedCourse.semester}`}
+                  {String(selectedCourse.semester).startsWith('Semester') ? selectedCourse.semester : `Semester ${selectedCourse.semester}`}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4 pt-4 border-t">
                 <div>
                   <p className="text-sm text-slate-500">Credit Hours</p>
-                  <p className="text-slate-800">{selectedCourse.credits}</p>
+                  <p className="text-slate-800 dark:text-slate-100">{selectedCourse.credits}</p>
                 </div>
                 <div>
                   <p className="text-sm text-slate-500">Capacity</p>
-                  <p className="text-slate-800">{selectedCourse.capacity} students</p>
+                  <p className="text-slate-800 dark:text-slate-100">{selectedCourse.capacity} students</p>
                 </div>
               </div>
             </div>
@@ -743,9 +743,9 @@ export function CourseOffering() {
             <DialogTitle>Import Courses Preview</DialogTitle>
           </DialogHeader>
           <div className="py-4 space-y-4">
-            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <div className="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-slate-700">Valid Courses found:</span>
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Valid Courses found:</span>
                 <Badge className="bg-green-100 text-green-700 hover:bg-green-100">{importPreview?.valid.length || 0}</Badge>
               </div>
               <p className="text-xs text-slate-500">These courses will be added to your repository.</p>

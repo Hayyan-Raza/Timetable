@@ -17,6 +17,8 @@ import { Conflicts } from "./components/pages/Conflicts";
 import { Debugging } from "./components/pages/Debugging";
 import { useState, createContext, useContext, useEffect } from "react";
 import { useTimetableStore } from "./stores/timetableStore";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { Login } from "./components/pages/Login";
 
 type PageType = "Dashboard" | "Course Offering" | "Faculty Management" | "Room Management" | "Course Allotment" | "Timetable" | "Edit Timetable" | "Settings" | "Data Management" | "Agent" | "Departments" | "Semesters" | "Conflicts" | "Debugging";
 
@@ -40,6 +42,15 @@ export const useAppContext = () => {
 };
 
 export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}
+
+function AppContent() {
+  const { user, loading } = useAuth();
   const [showSplash, setShowSplash] = useState(true);
   const [activePage, setActivePage] = useState<PageType>("Dashboard");
   const [settings, setSettings] = useState<AppSettings>({
@@ -48,8 +59,10 @@ export default function App() {
   const { fetchData } = useTimetableStore();
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (user) {
+      fetchData();
+    }
+  }, [fetchData, user]);
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
     setSettings(prev => ({ ...prev, ...newSettings }));
@@ -87,6 +100,12 @@ export default function App() {
         return <Dashboard />;
     }
   };
+
+  if (loading) return null; // Or a loading spinner
+
+  if (!user) {
+    return <Login />;
+  }
 
   if (showSplash) {
     return <SplashScreen onFinish={() => setShowSplash(false)} />;

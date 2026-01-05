@@ -6,6 +6,7 @@ import {
     Department,
     Semester,
     SemesterSchema,
+    TimetableEntry,
 } from '../types/timetable.types';
 import {
     COURSES as DEFAULT_COURSES,
@@ -16,327 +17,274 @@ import {
     DEPARTMENTS as DEFAULT_DEPARTMENTS,
     SCHEMAS as DEFAULT_SCHEMAS,
 } from '../data/sampleData';
-import { supabase } from './supabaseClient';
+import { findOrCreateSpreadsheet, fetchSheetData, replaceSheetData } from './googleSheetsService';
 
-/**
- * Supabase-based data service for managing timetable data
- */
 class DataService {
-    /**
-     * Initialize data storage
-     */
+    private spreadsheetId: string | null = null;
+    private accessToken: string | null = null;
+
+    private getAccessToken(): string | null {
+        // Direct read from storage as this service isn't a React component
+        return localStorage.getItem("google_access_token");
+    }
+
     async initialize(): Promise<void> {
-        // Auto-seeding removed to allow empty state.
+        const token = this.getAccessToken();
+        if (!token) return; // Wait for login
+        this.accessToken = token;
+
+        try {
+            this.spreadsheetId = await findOrCreateSpreadsheet(token);
+        } catch (error) {
+            console.error("Failed to init Sheets:", error);
+        }
     }
 
-    /**
-     * Load courses from Supabase
-     */
+    getSpreadsheetUrl(): string | null {
+        if (!this.spreadsheetId) return null;
+        return `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}`;
+    }
+
+    // --- Helpers ---
+    private async ensureInit() {
+        if (!this.spreadsheetId) await this.initialize();
+        if (!this.spreadsheetId || !this.accessToken) throw new Error("Google Sheets not initialized or user not logged in");
+    }
+
+    // --- COURSES ---
     async loadCourses(): Promise<Course[]> {
-        try {
-            const { data, error } = await supabase.from('courses').select('*');
-            if (error) throw error;
-
-            // Map snake_case DB fields to camelCase TS interfaces if necessary
-            // Our SQL schema uses snake_case but we need to match the TS interface
-            return data.map((item: any) => ({
-                id: item.id,
-                code: item.code,
-                name: item.name,
-                credits: item.credits,
-                type: item.type,
-                semester: item.semester,
-                department: item.department || '', // Import department from database
-                requiresLab: item.requires_lab,
-                estimatedStudents: item.estimated_students
-            }));
-        } catch (error) {
-            console.error('Error loading courses:', error);
-            return [];
-        }
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Courses!A2:I");
+        return rows.map((r: string[]) => ({
+            id: r[0],
+            code: r[1],
+            name: r[2],
+            credits: Number(r[3]),
+            type: r[4] as any,
+            semester: r[5] === 'undefined' ? undefined : (isNaN(Number(r[5])) ? r[5] : Number(r[5])), // Handle complex semester types
+            department: r[6],
+            requiresLab: r[7] === "TRUE",
+            estimatedStudents: Number(r[8] || 0)
+        }));
     }
 
-    /**
-     * Save courses to Supabase
-     * Note: This replaces all courses. For individual updates, we should add specific methods.
-     */
     async saveCourses(courses: Course[]): Promise<void> {
-        try {
-            // First delete all existing courses (since we are mimicking the previous full-save behavior)
-            // In a real app, we would upsert or update specific records
-            const { error: deleteError } = await supabase.from('courses').delete().neq('id', 'placeholder');
-            if (deleteError) throw deleteError;
-
-            const dbCourses = courses.map(c => ({
-                id: c.id,
-                code: c.code,
-                name: c.name,
-                credits: c.credits,
-                type: c.type,
-                semester: c.semester,
-                department: c.department || '', // Save department to database
-                requires_lab: c.requiresLab,
-                estimated_students: c.estimatedStudents
-            }));
-
-            const { error } = await supabase.from('courses').insert(dbCourses);
-            if (error) throw error;
-        } catch (error) {
-            console.error('Error saving courses:', error);
-        }
+        await this.ensureInit();
+        const values = courses.map(c => [
+            c.id, c.code, c.name, c.credits, c.type, c.semester, c.department || '', c.requiresLab ? "TRUE" : "FALSE", c.estimatedStudents
+        ]);
+        // Write headers + data
+        const payload = [
+            ["ID", "Code", "Name", "Credits", "Type", "Semester", "Department", "RequiresLab", "EstimatedStudents"],
+            ...values
+        ];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Courses", payload);
     }
 
-
-
-    /**
-     * Save semesters (Disabled - using local constant)
-     */
-    async saveSemesters(_semesters: Semester[]): Promise<void> {
-        // No-op since we are using static local data for semesters
-        console.log('Semesters are static and cannot be modified via Supabase');
-    }
-
-
-
-    /**
-     * Load faculty from Supabase
-     */
+    // --- FACULTY ---
     async loadFaculty(): Promise<Faculty[]> {
-        try {
-            const { data, error } = await supabase.from('faculty').select('*');
-            if (error) throw error;
-
-            return data.map((item: any) => ({
-                id: item.id,
-                name: item.name,
-                initials: item.initials,
-                maxWeeklyHours: item.max_weekly_hours,
-                department: item.department
-            }));
-        } catch (error) {
-            console.error('Error loading faculty:', error);
-            return [];
-        }
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Faculty!A2:E");
+        return rows.map((r: string[]) => ({
+            id: r[0],
+            name: r[1],
+            initials: r[2],
+            maxWeeklyHours: Number(r[3]),
+            department: r[4]
+        }));
     }
 
-    /**
-     * Save faculty to Supabase
-     */
     async saveFaculty(faculty: Faculty[]): Promise<void> {
-        try {
-            const { error: deleteError } = await supabase.from('faculty').delete().neq('id', 'placeholder');
-            if (deleteError) throw deleteError;
-
-            const dbFaculty = faculty.map(f => ({
-                id: f.id,
-                name: f.name,
-                initials: f.initials,
-                max_weekly_hours: f.maxWeeklyHours,
-                department: f.department
-            }));
-
-            const { error } = await supabase.from('faculty').insert(dbFaculty);
-            if (error) throw error;
-        } catch (error) {
-            console.error('Error saving faculty:', error);
-        }
+        await this.ensureInit();
+        const values = faculty.map(f => [
+            f.id, f.name, f.initials, f.maxWeeklyHours, f.department
+        ]);
+        const payload = [
+            ["ID", "Name", "Initials", "MaxWeeklyHours", "Department"],
+            ...values
+        ];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Faculty", payload);
     }
 
-    /**
-     * Load rooms from Supabase
-     */
+    // --- ROOMS ---
     async loadRooms(): Promise<Room[]> {
-        try {
-            const { data, error } = await supabase.from('rooms').select('*');
-            if (error) throw error;
-
-            return data.map((item: any) => ({
-                id: item.id,
-                name: item.name,
-                capacity: item.capacity,
-                type: item.type,
-                building: item.building
-            }));
-        } catch (error) {
-            console.error('Error loading rooms:', error);
-            return [];
-        }
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Rooms!A2:E");
+        return rows.map((r: string[]) => ({
+            id: r[0],
+            name: r[1],
+            capacity: Number(r[2]),
+            type: r[3] as any,
+            building: r[4]
+        }));
     }
 
-    /**
-     * Save rooms to Supabase
-     */
     async saveRooms(rooms: Room[]): Promise<void> {
-        try {
-            const { error: deleteError } = await supabase.from('rooms').delete().neq('id', 'placeholder');
-            if (deleteError) throw deleteError;
-
-            const dbRooms = rooms.map(r => ({
-                id: r.id,
-                name: r.name,
-                capacity: r.capacity,
-                type: r.type,
-                building: r.building
-            }));
-
-            const { error } = await supabase.from('rooms').insert(dbRooms);
-            if (error) throw error;
-        } catch (error) {
-            console.error('Error saving rooms:', error);
-        }
+        await this.ensureInit();
+        const values = rooms.map(r => [
+            r.id, r.name, r.capacity, r.type, r.building
+        ]);
+        const payload = [
+            ["ID", "Name", "Capacity", "Type", "Building"],
+            ...values
+        ];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Rooms", payload);
     }
 
-    /**
-     * Load course allotments from Supabase
-     */
+    // --- ALLOTMENTS ---
     async loadAllotments(): Promise<CourseAllotment[]> {
-        try {
-            const { data, error } = await supabase.from('allotments').select('*');
-            if (error) throw error;
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Allotments!A2:E");
+        return rows.map((r: string[]) => {
+            let classIds: string[] = [];
+            try { classIds = JSON.parse(r[2]); } catch { classIds = [r[2]]; } // Fallback for old format
 
-            return data.map((item: any) => ({
-                courseId: item.course_id,
-                facultyId: item.faculty_id,
-                classIds: item.class_ids,
-                preferredRoomId: item.preferred_room_id,
-                manualSchedule: item.manual_schedule ? {
-                    day: item.manual_schedule.day,
-                    time: item.manual_schedule.time
-                } : undefined
-            }));
-        } catch (error) {
-            console.error('Error loading allotments:', error);
-            return [];
-        }
-    }
-
-    /**
-     * Save course allotments to Supabase
-     */
-    async saveAllotments(allotments: CourseAllotment[]): Promise<void> {
-        try {
-            const { error: deleteError } = await supabase.from('allotments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-            if (deleteError) throw deleteError;
-
-            const dbAllotments = allotments.map(a => ({
-                course_id: a.courseId,
-                faculty_id: a.facultyId,
-                class_ids: a.classIds,
-                preferred_room_id: a.preferredRoomId,
-                manual_schedule: a.manualSchedule
-            }));
-
-            const { error } = await supabase.from('allotments').insert(dbAllotments);
-            if (error) throw error;
-        } catch (error) {
-            console.error('Error saving allotments:', error);
-        }
-    }
-
-    /**
-     * Load departments from Supabase
-     */
-    async loadDepartments(): Promise<Department[]> {
-        try {
-            const { data, error } = await supabase.from('departments').select('*');
-            if (error) throw error;
-
-            return data.map((item: any) => ({
-                id: item.id,
-                name: item.name,
-                code: item.code
-            }));
-        } catch (error) {
-            console.error('Error loading departments:', error);
-            return [];
-        }
-    }
-
-    /**
-     * Save departments to Supabase
-     */
-    async saveDepartments(departments: Department[]): Promise<void> {
-        try {
-            const { error: deleteError } = await supabase.from('departments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-            if (deleteError) throw deleteError;
-
-            if (departments.length > 0) {
-                const dbDepartments = departments.map(d => ({
-                    id: d.id,
-                    name: d.name,
-                    code: d.code
-                }));
-
-                const { error } = await supabase.from('departments').insert(dbDepartments);
-                if (error) throw error;
+            let manualSchedule = undefined;
+            if (r[4]) {
+                try { manualSchedule = JSON.parse(r[4]); } catch { }
             }
-        } catch (error) {
-            console.error('Error saving departments:', error);
-            throw error;
-        }
+
+            return {
+                courseId: r[0],
+                facultyId: r[1],
+                classIds,
+                preferredRoomId: r[3],
+                manualSchedule
+            };
+        });
     }
 
+    async saveAllotments(allotments: CourseAllotment[]): Promise<void> {
+        await this.ensureInit();
+        const values = allotments.map(a => [
+            a.courseId,
+            a.facultyId,
+            JSON.stringify(a.classIds),
+            a.preferredRoomId || "",
+            a.manualSchedule ? JSON.stringify(a.manualSchedule) : ""
+        ]);
+        const payload = [
+            ["CourseID", "FacultyID", "ClassIDs", "PreferredRoomID", "ManualSchedule"],
+            ...values
+        ];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Allotments", payload);
+    }
 
+    // --- DEPARTMENTS ---
+    async loadDepartments(): Promise<Department[]> {
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Departments!A2:C");
+        return rows.map((r: string[]) => ({ id: r[0], name: r[1], code: r[2] }));
+    }
 
-    /**
-     * Load semesters from local constant (Supabase bypassed)
-     */
+    async saveDepartments(departments: Department[]): Promise<void> {
+        await this.ensureInit();
+        const values = departments.map(d => [d.id, d.name, d.code]);
+        const payload = [["ID", "Name", "Code"], ...values];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Departments", payload);
+    }
+
+    // --- SCHEMAS ---
+    async loadSchemas(): Promise<SemesterSchema[]> {
+        await this.ensureInit();
+        const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Schemas!A2:D");
+        return rows.map((r: string[]) => ({
+            id: r[0],
+            departmentId: r[1],
+            semesterId: r[2],
+            courseIds: JSON.parse(r[3] || "[]")
+        }));
+    }
+
+    async saveSchemas(schemas: SemesterSchema[]): Promise<void> {
+        await this.ensureInit();
+        const values = schemas.map(s => [
+            s.id, s.departmentId, s.semesterId, JSON.stringify(s.courseIds)
+        ]);
+        const payload = [["ID", "DepartmentID", "SemesterID", "CourseIDs"], ...values];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Schemas", payload);
+    }
+
+    // --- SEMESTERS (STATIC for now) ---
     async loadSemesters(): Promise<Semester[]> {
         return DEFAULT_SEMESTERS;
     }
+    async saveSemesters(_semesters: Semester[]): Promise<void> { } // No-op
 
-
-
-    /**
-     * Load semester schemas from Supabase
-     */
-    async loadSchemas(): Promise<SemesterSchema[]> {
+    // --- TIMETABLE ENTRIES ---
+    async loadTimetableEntries(): Promise<TimetableEntry[]> {
+        await this.ensureInit();
         try {
-            const { data, error } = await supabase.from('semester_schemas').select('*');
-            if (error) throw error;
-
-            return data.map((item: any) => ({
-                id: item.id,
-                departmentId: item.department_id,
-                semesterId: item.semester_id,
-                courseIds: item.course_ids
-            }));
+            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries!A2:P");
+            return rows.map((r: string[]) => ({
+                id: r[0],
+                courseId: r[1],
+                courseName: r[2],
+                courseCode: r[3],
+                facultyId: r[4],
+                facultyName: r[5],
+                roomId: r[6],
+                roomName: r[7],
+                classId: r[8],
+                timeSlot: JSON.parse(r[9]), // {day, startTime, endTime}
+                semester: r[10],
+                metadata: r[11] ? JSON.parse(r[11]) : undefined,
+                // Metadata for identification (columns 12-15)
+                // metadataSemester: r[12],
+                // metadataDepartment: r[13],
+                // metadataSection: r[14],
+                // generatedAt: r[15]
+            } as TimetableEntry));
         } catch (error) {
-            console.error('Error loading schemas:', error);
+            console.log("No timetable entries found or error loading:", error);
             return [];
         }
     }
 
-    /**
-     * Save semester schemas to Supabase
-     */
-    async saveSchemas(schemas: SemesterSchema[]): Promise<void> {
+    async saveTimetableEntries(entries: TimetableEntry[], metadata: { semester: string, department: string, section: string }): Promise<void> {
+        await this.ensureInit();
+        const generatedAt = new Date().toISOString();
+        const values = entries.map(e => [
+            e.id,
+            e.courseId,
+            e.courseName,
+            e.courseCode,
+            e.facultyId,
+            e.facultyName,
+            e.roomId,
+            e.roomName,
+            e.classId,
+            JSON.stringify(e.timeSlot), // {day, startTime, endTime}
+            e.semester,
+            e.metadata ? JSON.stringify(e.metadata) : "",
+            // Identification metadata
+            metadata.semester,
+            metadata.department,
+            metadata.section,
+            generatedAt
+        ]);
+        const payload = [
+            ["ID", "CourseID", "CourseName", "CourseCode", "FacultyID", "FacultyName", "RoomID", "RoomName", "ClassID", "TimeSlot", "Semester", "Metadata", "MetaSemester", "MetaDepartment", "MetaSection", "GeneratedAt"],
+            ...values
+        ];
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries", payload);
+    }
+
+    async checkTimetableExists(semester: string, department: string, section: string): Promise<boolean> {
+        await this.ensureInit();
         try {
-            const { error: deleteError } = await supabase.from('semester_schemas').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-            if (deleteError) throw deleteError;
-
-            if (schemas.length > 0) {
-                const dbSchemas = schemas.map(s => ({
-                    id: s.id,
-                    department_id: s.departmentId,
-                    semester_id: s.semesterId,
-                    course_ids: s.courseIds
-                }));
-
-                const { error } = await supabase.from('semester_schemas').insert(dbSchemas);
-                if (error) throw error;
-            }
+            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries!A2:P");
+            return rows.some((r: string[]) =>
+                r[12] === semester &&
+                r[13] === department &&
+                r[14] === section
+            );
         } catch (error) {
-            console.error('Error saving schemas:', error);
-            throw error;
+            return false;
         }
     }
 
-
-
-    /**
-     * Reset all data to defaults
-     */
+    // --- UTILS ---
     async resetToDefaults(): Promise<void> {
         await this.saveDepartments(DEFAULT_DEPARTMENTS);
         await this.saveCourses(DEFAULT_COURSES);
@@ -346,17 +294,18 @@ class DataService {
         await this.saveSchemas(DEFAULT_SCHEMAS);
     }
 
-    /**
-     * Clear all data
-     */
     async clearAll(): Promise<void> {
-        await supabase.from('allotments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-        await supabase.from('courses').delete().neq('id', 'placeholder');
-        await supabase.from('faculty').delete().neq('id', 'placeholder');
-        await supabase.from('rooms').delete().neq('id', 'placeholder');
-        await supabase.from('departments').delete().neq('id', 'placeholder');
-        await supabase.from('semesters').delete().neq('id', 'placeholder');
-        await supabase.from('semester_schemas').delete().neq('id', 'placeholder');
+        await this.ensureInit();
+        // Clear all sheets
+        await Promise.all([
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Courses", [["ID", "Code", "Name", "Credits", "Type", "Semester", "Department", "RequiresLab", "EstimatedStudents"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Faculty", [["ID", "Name", "Initials", "MaxWeeklyHours", "Department"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Rooms", [["ID", "Name", "Capacity", "Type", "Building"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Allotments", [["CourseID", "FacultyID", "ClassIDs", "PreferredRoomID", "ManualSchedule"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Departments", [["ID", "Name", "Code"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Schemas", [["ID", "DepartmentID", "SemesterID", "CourseIDs"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries", [["ID", "CourseID", "CourseName", "CourseCode", "FacultyID", "FacultyName", "RoomID", "RoomName", "ClassID", "TimeSlot", "Semester", "Metadata", "MetaSemester", "MetaDepartment", "MetaSection", "GeneratedAt"]]),
+        ]);
     }
 }
 

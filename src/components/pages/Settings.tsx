@@ -3,25 +3,42 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import { User, Lock, Palette, Globe, Save, Bot, Bug } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../../App";
 import { toast } from "sonner";
 import { themes, useTheme, type Theme } from "../../context/ThemeContext";
 import { useTimetableStore } from "../../stores/timetableStore";
+import { useAuth } from "../../contexts/AuthContext";
+import { dataService } from "../../services/dataService";
+import { ExternalLink, Database } from "lucide-react";
 
 export function Settings() {
   const { settings, updateSettings } = useAppContext();
   const { currentTheme, setTheme } = useTheme();
   const { debugMode, toggleDebugMode } = useTimetableStore();
+  const { user } = useAuth();
+
   const [profileData, setProfileData] = useState({
-    firstName: "Ali",
-    lastName: "Ahmed",
-    email: "ali@maju.edu.pk",
-    phone: "+92 300 1234567",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "+92 300 1234567", // Placeholder
   });
+
+  useEffect(() => {
+    if (user) {
+      const nameParts = user.name.split(" ");
+      setProfileData(prev => ({
+        ...prev,
+        firstName: nameParts[0] || "",
+        lastName: nameParts.slice(1).join(" ") || "",
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   const [regionSettings, setRegionSettings] = useState({
     language: "English (US)",
@@ -70,21 +87,26 @@ export function Settings() {
             </div>
 
             <div className="flex items-center gap-6 mb-6 p-6 rounded-xl bg-slate-50 dark:bg-slate-700/50">
-              <Avatar className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600">
+              <Avatar className="w-20 h-20 border-4 border-white dark:border-slate-600 shadow-md">
+                <AvatarImage src={user?.picture} />
                 <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white text-xl">
-                  DA
+                  {profileData.firstName[0]}{profileData.lastName[0]}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
-                <h3 className="text-slate-800 dark:text-slate-100 mb-1">Dr. Ali</h3>
+                <h3 className="text-slate-800 dark:text-slate-100 mb-1 text-xl font-semibold">
+                  {user?.name || "Guest User"}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-2">{profileData.email}</p>
-                <Badge className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700 border">
-                  Administrator
-                </Badge>
+                <div className="flex gap-2">
+                  <Badge className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700 border">
+                    Administrator
+                  </Badge>
+                  <Badge variant="outline" className="border-green-200 text-green-700 bg-green-50 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800">
+                    Synced with Google
+                  </Badge>
+                </div>
               </div>
-              <Button variant="outline" className="rounded-xl border-slate-200 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700">
-                Change Photo
-              </Button>
             </div>
 
             <div className="space-y-4">
@@ -93,34 +115,34 @@ export function Settings() {
                   <Label className="text-slate-600 dark:text-slate-300 mb-2 block">First Name</Label>
                   <Input
                     value={profileData.firstName}
-                    onChange={(e) => setProfileData({ ...profileData, firstName: e.target.value })}
-                    className="rounded-xl border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
+                    readOnly
+                    className="rounded-xl border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 opacity-70 cursor-not-allowed"
                   />
                 </div>
                 <div>
-                  <Label className="text-slate-600 mb-2 block">Last Name</Label>
+                  <Label className="text-slate-600 dark:text-slate-300 mb-2 block">Last Name</Label>
                   <Input
                     value={profileData.lastName}
-                    onChange={(e) => setProfileData({ ...profileData, lastName: e.target.value })}
-                    className="rounded-xl border-slate-200"
+                    readOnly
+                    className="rounded-xl border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 opacity-70 cursor-not-allowed"
                   />
                 </div>
               </div>
               <div>
-                <Label className="text-slate-600 mb-2 block">Email Address</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block">Email Address</Label>
                 <Input
                   type="email"
                   value={profileData.email}
-                  onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                  className="rounded-xl border-slate-200"
+                  readOnly
+                  className="rounded-xl border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 opacity-70 cursor-not-allowed"
                 />
               </div>
               <div>
-                <Label className="text-slate-600 mb-2 block">Phone Number</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block">Phone Number</Label>
                 <Input
                   value={profileData.phone}
                   onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                  className="rounded-xl border-slate-200"
+                  className="rounded-xl border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100"
                 />
               </div>
               <Button
@@ -154,7 +176,7 @@ export function Settings() {
                   </div>
                   <h4 className="font-medium text-slate-800 dark:text-slate-100">AI Agent Configuration</h4>
                 </div>
-                <Label className="text-slate-600 mb-2 block">Gemini API Key</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block">Gemini API Key</Label>
                 <div className="flex gap-2">
                   <Input
                     type="password"
@@ -176,6 +198,44 @@ export function Settings() {
                 <p className="text-xs text-slate-500 mt-2">
                   Required for the Agent tab. Get a free key from Google AI Studio.
                 </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Data Management Settings */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
+                <Database className="w-5 h-5 text-green-600 dark:text-green-400" />
+              </div>
+              <h3 className="text-slate-800 dark:text-slate-100">Data Management</h3>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-medium text-slate-800 dark:text-slate-100 mb-1">Google Sheets Database</h4>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">View and edit your raw data directly in Google Sheets</p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="gap-2"
+                    onClick={() => {
+                      const url = dataService.getSpreadsheetUrl();
+                      if (url) window.open(url, "_blank");
+                      else toast.error("Spreadsheet not connected yet");
+                    }}
+                  >
+                    Open Sheet
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -295,7 +355,7 @@ export function Settings() {
 
             <div className="space-y-4">
               <div>
-                <Label className="text-slate-600 mb-2 block text-sm">Language</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block text-sm">Language</Label>
                 <Input
                   value={regionSettings.language}
                   onChange={(e) => setRegionSettings({ ...regionSettings, language: e.target.value })}
@@ -303,7 +363,7 @@ export function Settings() {
                 />
               </div>
               <div>
-                <Label className="text-slate-600 mb-2 block text-sm">Time Zone</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block text-sm">Time Zone</Label>
                 <Input
                   value={regionSettings.timezone}
                   onChange={(e) => setRegionSettings({ ...regionSettings, timezone: e.target.value })}
@@ -311,7 +371,7 @@ export function Settings() {
                 />
               </div>
               <div>
-                <Label className="text-slate-600 mb-2 block text-sm">Date Format</Label>
+                <Label className="text-slate-600 dark:text-slate-300 mb-2 block text-sm">Date Format</Label>
                 <Input
                   value={regionSettings.dateFormat}
                   onChange={(e) => setRegionSettings({ ...regionSettings, dateFormat: e.target.value })}

@@ -56,6 +56,12 @@ interface TimetableStore extends TimetableState {
     setNavigationFilter: (filter: { department?: string, semesterLevel?: string, classId?: string } | null) => void;
     setLastGenerated: (timestamp: string) => void;
     toggleDebugMode: () => void;
+
+    // Timetable persistence
+    saveTimetableEntries: (metadata: { semester: string, department: string, section: string }) => Promise<void>;
+    checkTimetableExists: (metadata: { semester: string, department: string, section: string }) => Promise<boolean>;
+    exportAllTimetables: () => Promise<void>;
+
     resetToDefaults: () => Promise<void>;
     clearAllData: () => Promise<void>;
 }
@@ -116,7 +122,7 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
         set({ isLoading: true, error: null });
         try {
             await dataService.initialize();
-            const [courses, faculty, rooms, allotments, departments, semesters, schemas] = await Promise.all([
+            const [courses, faculty, rooms, allotments, departments, semesters, schemas, loadedEntries] = await Promise.all([
                 dataService.loadCourses(),
                 dataService.loadFaculty(),
                 dataService.loadRooms(),
@@ -124,8 +130,15 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
                 dataService.loadDepartments(),
                 dataService.loadSemesters(),
                 dataService.loadSchemas(),
+                dataService.loadTimetableEntries(),
             ]);
-            set({ courses, faculty, rooms, allotments, departments, semesters, schemas, isLoading: false });
+
+            // Only set entries if some were loaded AND we don't have any current entries
+            // This prevents overwriting a freshly generated timetable
+            const { entries: currentEntries } = get();
+            const entriesToSet = (loadedEntries.length > 0 && currentEntries.length === 0) ? loadedEntries : currentEntries;
+
+            set({ courses, faculty, rooms, allotments, departments, semesters, schemas, entries: entriesToSet, isLoading: false });
         } catch (error) {
             console.error('Error fetching data:', error);
             set({ error: 'Failed to load data', isLoading: false });
@@ -206,6 +219,51 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
 
     toggleDebugMode: () => {
         set((state) => ({ debugMode: !state.debugMode }));
+    },
+
+    // Timetable persistence methods
+    saveTimetableEntries: async (metadata: { semester: string, department: string, section: string }) => {
+        const { entries } = get();
+        if (entries.length === 0) return;
+        try {
+            await dataService.saveTimetableEntries(entries, metadata);
+            console.log('Timetable saved successfully');
+        } catch (error) {
+            console.error('Failed to save timetable:', error);
+            throw error;
+        }
+    },
+
+    checkTimetableExists: async (metadata: { semester: string, department: string, section: string }) => {
+        try {
+            return await dataService.checkTimetableExists(metadata.semester, metadata.department, metadata.section);
+        } catch (error) {
+            console.error('Failed to check timetable existence:', error);
+            return false;
+        }
+    },
+
+    exportAllTimetables: async () => {
+        const { entries } = get();
+        if (entries.length === 0) {
+            throw new Error('No timetable entries to export');
+        }
+        try {
+            // Extract metadata from entries
+            // Use the first entry's metadata or fall back to generic values
+            const firstEntry = entries[0];
+            const metadata = {
+                semester: firstEntry.metadata?.semesterLevel?.toString() || firstEntry.semester || 'All',
+                department: firstEntry.metadata?.departmentCode || 'All',
+                section: 'All Sections'
+            };
+
+            await dataService.saveTimetableEntries(entries, metadata);
+            console.log('All timetables exported successfully to Google Sheets');
+        } catch (error) {
+            console.error('Failed to export all timetables:', error);
+            throw error;
+        }
     },
 
     resetToDefaults: async () => {

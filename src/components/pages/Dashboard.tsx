@@ -29,7 +29,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
   const { entries, courses, faculty, rooms, allotments, setEntries, setGenerationConflicts, semesters, fetchData,
     isGenerating, setIsGenerating, generationProgress, setGenerationProgress,
     generationStatus, setGenerationStatus, solutionsFound, setSolutionsFound,
-    generationStartTime, setGenerationStartTime } = useTimetableStore();
+    generationStartTime, setGenerationStartTime, saveTimetableEntries, exportAllTimetables } = useTimetableStore();
   const [selectedDepartment, setSelectedDepartment] = useState("all");
   const [selectedSemester, setSelectedSemester] = useState("all");
   const [selectedClass, setSelectedClass] = useState("bcs3a");
@@ -134,6 +134,23 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
 
             if (result.timetable && result.timetable.length > 0) {
               setEntries(result.timetable);
+
+              // Automatically save timetable to Google Sheets with metadata
+              try {
+                // Extract metadata from first entry
+                const firstEntry = result.timetable[0];
+                const metadata = {
+                  semester: firstEntry.metadata?.semesterLevel?.toString() || firstEntry.semester || "Unknown",
+                  department: firstEntry.metadata?.departmentCode || "Unknown",
+                  section: firstEntry.classId || "Unknown"
+                };
+
+                await saveTimetableEntries(metadata);
+                console.log('Timetable automatically saved to Google Sheets');
+              } catch (saveError) {
+                console.error('Failed to auto-save timetable:', saveError);
+                // Don't show error to user - saving is in background
+              }
             }
 
             setIsGenerating(false);
@@ -238,12 +255,12 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <div ref={timetableRef} className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
+        <div ref={timetableRef} className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 shadow-sm overflow-hidden">
           {/* Header */}
-          <div className="px-8 py-6 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
+          <div className="px-8 py-6 border-b border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800 dark:to-slate-800">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-slate-800">Generated Timetable</h2>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Generated Timetable</h2>
                 <p className="text-slate-500">Fall 2025 Academic Schedule</p>
               </div>
             </div>
@@ -310,42 +327,62 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                   {isGenerating ? "Generating..." : "Generate Timetable"}
                 </Button>
                 {entries.length > 0 && !isGenerating && (
-                  <Button
-                    onClick={() => {
-                      const classIdDisplay = allotments.flatMap(a => a.classIds)
-                        .find(c => c.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass) || selectedClass.toUpperCase();
+                  <>
+                    <Button
+                      onClick={() => {
+                        const classIdDisplay = allotments.flatMap(a => a.classIds)
+                          .find(c => c.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass) || selectedClass.toUpperCase();
 
-                      // Get department and semester from actual entries
-                      let actualDepartment = "Unknown";
-                      let actualSemester = "Unknown";
+                        // Get department and semester from actual entries
+                        let actualDepartment = "Unknown";
+                        let actualSemester = "Unknown";
 
-                      if (entries.length > 0) {
-                        const firstEntry = entries[0];
-                        const course = courses.find(c => c.id === firstEntry.courseId);
-                        if (course) {
-                          actualDepartment = course.department || "Unknown";
-                          actualSemester = course.semester || "Unknown";
+                        if (entries.length > 0) {
+                          const firstEntry = entries[0];
+                          const course = courses.find(c => c.id === firstEntry.courseId);
+                          if (course) {
+                            actualDepartment = course.department || "Unknown";
+                            actualSemester = course.semester || "Unknown";
+                          }
                         }
-                      }
 
-                      exportTimetableToCSV(
-                        entries,
-                        courses,
-                        faculty,
-                        rooms,
-                        {
-                          department: actualDepartment,
-                          semester: actualSemester,
-                          classId: classIdDisplay
+                        exportTimetableToCSV(
+                          entries,
+                          courses,
+                          faculty,
+                          rooms,
+                          {
+                            department: actualDepartment,
+                            semester: actualSemester,
+                            classId: classIdDisplay
+                          }
+                        );
+                      }}
+                      variant="outline"
+                      className="rounded-xl border-slate-300 hover:bg-slate-50"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Export CSV
+                    </Button>
+                    <Button
+                      onClick={async () => {
+                        try {
+                          toast.loading("Exporting all timetables to Google Sheets...");
+                          await exportAllTimetables();
+                          toast.dismiss();
+                          toast.success("All timetables exported to Google Sheets successfully!");
+                        } catch (error) {
+                          toast.dismiss();
+                          toast.error("Failed to export to Sheets: " + (error as Error).message);
                         }
-                      );
-                    }}
-                    variant="outline"
-                    className="rounded-xl border-slate-300 hover:bg-slate-50"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Export CSV
-                  </Button>
+                      }}
+                      variant="outline"
+                      className="rounded-xl border-green-300 hover:bg-green-50 text-green-700 hover:text-green-800"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Export All to Sheets
+                    </Button>
+                  </>
                 )}
               </div>
             </div>
@@ -497,7 +534,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               {/* Conflicts List */}
               {generationResult.conflicts.length > 0 && (
                 <div className="max-h-64 overflow-y-auto">
-                  <h4 className="text-sm font-semibold text-slate-700 mb-2">Issues Found:</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Issues Found:</h4>
                   <div className="space-y-2">
                     {generationResult.conflicts.map((conflict, idx) => (
                       <div
@@ -507,7 +544,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                           : 'bg-amber-50 border-amber-200'
                           }`}
                       >
-                        <p className="text-sm text-slate-700">{conflict.message}</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-300">{conflict.message}</p>
                         <p className="text-xs text-slate-500 mt-1">Type: {conflict.type}</p>
                       </div>
                     ))}

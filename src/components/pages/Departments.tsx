@@ -324,7 +324,7 @@ export function Departments() {
                                             if (!selectedDepartmentForSchema || !selectedSemesterForSchema) return;
 
                                             // Normalize semester for comparison
-                                            const normalizeSemester = (sem: string) => sem.replace(/^Semester\s+/i, '').trim();
+                                            const normalizeSemester = (sem: string | number) => String(sem).replace(/^Semester\s+/i, '').trim();
                                             const normalizedSelectedSemester = normalizeSemester(selectedSemesterForSchema);
 
                                             // Find all courses matching this department and semester
@@ -380,7 +380,7 @@ export function Departments() {
                                             return (
                                                 <div className="border-b bg-blue-50/50">
                                                     <div className="px-4 py-2 flex items-center justify-between">
-                                                        <h4 className="text-sm font-semibold text-slate-700">Current Curriculum ({currentCourseIds.length} courses)</h4>
+                                                        <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Current Curriculum ({currentCourseIds.length} courses)</h4>
                                                     </div>
                                                     <div className="px-4 pb-3 space-y-1.5 max-h-[200px] overflow-y-auto">
                                                         {currentCourseIds.map(courseId => {
@@ -439,7 +439,7 @@ export function Departments() {
                                                 const currentSchema = getCurrentSchema();
                                                 const existingIds = currentSchema?.courseIds || [];
 
-                                                const normalizeSemester = (sem: string) => sem.replace(/^Semester\s+/i, '').trim();
+                                                const normalizeSemester = (sem: string | number) => String(sem).replace(/^Semester\s+/i, '').trim();
                                                 const normalizedSelectedSemester = normalizeSemester(selectedSemesterForSchema);
 
                                                 const availableCourses = courses.filter(c => {
@@ -608,7 +608,7 @@ export function Departments() {
 
                         <Button
                             variant="outline"
-                            className="w-full mt-2 border-slate-200 hover:bg-slate-50 text-slate-600"
+                            className="w-full mt-2 border-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300"
                             onClick={() => handleManageSchema(dept)}
                         >
                             <BookOpen className="w-4 h-4 mr-2" />

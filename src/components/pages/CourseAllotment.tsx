@@ -523,7 +523,7 @@ export function CourseAllotment() {
                   <div>
                     <Label>Course</Label>
                     {!formData.department ? (
-                      <div className="mt-2 p-3 bg-slate-50 border border-slate-200 rounded text-sm text-slate-500">
+                      <div className="mt-2 p-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded text-sm text-slate-500 dark:text-slate-400">
                         Please select a department first
                       </div>
                     ) : (
@@ -652,7 +652,7 @@ export function CourseAllotment() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="bg-white rounded-2xl border border-slate-200/60 p-6 mb-6"
+        className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 mb-6"
       >
         <div className="grid grid-cols-4 gap-4">
           <div className="relative col-span-2">
@@ -694,11 +694,11 @@ export function CourseAllotment() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-white rounded-2xl border border-slate-200/60 overflow-hidden"
+        className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 overflow-hidden"
       >
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-700">
               <tr>
                 <th className="text-left px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Faculty Member</th>
                 <th className="text-left px-6 py-4 text-sm text-slate-600 dark:text-slate-300">Course Details</th>
@@ -818,7 +818,7 @@ export function CourseAllotment() {
 
       {/* Import Preview Dialog */}
       <Dialog open={isImportDialogOpen} onOpenChange={setIsImportDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
             <DialogTitle>Import Preview</DialogTitle>
             <DialogDescription>Review CSV data before importing</DialogDescription>
@@ -852,7 +852,7 @@ export function CourseAllotment() {
             <Button
               onClick={handleConfirmImport}
               disabled={importing}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/20"
             >
               {importing ? "Importing..." : "Confirm Import"}
             </Button>
