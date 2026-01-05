@@ -249,17 +249,49 @@ export const useTimetableStore = create<TimetableStore>((set, get) => ({
             throw new Error('No timetable entries to export');
         }
         try {
-            // Extract metadata from entries
-            // Use the first entry's metadata or fall back to generic values
-            const firstEntry = entries[0];
-            const metadata = {
-                semester: firstEntry.metadata?.semesterLevel?.toString() || firstEntry.semester || 'All',
-                department: firstEntry.metadata?.departmentCode || 'All',
-                section: 'All Sections'
-            };
+            // Group entries by unique metadata combinations
+            const groupedByMetadata = new Map<string, TimetableEntry[]>();
 
-            await dataService.saveTimetableEntries(entries, metadata);
-            console.log('All timetables exported successfully to Google Sheets');
+            entries.forEach(entry => {
+                // Extract department from classId (e.g., "BS-SE-1-AM" -> "BS-SE")
+                const classIdParts = entry.classId.split('-');
+                const department = classIdParts.length >= 2 ? `${classIdParts[0]}-${classIdParts[1]}` : 'Unknown';
+
+                // Extract semester from metadata or classId (e.g., "BS-SE-1-AM" -> "1")
+                const semester = entry.metadata?.semesterLevel?.toString() ||
+                    (classIdParts.length >= 3 ? classIdParts[2] : entry.semester || 'Unknown');
+
+                // Use the full classId as section
+                const section = entry.classId;
+
+                const key = `${semester}-${department}-${section}`;
+
+                if (!groupedByMetadata.has(key)) {
+                    groupedByMetadata.set(key, []);
+                }
+                groupedByMetadata.get(key)!.push(entry);
+            });
+
+            // Save each group with its proper metadata
+            for (const [, groupEntries] of groupedByMetadata) {
+                // Extract metadata from the first entry in this group
+                const firstEntry = groupEntries[0];
+                const classIdParts = firstEntry.classId.split('-');
+                const department = classIdParts.length >= 2 ? `${classIdParts[0]}-${classIdParts[1]}` : 'Unknown';
+                const semester = firstEntry.metadata?.semesterLevel?.toString() ||
+                    (classIdParts.length >= 3 ? classIdParts[2] : firstEntry.semester || 'Unknown');
+
+                const metadata = {
+                    semester,
+                    department,
+                    section: firstEntry.classId
+                };
+
+                await dataService.saveTimetableEntries(groupEntries, metadata);
+                console.log(`Saved timetable for ${department} Semester ${semester} Section ${firstEntry.classId}`);
+            }
+
+            console.log(`All timetables exported successfully (${groupedByMetadata.size} unique timetables)`);
         } catch (error) {
             console.error('Failed to export all timetables:', error);
             throw error;

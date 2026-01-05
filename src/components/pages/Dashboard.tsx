@@ -3,14 +3,13 @@ import { Button } from "../ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../ui/dialog";
-import { BookOpen, Users, GraduationCap, Download, Sparkles, AlertCircle, CheckCircle } from "lucide-react";
+import { BookOpen, Users, GraduationCap, Sparkles, AlertCircle, CheckCircle } from "lucide-react";
 import { motion } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import domtoimage from "dom-to-image-more";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { generateTimetableViaAPI as generateTimetable, pollGenerationStatus, getTimetableForClass } from "../../utils/timetableGenerator";
-import { exportTimetableToCSV } from "../../utils/csvExport";
 import { GenerationResult } from "../../types/timetable.types";
 import { TimetableGridView } from "../TimetableGridView";
 import { Progress } from "../ui/progress";
@@ -29,7 +28,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
   const { entries, courses, faculty, rooms, allotments, setEntries, setGenerationConflicts, semesters, fetchData,
     isGenerating, setIsGenerating, generationProgress, setGenerationProgress,
     generationStatus, setGenerationStatus, solutionsFound, setSolutionsFound,
-    generationStartTime, setGenerationStartTime, saveTimetableEntries, exportAllTimetables } = useTimetableStore();
+    generationStartTime, setGenerationStartTime, saveTimetableEntries } = useTimetableStore();
   const [selectedDepartment, setSelectedDepartment] = useState("all");
   const [selectedSemester, setSelectedSemester] = useState("all");
   const [selectedClass, setSelectedClass] = useState("bcs3a");
@@ -139,10 +138,20 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               try {
                 // Extract metadata from first entry
                 const firstEntry = result.timetable[0];
+
+                // Extract department from classId (e.g., "BS-SE-1-AM" -> "BS-SE")
+                const classIdParts = firstEntry.classId.split('-');
+                const department = classIdParts.length >= 2 ? `${classIdParts[0]}-${classIdParts[1]}` :
+                  (firstEntry.metadata?.departmentCode || "Unknown");
+
+                // Extract semester from metadata or classId
+                const semester = firstEntry.metadata?.semesterLevel?.toString() ||
+                  (classIdParts.length >= 3 ? classIdParts[2] : firstEntry.semester || "Unknown");
+
                 const metadata = {
-                  semester: firstEntry.metadata?.semesterLevel?.toString() || firstEntry.semester || "Unknown",
-                  department: firstEntry.metadata?.departmentCode || "Unknown",
-                  section: firstEntry.classId || "Unknown"
+                  semester,
+                  department,
+                  section: firstEntry.classId
                 };
 
                 await saveTimetableEntries(metadata);
@@ -270,7 +279,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               <div>
                 <label className="block text-sm text-slate-600 dark:text-slate-300 mb-2">Department (for generation)</label>
                 <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-                  <SelectTrigger className="bg-white border-slate-200 rounded-xl hover:border-slate-300">
+                  <SelectTrigger className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl hover:border-slate-300 dark:hover:border-slate-600 text-slate-800 dark:text-slate-100">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -285,7 +294,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               <div>
                 <label className="block text-sm text-slate-600 dark:text-slate-300 mb-2">Semester (for generation)</label>
                 <Select value={selectedSemester} onValueChange={setSelectedSemester}>
-                  <SelectTrigger className="bg-white border-slate-200 rounded-xl hover:border-slate-300">
+                  <SelectTrigger className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl hover:border-slate-300 dark:hover:border-slate-600 text-slate-800 dark:text-slate-100">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -300,7 +309,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               <div>
                 <label className="block text-sm text-slate-600 dark:text-slate-300 mb-2">Class (to view)</label>
                 <Select value={selectedClass} onValueChange={setSelectedClass}>
-                  <SelectTrigger className="bg-white border-slate-200 rounded-xl hover:border-slate-300">
+                  <SelectTrigger className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl hover:border-slate-300 dark:hover:border-slate-600 text-slate-800 dark:text-slate-100">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -326,64 +335,6 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                   <Sparkles className="w-4 h-4 mr-2" />
                   {isGenerating ? "Generating..." : "Generate Timetable"}
                 </Button>
-                {entries.length > 0 && !isGenerating && (
-                  <>
-                    <Button
-                      onClick={() => {
-                        const classIdDisplay = allotments.flatMap(a => a.classIds)
-                          .find(c => c.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedClass) || selectedClass.toUpperCase();
-
-                        // Get department and semester from actual entries
-                        let actualDepartment = "Unknown";
-                        let actualSemester = "Unknown";
-
-                        if (entries.length > 0) {
-                          const firstEntry = entries[0];
-                          const course = courses.find(c => c.id === firstEntry.courseId);
-                          if (course) {
-                            actualDepartment = course.department || "Unknown";
-                            actualSemester = course.semester || "Unknown";
-                          }
-                        }
-
-                        exportTimetableToCSV(
-                          entries,
-                          courses,
-                          faculty,
-                          rooms,
-                          {
-                            department: actualDepartment,
-                            semester: actualSemester,
-                            classId: classIdDisplay
-                          }
-                        );
-                      }}
-                      variant="outline"
-                      className="rounded-xl border-slate-300 hover:bg-slate-50"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Export CSV
-                    </Button>
-                    <Button
-                      onClick={async () => {
-                        try {
-                          toast.loading("Exporting all timetables to Google Sheets...");
-                          await exportAllTimetables();
-                          toast.dismiss();
-                          toast.success("All timetables exported to Google Sheets successfully!");
-                        } catch (error) {
-                          toast.dismiss();
-                          toast.error("Failed to export to Sheets: " + (error as Error).message);
-                        }
-                      }}
-                      variant="outline"
-                      className="rounded-xl border-green-300 hover:bg-green-50 text-green-700 hover:text-green-800"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Export All to Sheets
-                    </Button>
-                  </>
-                )}
               </div>
             </div>
 
@@ -440,7 +391,7 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="group relative bg-gradient-to-br from-slate-50 to-white rounded-xl p-5 border border-slate-200/60 hover:border-slate-300 hover:shadow-lg transition-all duration-300"
+                      className="group relative bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 rounded-xl p-5 border border-slate-200/60 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-lg transition-all duration-300"
                     >
                       {/* Top Section */}
                       <div className="flex items-start justify-between mb-4">

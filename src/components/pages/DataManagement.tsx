@@ -158,7 +158,7 @@ export function DataManagement() {
                         <input
                             type="file"
                             accept=".csv"
-                            className="hidden"
+                            style={{ display: 'none' }}
                             ref={fileInputRef}
                             onChange={handleFileSelect}
                         />

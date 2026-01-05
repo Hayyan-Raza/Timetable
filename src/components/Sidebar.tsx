@@ -30,7 +30,6 @@ const menuItems = [
   { icon: GraduationCap, label: "Course Allotment" },
   { icon: Calendar, label: "Timetable" },
   { icon: Calendar, label: "Edit Timetable" }, // Using same icon for now
-  { icon: Database, label: "Data Management" },
   { icon: AlertTriangle, label: "Conflicts" },
   { icon: Settings, label: "Settings" },
 ];

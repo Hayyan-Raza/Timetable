@@ -215,7 +215,7 @@ class DataService {
     async loadTimetableEntries(): Promise<TimetableEntry[]> {
         await this.ensureInit();
         try {
-            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries!A2:P");
+            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Timetables!A2:P");
             return rows.map((r: string[]) => ({
                 id: r[0],
                 courseId: r[1],
@@ -244,7 +244,22 @@ class DataService {
     async saveTimetableEntries(entries: TimetableEntry[], metadata: { semester: string, department: string, section: string }): Promise<void> {
         await this.ensureInit();
         const generatedAt = new Date().toISOString();
-        const values = entries.map(e => [
+
+        // Load existing timetables
+        let existingRows: string[][] = [];
+        try {
+            existingRows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Timetables!A2:P");
+        } catch (error) {
+            console.log("No existing timetables found, creating new sheet data");
+        }
+
+        // Filter out entries with the same metadata (to replace them)
+        const filteredRows = existingRows.filter((r: string[]) => {
+            return !(r[12] === metadata.semester && r[13] === metadata.department && r[14] === metadata.section);
+        });
+
+        // Add new entries
+        const newValues = entries.map(e => [
             e.id,
             e.courseId,
             e.courseName,
@@ -263,17 +278,19 @@ class DataService {
             metadata.section,
             generatedAt
         ]);
+
         const payload = [
             ["ID", "CourseID", "CourseName", "CourseCode", "FacultyID", "FacultyName", "RoomID", "RoomName", "ClassID", "TimeSlot", "Semester", "Metadata", "MetaSemester", "MetaDepartment", "MetaSection", "GeneratedAt"],
-            ...values
+            ...filteredRows,
+            ...newValues
         ];
-        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries", payload);
+        await replaceSheetData(this.accessToken!, this.spreadsheetId!, "Timetables", payload);
     }
 
     async checkTimetableExists(semester: string, department: string, section: string): Promise<boolean> {
         await this.ensureInit();
         try {
-            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries!A2:P");
+            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Timetables!A2:P");
             return rows.some((r: string[]) =>
                 r[12] === semester &&
                 r[13] === department &&
@@ -281,6 +298,35 @@ class DataService {
             );
         } catch (error) {
             return false;
+        }
+    }
+
+    async loadTimetableForMetadata(semester: string, department: string, section: string): Promise<TimetableEntry[]> {
+        await this.ensureInit();
+        try {
+            const rows = await fetchSheetData(this.accessToken!, this.spreadsheetId!, "Timetables!A2:P");
+            const filteredRows = rows.filter((r: string[]) =>
+                r[12] === semester &&
+                r[13] === department &&
+                r[14] === section
+            );
+            return filteredRows.map((r: string[]) => ({
+                id: r[0],
+                courseId: r[1],
+                courseName: r[2],
+                courseCode: r[3],
+                facultyId: r[4],
+                facultyName: r[5],
+                roomId: r[6],
+                roomName: r[7],
+                classId: r[8],
+                timeSlot: JSON.parse(r[9]),
+                semester: r[10],
+                metadata: r[11] ? JSON.parse(r[11]) : undefined,
+            } as TimetableEntry));
+        } catch (error) {
+            console.log("No timetable found for specified metadata:", error);
+            return [];
         }
     }
 
@@ -304,7 +350,7 @@ class DataService {
             replaceSheetData(this.accessToken!, this.spreadsheetId!, "Allotments", [["CourseID", "FacultyID", "ClassIDs", "PreferredRoomID", "ManualSchedule"]]),
             replaceSheetData(this.accessToken!, this.spreadsheetId!, "Departments", [["ID", "Name", "Code"]]),
             replaceSheetData(this.accessToken!, this.spreadsheetId!, "Schemas", [["ID", "DepartmentID", "SemesterID", "CourseIDs"]]),
-            replaceSheetData(this.accessToken!, this.spreadsheetId!, "TimetableEntries", [["ID", "CourseID", "CourseName", "CourseCode", "FacultyID", "FacultyName", "RoomID", "RoomName", "ClassID", "TimeSlot", "Semester", "Metadata", "MetaSemester", "MetaDepartment", "MetaSection", "GeneratedAt"]]),
+            replaceSheetData(this.accessToken!, this.spreadsheetId!, "Timetables", [["ID", "CourseID", "CourseName", "CourseCode", "FacultyID", "FacultyName", "RoomID", "RoomName", "ClassID", "TimeSlot", "Semester", "Metadata", "MetaSemester", "MetaDepartment", "MetaSection", "GeneratedAt"]]),
         ]);
     }
 }

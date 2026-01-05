@@ -300,7 +300,7 @@ export function CourseOffering() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-slate-800 dark:text-slate-100 mb-2">Course Offering</h2>
-            <p className="text-slate-500">Manage and view all offered courses for the semester</p>
+            <p className="text-slate-500 dark:text-slate-400">Manage and view all offered courses for the semester</p>
           </div>
           <div className="flex gap-2">
             <input
@@ -440,13 +440,13 @@ export function CourseOffering() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
             <Input
               placeholder="Search courses by name or code..."
-              className="pl-10 rounded-xl border-slate-200 w-full"
+              className="pl-10 rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 w-full"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-            <SelectTrigger className="rounded-xl border-slate-200 w-[180px]">
+            <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 w-[180px]">
               <SelectValue placeholder="Department" />
             </SelectTrigger>
             <SelectContent>
@@ -457,7 +457,7 @@ export function CourseOffering() {
             </SelectContent>
           </Select>
           <Select value={typeFilter} onValueChange={setTypeFilter}>
-            <SelectTrigger className="rounded-xl border-slate-200 w-[150px]">
+            <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 w-[150px]">
               <SelectValue placeholder="Course Type" />
             </SelectTrigger>
             <SelectContent>
@@ -468,7 +468,7 @@ export function CourseOffering() {
             </SelectContent>
           </Select>
           <Select value={semesterFilter} onValueChange={setSemesterFilter}>
-            <SelectTrigger className="rounded-xl border-slate-200 w-[150px]">
+            <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 w-[150px]">
               <SelectValue placeholder="Semester" />
             </SelectTrigger>
             <SelectContent>
@@ -479,7 +479,7 @@ export function CourseOffering() {
             </SelectContent>
           </Select>
           <Select value={labFilter} onValueChange={setLabFilter}>
-            <SelectTrigger className="rounded-xl border-slate-200 w-[150px]">
+            <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 w-[150px]">
               <SelectValue placeholder="Lab Filter" />
             </SelectTrigger>
             <SelectContent>
@@ -500,7 +500,7 @@ export function CourseOffering() {
       >
         {filteredCourses.length === 0 && (
           <div className="col-span-2 text-center py-12">
-            <p className="text-slate-500">No courses found. Add a course to get started!</p>
+            <p className="text-slate-500 dark:text-slate-400">No courses found. Add a course to get started!</p>
           </div>
         )}
 
@@ -534,7 +534,7 @@ export function CourseOffering() {
                     )}
                   </div>
                   <h3 className="text-slate-800 dark:text-slate-100 mb-1">{course.name}</h3>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     {String(course.semester).startsWith('Semester') ? course.semester : `Semester ${course.semester}`}
                   </p>
                 </div>
@@ -593,7 +593,8 @@ export function CourseOffering() {
                           updateCourses(updatedCourses);
                           toast.success('Course deleted successfully!');
                         }}
-                        className="bg-red-600 hover:bg-red-700 text-white border-none shadow-sm font-medium"
+                        className="bg-red-600 text-white hover:bg-red-700 border-none shadow-sm font-medium"
+                        style={{ backgroundColor: '#dc2626', color: 'white' }} // Force styles inline as backup
                       >
                         Delete
                       </AlertDialogAction>

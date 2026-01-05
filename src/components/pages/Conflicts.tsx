@@ -118,12 +118,12 @@ export function Conflicts({ onPageChange }: { onPageChange: (page: any) => void 
                         onClick={handleCheckConflicts}
                         disabled={isChecking}
                         size="lg"
-                        className="rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-lg shadow-red-500/20 px-8"
+                        className="rounded-lg bg-slate-900 text-white hover:bg-slate-800 shadow-sm hover:shadow px-8 flex items-center gap-2 transition-all"
                     >
                         {isChecking ? (
-                            <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
+                            <RefreshCw className="w-5 h-5 animate-spin" />
                         ) : (
-                            <Search className="w-5 h-5 mr-2" />
+                            <Search className="w-5 h-5" />
                         )}
                         {isChecking ? "Auditing Schedule..." : "Check for Conflicts"}
                     </Button>
@@ -134,9 +134,9 @@ export function Conflicts({ onPageChange }: { onPageChange: (page: any) => void 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 p-20 text-center"
+                    className="bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 p-20 text-center flex flex-col items-center justify-center"
                 >
-                    <div className="w-24 h-24 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <div className="w-24 h-24 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 rounded-full flex items-center justify-center mb-6 shadow-inner">
                         <AlertTriangle className="w-12 h-12 text-slate-400 dark:text-slate-500" />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-700 dark:text-slate-200 mb-2">Ready to Audit</h3>
@@ -156,9 +156,9 @@ export function Conflicts({ onPageChange }: { onPageChange: (page: any) => void 
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950 dark:to-green-950 border border-emerald-200 dark:border-emerald-800 rounded-3xl p-12 text-center shadow-sm"
+                            className="bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950 dark:to-green-950 border border-emerald-200 dark:border-emerald-800 rounded-3xl p-12 text-center shadow-sm flex flex-col items-center justify-center"
                         >
-                            <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900 dark:to-emerald-800 rounded-full flex items-center justify-center mb-6 shadow-lg">
                                 <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
                             </div>
                             <h3 className="text-2xl font-bold text-emerald-800 dark:text-emerald-200 mb-2">Schedule is Conflict-Free!</h3>

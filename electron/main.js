@@ -116,6 +116,79 @@ function stopBackend() {
 }
 
 
+// Basic MIME types for serving static files
+const MIME_TYPES = {
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.css': 'text/css',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.wav': 'audio/wav',
+    '.mp4': 'video/mp4',
+    '.woff': 'application/font-woff',
+    '.ttf': 'application/font-ttf',
+    '.eot': 'application/vnd.ms-fontobject',
+    '.otf': 'application/font-otf',
+    '.wasm': 'application/wasm'
+};
+
+let server = null;
+
+function startStaticServer(directory, port) {
+    const http = require('http');
+    const fs = require('fs');
+
+    return new Promise((resolve, reject) => {
+        server = http.createServer((request, response) => {
+            let filePath = path.join(directory, request.url === '/' ? 'index.html' : request.url);
+
+            // Prevent directory traversal
+            if (!filePath.startsWith(directory)) {
+                response.writeHead(403);
+                response.end('Forbidden');
+                return;
+            }
+
+            const extname = path.extname(filePath);
+            let contentType = MIME_TYPES[extname] || 'application/octet-stream';
+
+            fs.readFile(filePath, (error, content) => {
+                if (error) {
+                    if (error.code == 'ENOENT') {
+                        // Keep SPA routing working by serving index.html for unknown paths
+                        fs.readFile(path.join(directory, 'index.html'), (error, content) => {
+                            if (error) {
+                                response.writeHead(500);
+                                response.end('Error loading index.html');
+                            } else {
+                                response.writeHead(200, { 'Content-Type': 'text/html' });
+                                response.end(content, 'utf-8');
+                            }
+                        });
+                    } else {
+                        response.writeHead(500);
+                        response.end(`Server Error: ${error.code} ..\n`);
+                    }
+                } else {
+                    response.writeHead(200, { 'Content-Type': contentType });
+                    response.end(content, 'utf-8');
+                }
+            });
+        });
+
+        server.listen(port, () => {
+            console.log(`Server running at http://localhost:${port}/`);
+            resolve();
+        }).on('error', (err) => {
+            console.error('Failed to start server:', err);
+            reject(err);
+        });
+    });
+}
+
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
@@ -123,7 +196,9 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-        }
+            zoomFactor: app.isPackaged ? 0.75 : 1.0,
+        },
+        icon: path.join(__dirname, '../assets/icon.png')
     });
 
     if (!app.isPackaged) {
@@ -131,14 +206,24 @@ function createWindow() {
         mainWindow.loadURL('http://localhost:5173');
         mainWindow.webContents.openDevTools();
     } else {
-        // Production mode: load from built files
-        const indexPath = path.join(app.getAppPath(), 'dist', 'index.html');
-        console.log('Loading from:', indexPath);
-        mainWindow.loadFile(indexPath);
+        // Production mode: Start local server to support OAuth origins
+        // We use port 5173 to match the likely configured redirect URI in Google Console
+        const distPath = path.join(app.getAppPath(), 'dist');
+        const port = 5173;
+
+        startStaticServer(distPath, port).then(() => {
+            mainWindow.loadURL(`http://localhost:${port}`);
+        }).catch(err => {
+            console.error('Failed to start production server:', err);
+            // Fallback to file protocol if server fails (Auth won't work, but app will load)
+            const indexPath = path.join(app.getAppPath(), 'dist', 'index.html');
+            mainWindow.loadFile(indexPath);
+        });
     }
 
     mainWindow.on('closed', () => {
         stopBackend();
+        if (server) server.close();
         mainWindow = null;
     });
 }

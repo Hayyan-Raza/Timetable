@@ -6,7 +6,6 @@ import { CourseOffering } from "./components/pages/CourseOffering";
 import { CourseAllotment } from "./components/pages/CourseAllotment";
 import { Timetable } from "./components/pages/Timetable";
 import { Settings } from "./components/pages/Settings";
-import { DataManagement } from "./components/pages/DataManagement";
 import { FacultyManagement } from "./components/pages/FacultyManagement";
 import { RoomManagement } from "./components/pages/RoomManagement";
 import { Departments } from "./components/pages/Departments";
@@ -20,7 +19,7 @@ import { useTimetableStore } from "./stores/timetableStore";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { Login } from "./components/pages/Login";
 
-type PageType = "Dashboard" | "Course Offering" | "Faculty Management" | "Room Management" | "Course Allotment" | "Timetable" | "Edit Timetable" | "Settings" | "Data Management" | "Agent" | "Departments" | "Semesters" | "Conflicts" | "Debugging";
+type PageType = "Dashboard" | "Course Offering" | "Faculty Management" | "Room Management" | "Course Allotment" | "Timetable" | "Edit Timetable" | "Settings" | "Agent" | "Departments" | "Semesters" | "Conflicts" | "Debugging";
 
 interface AppSettings {
   compactMode: boolean;
@@ -84,8 +83,6 @@ function AppContent() {
         return <Timetable />;
       case "Edit Timetable":
         return <EditTimetable />;
-      case "Data Management":
-        return <DataManagement />;
       case "Settings":
         return <Settings />;
       case "Agent":

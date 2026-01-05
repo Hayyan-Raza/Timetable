@@ -3167,3 +3167,36 @@ html {
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #475569;
 }
+
+/* Manual Dark Mode Overrides */
+.dark .dark\:bg-slate-800 { background-color: var(--color-slate-800) !important; }
+.dark .dark\:bg-slate-700 { background-color: var(--color-slate-700) !important; }
+.dark .dark\:bg-slate-900 { background-color: var(--color-slate-900) !important; }
+.dark .dark\:bg-slate-950 { background-color: #020617 !important; }
+
+.dark .dark\:text-slate-100 { color: var(--color-slate-100) !important; }
+.dark .dark\:text-slate-200 { color: var(--color-slate-200) !important; }
+.dark .dark\:text-slate-300 { color: var(--color-slate-300) !important; }
+.dark .dark\:text-slate-400 { color: var(--color-slate-400) !important; }
+.dark .dark\:text-blue-100 { color: var(--color-blue-100) !important; }
+.dark .dark\:text-purple-100 { color: var(--color-purple-100) !important; }
+.dark .dark\:text-green-100 { color: var(--color-green-100) !important; }
+.dark .dark\:text-orange-100 { color: var(--color-orange-100) !important; }
+.dark .dark\:text-blue-400 { color: var(--color-blue-400) !important; }
+.dark .dark\:text-violet-400 { color: var(--color-violet-400) !important; }
+.dark .dark\:text-amber-400 { color: var(--color-amber-400) !important; }
+
+.dark .dark\:border-slate-600 { border-color: var(--color-slate-600) !important; }
+.dark .dark\:border-slate-700 { border-color: var(--color-slate-700) !important; }
+.dark .dark\:border-slate-800 { border-color: var(--color-slate-800) !important; }
+
+.dark .dark\:from-slate-800 { --tw-gradient-from: var(--color-slate-800) !important; var(--tw-gradient-from): var(--color-slate-800) !important; background-color: var(--color-slate-800); }
+.dark .dark\:to-slate-900 { --tw-gradient-to: var(--color-slate-900) !important; var(--tw-gradient-to): var(--color-slate-900) !important; }
+
+.dark .dark\:hover\:border-slate-600:hover { border-color: var(--color-slate-600) !important; }
+.dark .dark\:bg-blue-900\/20 { background-color: rgb(30 58 138 / 0.2) !important; }
+.dark .dark\:bg-purple-900\/20 { background-color: rgb(88 28 135 / 0.2) !important; }
+.dark .dark\:bg-green-900\/20 { background-color: rgb(20 83 45 / 0.2) !important; }
+.dark .dark\:bg-orange-900\/20 { background-color: rgb(124 45 18 / 0.2) !important; }
+.dark .dark\:bg-amber-900\/30 { background-color: rgb(120 53 15 / 0.3) !important; }
+

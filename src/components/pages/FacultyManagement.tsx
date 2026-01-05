@@ -5,7 +5,18 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Badge } from "../ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "../ui/dialog";
-import { Plus, Search, Users, Briefcase, Clock, Download } from "lucide-react";
+import { Plus, Search, Users, Briefcase, Clock, Download, Trash2 } from "lucide-react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../ui/alert-dialog";
 import { useState, useMemo } from "react";
 import { useTimetableStore } from "../../stores/timetableStore";
 import { toast } from "sonner";
@@ -251,9 +262,8 @@ export function FacultyManagement() {
             </motion.div >
 
             {/* Filters */}
-            < motion.div
-                initial={{ opacity: 0, y: 20 }
-                }
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 mb-6"
@@ -283,7 +293,7 @@ export function FacultyManagement() {
             </motion.div >
 
             {/* Faculty Grid */}
-            < motion.div
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -329,13 +339,50 @@ export function FacultyManagement() {
                                 </div>
                             </div>
 
-                            <Button
-                                variant="outline"
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700"
-                                onClick={() => openEditDialog(f)}
-                            >
-                                Edit Details
-                            </Button>
+                            <div className="flex gap-2">
+                                <Button
+                                    variant="outline"
+                                    className="flex-1 rounded-xl border-slate-200 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700"
+                                    onClick={() => openEditDialog(f)}
+                                >
+                                    Edit Details
+                                </Button>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            variant="destructive"
+                                            size="icon"
+                                            className="rounded-xl bg-red-50 text-red-600 hover:bg-red-100 border border-red-200"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Delete Faculty Member?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Are you sure you want to delete <span className="font-semibold text-slate-800">{f.name}</span>?
+                                                <br />
+                                                This action cannot be undone.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction
+                                                onClick={() => {
+                                                    const updatedFaculty = faculty.filter(faculty => faculty.id !== f.id);
+                                                    updateFaculty(updatedFaculty);
+                                                    toast.success('Faculty member deleted successfully!');
+                                                }}
+                                                className="bg-red-600 text-white hover:bg-red-700 border-none shadow-sm font-medium"
+                                                style={{ backgroundColor: '#dc2626', color: 'white' }}
+                                            >
+                                                Delete
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            </div>
                         </motion.div>
                     ))
                 }

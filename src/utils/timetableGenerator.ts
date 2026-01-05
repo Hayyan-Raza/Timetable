@@ -108,7 +108,7 @@ export function getRelevantAllotments(
         // Semester Filter
         if (config.semester && config.semester !== 'all') {
             const configSemester = config.semester.toLowerCase();
-            const courseSemester = course.semester.toLowerCase();
+            const courseSemester = String(course.semester).toLowerCase();
             const configNumber = configSemester.match(/\d+/)?.[0];
             const isMatch = courseSemester === configSemester || (configNumber && courseSemester === configNumber);
             if (!isMatch) return null;
@@ -416,11 +416,16 @@ export function generateTimetable(
                         timeSlot,
                         semester: course.semester,
                         metadata: {
-                            departmentCode: config.department !== 'all'
-                                ? config.department.toUpperCase()
-                                : (facultyMember.department || (course.code.includes('-') ? course.code.split('-')[0] : 'UNKNOWN')),
+                            // Always extract department from classId for consistency (e.g., "BS-SE-1-AM" -> "BS-SE")
+                            departmentCode: (() => {
+                                const parts = classId.split('-');
+                                return parts.length >= 2 ? `${parts[0]}-${parts[1]}` : 'UNKNOWN';
+                            })(),
                             semesterName: config.semester !== 'all' ? config.semester : course.semester,
-                            semesterLevel: parseInt((config.semester !== 'all' ? config.semester : course.semester).replace(/\D/g, '')) || 0
+                            semesterLevel: (() => {
+                                const parts = classId.split('-');
+                                return parts.length >= 3 ? parseInt(parts[2]) : (parseInt(String(course.semester).replace(/\D/g, '')) || 0);
+                            })()
                         }
                     };
 
@@ -500,11 +505,16 @@ export function generateTimetable(
                             timeSlot,
                             semester: course.semester,
                             metadata: {
-                                departmentCode: config.department !== 'all'
-                                    ? config.department.toUpperCase()
-                                    : (facultyMember.department || (course.code.includes('-') ? course.code.split('-')[0] : 'UNKNOWN')),
+                                // Always extract department from classId for consistency
+                                departmentCode: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 2 ? `${parts[0]}-${parts[1]}` : 'UNKNOWN';
+                                })(),
                                 semesterName: config.semester !== 'all' ? config.semester : course.semester,
-                                semesterLevel: parseInt((config.semester !== 'all' ? config.semester : course.semester).replace(/\D/g, '')) || 0
+                                semesterLevel: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 3 ? parseInt(parts[2]) : (parseInt(String(course.semester).replace(/\D/g, '')) || 0);
+                                })()
                             }
                         };
 
@@ -601,11 +611,16 @@ export function generateTimetable(
                             timeSlot: slot1,
                             semester: course.semester,
                             metadata: {
-                                departmentCode: config.department !== 'all'
-                                    ? config.department.toUpperCase()
-                                    : (facultyMember.department || (course.code.includes('-') ? course.code.split('-')[0] : 'UNKNOWN')),
+                                // Always extract department from classId for consistency
+                                departmentCode: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 2 ? `${parts[0]}-${parts[1]}` : 'UNKNOWN';
+                                })(),
                                 semesterName: config.semester !== 'all' ? config.semester : course.semester,
-                                semesterLevel: parseInt((config.semester !== 'all' ? config.semester : course.semester).replace(/\D/g, '')) || 0
+                                semesterLevel: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 3 ? parseInt(parts[2]) : (parseInt(String(course.semester).replace(/\D/g, '')) || 0);
+                                })()
                             }
                         };
 
@@ -621,11 +636,16 @@ export function generateTimetable(
                             timeSlot: slot2,
                             semester: course.semester,
                             metadata: {
-                                departmentCode: config.department !== 'all'
-                                    ? config.department.toUpperCase()
-                                    : (facultyMember.department || (course.code.includes('-') ? course.code.split('-')[0] : 'UNKNOWN')),
+                                // Always extract department from classId for consistency
+                                departmentCode: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 2 ? `${parts[0]}-${parts[1]}` : 'UNKNOWN';
+                                })(),
                                 semesterName: config.semester !== 'all' ? config.semester : course.semester,
-                                semesterLevel: parseInt((config.semester !== 'all' ? config.semester : course.semester).replace(/\D/g, '')) || 0
+                                semesterLevel: (() => {
+                                    const parts = classId.split('-');
+                                    return parts.length >= 3 ? parseInt(parts[2]) : (parseInt(String(course.semester).replace(/\D/g, '')) || 0);
+                                })()
                             }
                         };
 

@@ -5,8 +5,8 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
-import { User, Lock, Palette, Globe, Save, Bot, Bug } from "lucide-react";
-import { useState, useEffect } from "react";
+import { User, Lock, Palette, Globe, Save, Bot, Bug, RotateCcw, Upload, Trash2, Download } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { useAppContext } from "../../App";
 import { toast } from "sonner";
 import { themes, useTheme, type Theme } from "../../context/ThemeContext";
@@ -14,11 +14,13 @@ import { useTimetableStore } from "../../stores/timetableStore";
 import { useAuth } from "../../contexts/AuthContext";
 import { dataService } from "../../services/dataService";
 import { ExternalLink, Database } from "lucide-react";
+import { parseCompleteTimetable, downloadSampleCompleteTimetable } from "../../utils/completeTimetableParser";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 
 export function Settings() {
   const { settings, updateSettings } = useAppContext();
   const { currentTheme, setTheme } = useTheme();
-  const { debugMode, toggleDebugMode } = useTimetableStore();
+  const { debugMode, toggleDebugMode, resetToDefaults, clearAllData, importCompleteTimetable } = useTimetableStore();
   const { user } = useAuth();
 
   const [profileData, setProfileData] = useState({
@@ -48,12 +50,83 @@ export function Settings() {
 
   const [apiKey, setApiKey] = useState(localStorage.getItem("gemini_api_key") || "");
 
+  // Data Management State
+  const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
+  const [importPreview, setImportPreview] = useState<any>(null);
+  const [importing, setImporting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleSaveProfile = () => {
     toast.success("Profile information updated successfully!");
   };
 
   const handleSaveAll = () => {
     toast.success("All changes saved successfully!");
+  };
+
+  // Data Management Handlers
+  const handleReset = async () => {
+    if (confirm('Are you sure you want to reset all data to defaults? This cannot be undone.')) {
+      try {
+        await resetToDefaults();
+        toast.success('Data reset to defaults successfully!');
+      } catch (error) {
+        toast.error('Failed to reset data');
+      }
+    }
+  };
+
+  const handleClearAll = async () => {
+    if (confirm('Are you sure you want to DELETE ALL DATA? This cannot be undone.')) {
+      try {
+        await clearAllData();
+        toast.success('All data cleared successfully!');
+      } catch (error) {
+        toast.error('Failed to clear data');
+      }
+    }
+  };
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const result = await parseCompleteTimetable(file);
+
+      if (!result.success) {
+        toast.error('Failed to parse CSV file');
+        console.error('Parse errors:', result.errors);
+        return;
+      }
+
+      setImportPreview(result);
+      setIsImportDialogOpen(true);
+    } catch (error) {
+      console.error('Import error:', error);
+      toast.error('Failed to read CSV file');
+    }
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleConfirmImport = async () => {
+    if (!importPreview?.data) return;
+
+    setImporting(true);
+    try {
+      await importCompleteTimetable(importPreview.data);
+      toast.success(`Successfully imported ${importPreview.summary.coursesCount} courses, ${importPreview.summary.facultyCount} faculty, ${importPreview.summary.roomsCount} rooms, and ${importPreview.summary.allotmentsCount} allotments!`);
+      setIsImportDialogOpen(false);
+      setImportPreview(null);
+    } catch (error) {
+      console.error('Import error:', error);
+      toast.error('Failed to import data');
+    } finally {
+      setImporting(false);
+    }
   };
 
   return (
@@ -216,7 +289,8 @@ export function Settings() {
               <h3 className="text-slate-800 dark:text-slate-100">Data Management</h3>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Google Sheets Link */}
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700">
                 <div className="flex items-center justify-between">
                   <div>
@@ -236,6 +310,66 @@ export function Settings() {
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-slate-700 dark:text-slate-300">Import / Export</Label>
+                  <div className="space-y-2">
+                    <input
+                      type="file"
+                      accept=".csv"
+                      style={{ display: 'none' }}
+                      ref={fileInputRef}
+                      onChange={handleFileSelect}
+                    />
+                    <Button
+                      onClick={() => fileInputRef.current?.click()}
+                      variant="outline"
+                      className="w-full justify-start border-blue-200 hover:bg-blue-50 text-blue-700 dark:border-blue-800 dark:hover:bg-blue-900/30 dark:text-blue-300"
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Import from CSV
+                    </Button>
+                    <Button
+                      onClick={downloadSampleCompleteTimetable}
+                      variant="outline"
+                      className="w-full justify-start border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-400"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Sample CSV
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-slate-700 dark:text-slate-300">Danger Zone</Label>
+                  <div className="space-y-2">
+                    <Button
+                      onClick={handleReset}
+                      variant="outline"
+                      className="w-full justify-start border-orange-200 hover:bg-orange-50 text-orange-700 dark:border-orange-900/50 dark:hover:bg-orange-900/20 dark:text-orange-400"
+                    >
+                      <RotateCcw className="w-4 h-4 mr-2" />
+                      Reset to Defaults
+                    </Button>
+                    <Button
+                      onClick={handleClearAll}
+                      variant="outline"
+                      className="w-full justify-start border-red-200 hover:bg-red-50 text-red-700 dark:border-red-900/50 dark:hover:bg-red-900/20 dark:text-red-400"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Clear All Data
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg">
+                <p className="text-xs text-blue-700 dark:text-blue-300">
+                  <strong>Note:</strong> Data is synchronized with your connected Google Sheet. Changes are saved automatically.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -397,6 +531,62 @@ export function Settings() {
           </motion.div>
         </div>
       </div>
+
+      {/* Import Preview Dialog */}
+      <Dialog open={isImportDialogOpen} onOpenChange={setIsImportDialogOpen}>
+        <DialogContent className="sm:max-w-[320px]">
+          <DialogHeader>
+            <DialogTitle className="text-sm">Import Preview</DialogTitle>
+            <DialogDescription className="text-xs">Review CSV data</DialogDescription>
+          </DialogHeader>
+
+          {importPreview && (
+            <div className="space-y-2">
+              <div className="text-xs text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-900/20 p-2 rounded border border-green-200 dark:border-green-800">
+                ✓ CSV parsed successfully!
+              </div>
+
+              <div className="grid grid-cols-4 gap-2 text-center">
+                <div className="p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                  <div className="text-lg font-bold text-blue-900 dark:text-blue-100">{importPreview.summary.coursesCount}</div>
+                  <div className="text-xs text-blue-700 dark:text-blue-300">Courses</div>
+                </div>
+                <div className="p-2 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded">
+                  <div className="text-lg font-bold text-purple-900 dark:text-purple-100">{importPreview.summary.facultyCount}</div>
+                  <div className="text-xs text-purple-700 dark:text-purple-300">Faculty</div>
+                </div>
+                <div className="p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded">
+                  <div className="text-lg font-bold text-green-900 dark:text-green-100">{importPreview.summary.roomsCount}</div>
+                  <div className="text-xs text-green-700 dark:text-green-300">Rooms</div>
+                </div>
+                <div className="p-2 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded">
+                  <div className="text-lg font-bold text-orange-900 dark:text-orange-100">{importPreview.summary.allotmentsCount}</div>
+                  <div className="text-xs text-orange-700 dark:text-orange-300">Allotments</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex gap-2 justify-end mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setIsImportDialogOpen(false)}
+              disabled={importing}
+              size="sm"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmImport}
+              disabled={importing}
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              {importing ? "Importing..." : "Confirm Import"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

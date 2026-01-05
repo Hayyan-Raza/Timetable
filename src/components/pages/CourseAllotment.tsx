@@ -81,18 +81,9 @@ export function CourseAllotment() {
         if (isNewFormat) {
           courseName = row.Subject;
           facultyName = row.Teachers;
-          // Construct class ID:
-          // If Section already contains the Department, don't prefix it again?
-          // But usually Section is just "A" or "AM".
-          // The issue reported is that it defaults to BS-SE? 
-          // I will enforce using row.Department.
-          // Format: DEPT-SEM-SECTION
-          const cleanDept = row.Department.trim();
-          const cleanSem = row.Semester.toString().trim();
-          const cleanSec = row.Section.toString().trim();
-          const classId = `${cleanDept}-${cleanSem}-${cleanSec}`;
-          classIdsList = [classId];
-          dept = row.Department;
+          dept = row.Department; // Keep CSV department for reference
+          // DON'T construct classId yet - wait until we match the course
+          // to use the ACTUAL course department
         } else {
           courseName = row.courseName;
           facultyName = row.facultyName;
@@ -136,6 +127,17 @@ export function CourseAllotment() {
         if (!facultyMember) {
           validationErrors.push(`Row ${index + 2}: Skipped - Faculty not found: '${facultyName}'`);
           return;
+        }
+
+        // NOW construct classId using the MATCHED COURSE's department (not CSV department)
+        if (isNewFormat) {
+          // Use COURSE department to ensure consistency
+          const courseDept = course.department || row.Department;
+          const cleanSem = row.Semester.toString().trim();
+          const cleanSec = row.Section.toString().trim();
+          const classId = `${courseDept}-${cleanSem}-${cleanSec}`;
+          classIdsList = [classId];
+          dept = courseDept; // Update dept to match course
         }
 
         validAllotments.push({
@@ -421,6 +423,61 @@ export function CourseAllotment() {
             </Button>
 
             {/* Delete All Button */}
+            {allotments.length > 0 && (
+              <>
+                <Button
+                  onClick={async () => {
+                    try {
+                      let fixedCount = 0;
+                      const correctedAllotments = allotments.map(allotment => {
+                        const course = courses.find(c => c.id === allotment.courseId);
+                        if (!course || !course.department) return allotment;
+
+                        // Check each classId
+                        const correctedClassIds = allotment.classIds.map(classId => {
+                          // Extract parts: e.g., "BS-SE-1-AM" -> ["BS", "SE", "1", "AM"]
+                          const parts = classId.split('-');
+                          if (parts.length < 3) return classId; // Invalid format, skip
+
+                          // Extract existing dept, sem, section
+                          const existingDept = parts.length >= 2 ? `${parts[0]}-${parts[1]}` : '';
+                          const semester = parts[2];
+                          const section = parts.slice(3).join('-'); // Handle cases like "AM" or "A-EV"
+
+                          // Check if department matches course department
+                          if (existingDept !== course.department) {
+                            fixedCount++;
+                            // Fix it: use course department
+                            return `${course.department}-${semester}-${section}`;
+                          }
+                          return classId; // Already correct
+                        });
+
+                        return {
+                          ...allotment,
+                          classIds: correctedClassIds,
+                          department: course.department // Also update allotment department
+                        };
+                      });
+
+                      if (fixedCount > 0) {
+                        await updateAllotments(correctedAllotments);
+                        toast.success(`Fixed ${fixedCount} mismatched section names!`);
+                      } else {
+                        toast.info('No mismatches found. All sections match their course departments.');
+                      }
+                    } catch (error) {
+                      console.error('Fix error:', error);
+                      toast.error('Failed to fix mismatches');
+                    }
+                  }}
+                  variant="outline"
+                  className="border-orange-300 text-orange-700 hover:bg-orange-50"
+                >
+                  🔧 Fix Mismatches
+                </Button>
+              </>
+            )}
             {allotments.length > 0 && (
               <Dialog>
                 <DialogTrigger asChild>

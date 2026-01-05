@@ -214,9 +214,23 @@ export default function EditTimetable() {
                                                                     <CardTitle className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                                                                         {cls}
                                                                     </CardTitle>
-                                                                    <Badge variant="outline" className="text-[10px] font-normal text-slate-400 border-slate-200 bg-slate-50 uppercase tracking-wider">
-                                                                        Section
-                                                                    </Badge>
+                                                                    {(() => {
+                                                                        const semNum = parseInt(semesterLabel.match(/\d+/)?.[0] || '0');
+                                                                        const colorMap = [
+                                                                            "bg-blue-50 text-blue-700 border-blue-200",
+                                                                            "bg-emerald-50 text-emerald-700 border-emerald-200",
+                                                                            "bg-violet-50 text-violet-700 border-violet-200",
+                                                                            "bg-amber-50 text-amber-700 border-amber-200",
+                                                                            "bg-rose-50 text-rose-700 border-rose-200",
+                                                                            "bg-orange-50 text-orange-700 border-orange-200"
+                                                                        ];
+                                                                        const colorClass = colorMap[(semNum - 1) % colorMap.length] || colorMap[0];
+                                                                        return (
+                                                                            <Badge variant="outline" className={`text-[10px] font-semibold border uppercase tracking-wider ${colorClass}`}>
+                                                                                Semester {semNum}
+                                                                            </Badge>
+                                                                        );
+                                                                    })()}
                                                                 </div>
                                                                 <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
                                                                     {deptDisplay && (
@@ -246,11 +260,11 @@ export default function EditTimetable() {
                                                     </div>
 
                                                     {/* Course Badges - Clean list */}
-                                                    <CardContent className="px-6 pb-16 pt-6">
+                                                    <CardContent className="px-6 pb-20 pt-6">
                                                         <div className="mb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                                                             Active Courses
                                                         </div>
-                                                        <div className="flex flex-wrap gap-2">
+                                                        <div className="flex flex-wrap gap-2 ">
                                                             {uniqueCourses.map((course: any) => (
                                                                 <Badge
                                                                     key={course}
@@ -261,6 +275,7 @@ export default function EditTimetable() {
                                                                 </Badge>
                                                             ))}
                                                         </div>
+                                                        <br ></br>
                                                     </CardContent>
                                                 </Card>
                                             );

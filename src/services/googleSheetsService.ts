@@ -48,6 +48,7 @@ export const findOrCreateSpreadsheet = async (accessToken: string): Promise<stri
         { addSheet: { properties: { title: "Allotments" } } },
         { addSheet: { properties: { title: "Departments" } } },
         { addSheet: { properties: { title: "Schemas" } } },
+        { addSheet: { properties: { title: "Timetables" } } },
     ];
 
     await fetch(batchUpdateUrl, {

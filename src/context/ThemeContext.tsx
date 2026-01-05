@@ -143,8 +143,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
         localStorage.setItem("app-theme", currentTheme);
 
-        // Add 'dark' class for all non-light themes to activate Tailwind's dark: variants
-        if (currentTheme !== 'light') {
+        // Add 'dark' class ONLY for the 'dark' theme to activate Tailwind's dark: variants
+        // Other themes (Aubergine, Ochin, Monument) have light content backgrounds, so they should use light mode text
+        if (currentTheme === 'dark') {
             root.classList.add('dark');
         } else {
             root.classList.remove('dark');
