@@ -70,4 +70,8 @@ def get_generation_status(session_id):
     return jsonify(progress_data)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Fix for PyInstaller on Windows to prevent infinite spawn loop
+    import multiprocessing
+    multiprocessing.freeze_support()
+    
+    app.run(host='0.0.0.0', port=5000, debug=False)

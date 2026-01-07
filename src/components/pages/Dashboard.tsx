@@ -68,13 +68,24 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
 
     setIsGenerating(true);
     setGenerationProgress(0);
-    setGenerationStatus("Starting generation...");
+    setGenerationStatus("Starting backend engine...");
     setSolutionsFound(0);
     setGenerationStartTime(Date.now());
-    setEstimatedTime("Calculating...");
-    toast.loading("Generating timetable... This may take a moment.");
+    setEstimatedTime("Initializing...");
+    toast.loading("Starting backend engine...");
 
     try {
+      // 1. Start Backend On-Demand
+      if (window.electron && window.electron.startBackend) {
+        try {
+          await window.electron.startBackend();
+        } catch (backendError) {
+          throw new Error("Failed to start backend engine. Please restart the app.");
+        }
+      }
+
+      setGenerationStatus("Backend ready. Starting generation...");
+
       const config = {
         semester: selectedSemester,
         department: selectedDepartment,
@@ -166,6 +177,11 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
             toast.dismiss();
             setShowResultDialog(true);
 
+            // STOP BACKEND AFTER SUCCESS
+            if (window.electron && window.electron.stopBackend) {
+              window.electron.stopBackend();
+            }
+
             // Auto-switch to a class that has entries
             if (result.timetable.length > 0) {
               const currentClassHasEntries = result.timetable.some(
@@ -195,6 +211,11 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
             setIsGenerating(false);
             toast.dismiss();
             toast.error("Error during generation: " + status.message);
+
+            // STOP BACKEND ON GENERATION ERROR
+            if (window.electron && window.electron.stopBackend) {
+              window.electron.stopBackend();
+            }
           }
         } catch (pollError) {
           console.error("Polling error:", pollError);
@@ -211,6 +232,28 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
         clearInterval(pollingIntervalRef.current);
         pollingIntervalRef.current = null;
       }
+
+      // STOP BACKEND ON STARTUP ERROR
+      if (window.electron && window.electron.stopBackend) {
+        window.electron.stopBackend();
+      }
+    }
+  };
+
+  const handleStopGeneration = async () => {
+    // User manually requested stop
+    if (pollingIntervalRef.current) {
+      clearInterval(pollingIntervalRef.current);
+      pollingIntervalRef.current = null;
+    }
+    setIsGenerating(false);
+    setGenerationStatus("Stopped by user");
+    toast.dismiss();
+    toast.info("Generation stopped by user.");
+
+    // Kill backend
+    if (window.electron && window.electron.stopBackend) {
+      await window.electron.stopBackend();
     }
   };
 
@@ -327,14 +370,24 @@ export function Dashboard({ onPageChange }: { onPageChange?: (page: any) => void
               </div>
 
               <div className="flex items-end gap-2">
-                <Button
-                  onClick={handleGenerateTimetable}
-                  disabled={isGenerating}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/20"
-                >
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  {isGenerating ? "Generating..." : "Generate Timetable"}
-                </Button>
+                {!isGenerating ? (
+                  <Button
+                    onClick={handleGenerateTimetable}
+                    disabled={isGenerating}
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/20"
+                  >
+                    <Sparkles className="w-4 h-4 mr-2" />
+                    Generate Timetable
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleStopGeneration}
+                    className="flex-1 !bg-red-600 hover:!bg-red-700 !text-white border-none rounded-xl shadow-lg shadow-red-500/20 z-50 relative"
+                  >
+                    <AlertCircle className="w-4 h-4 mr-2" />
+                    Stop Generation
+                  </Button>
+                )}
               </div>
             </div>
 

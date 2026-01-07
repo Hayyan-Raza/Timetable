@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -11,9 +11,10 @@ let mainWindow = null;
  */
 async function startBackend() {
     // Determine backend executable path
+    // In onedir mode, the executable is inside a folder named 'app'
     const backendPath = app.isPackaged
-        ? path.join(process.resourcesPath, 'backend', 'app.exe')
-        : path.join(__dirname, '..', 'backend', 'dist', 'app.exe');
+        ? path.join(process.resourcesPath, 'backend', 'app', 'app.exe')
+        : path.join(__dirname, '..', 'backend', 'dist', 'app', 'app.exe');
 
     console.log('Starting backend from:', backendPath);
 
@@ -97,16 +98,19 @@ function stopBackend() {
         console.log('Stopping backend...');
 
         try {
-            // Try graceful shutdown first
-            backendProcess.kill('SIGTERM');
-
-            // Force kill after 5 seconds if still running
-            setTimeout(() => {
-                if (backendProcess && !backendProcess.killed) {
-                    console.log('Force killing backend...');
-                    backendProcess.kill('SIGKILL');
-                }
-            }, 5000);
+            if (process.platform === 'win32') {
+                // Windows: Use taskkill to kill the process tree (including children like OR-Tools)
+                spawn('taskkill', ['/pid', backendProcess.pid, '/f', '/t']);
+            } else {
+                // Unix-like: Standard kill
+                backendProcess.kill('SIGTERM');
+                // Force kill after 5 seconds if still running
+                setTimeout(() => {
+                    if (backendProcess && !backendProcess.killed) {
+                        backendProcess.kill('SIGKILL');
+                    }
+                }, 5000);
+            }
         } catch (error) {
             console.error('Error stopping backend:', error);
         }
@@ -196,6 +200,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js'),
             zoomFactor: app.isPackaged ? 0.75 : 1.0,
         },
         icon: path.join(__dirname, '../assets/icon.png')
@@ -228,36 +233,63 @@ function createWindow() {
     });
 }
 
-app.whenReady().then(async () => {
-    try {
-        if (app.isPackaged) {
-            // Start backend and wait for it to be healthy
-            console.log('Packaged mode: Starting backend...');
-            await startBackend();
-            console.log('Backend ready, creating window...');
-            createWindow();
-        } else {
-            // In dev mode, assume backend is already running
-            console.log('Development mode: Skipping backend startup');
-            createWindow();
-        }
-    } catch (error) {
-        console.error('Failed to start application:', error);
-        // Show error dialog to user
-        const { dialog } = require('electron');
-        dialog.showErrorBox(
-            'Startup Error',
-            `Failed to start the backend server:\n\n${error.message}\n\nPlease try restarting the application.`
-        );
-        app.quit();
-    }
+const gotTheLock = app.requestSingleInstanceLock();
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow();
+if (!gotTheLock) {
+    app.quit();
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.focus();
         }
     });
-});
+
+    app.whenReady().then(async () => {
+        // Create window immediately
+        createWindow();
+
+        // Register IPC Handlers for On-Demand Backend
+        ipcMain.handle('start-backend', async () => {
+            if (backendProcess) {
+                console.log('Backend already running');
+                return true;
+            }
+            console.log('Starting backend on-demand...');
+            try {
+                // If packaged, start the real executable.
+                // If dev, assume python script is handled externally or not needed for UI dev
+                if (app.isPackaged) {
+                    await startBackend();
+                } else {
+                    console.log('Dev mode: skipping actual spawn, assuming external backend');
+                    // Note: In dev, you might want to spawn python manually or just return true
+                    // for now we'll pretend it started if not packaged.
+                }
+                return true;
+            } catch (err) {
+                console.error('Failed to start backend:', err);
+                throw err;
+            }
+        });
+
+        ipcMain.handle('stop-backend', async () => {
+            stopBackend();
+            return true;
+        });
+
+        ipcMain.handle('get-backend-status', () => {
+            return !!backendProcess;
+        });
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) {
+                createWindow();
+            }
+        });
+    });
+}
 
 app.on('window-all-closed', () => {
     stopBackend();
